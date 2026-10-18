@@ -364,6 +364,7 @@
       }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -376,8 +377,14 @@
       <span style="font-size: 0.9rem; opacity: 0.8;">| Khổ A0 Chuẩn Triển Lãm Khoa Học (Bộ GD&ĐT & RMIT)</span>
     </div>
 
-    <div style="display: flex; gap: 10px;">
-      <button class="btn-action gold" onclick="window.print()">
+    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+      <button class="btn-action" style="background: linear-gradient(135deg, #059669, #10b981);" id="btn-export-png" onclick="exportPosterPNG()" title="Kết xuất poster khoa học A0 thành ảnh PNG">
+        <span>📥</span> Tải Poster A0 (PNG)
+      </button>
+      <a href="Poster_KID_LESSON_AI_App.png" download="Poster_KID_LESSON_AI_App.png" class="btn-action" style="background: linear-gradient(135deg, #e11d48, #f43f5e);" title="Tải ảnh Poster truyền thông minh họa mầm non">
+        <span>🎨</span> Tải Poster App (PNG)
+      </a>
+      <button class="btn-action gold" onclick="window.print()" title="In ra giấy hoặc lưu thành PDF A0">
         <span>🖨️</span> In Khổ Lớn A0 (Print)
       </button>
     </div>
@@ -495,6 +502,9 @@
             <p style="font-size: 0.9rem; color: #14532d; line-height: 1.5;">
               Tự động hóa toàn diện 3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ) theo Thông tư 51/2020/TT-BGDĐT và Tiến trình 3 bước lôi cuốn (Gây hứng thú $\rightarrow$ Trải nghiệm khám phá $\rightarrow$ Trò chơi củng cố).
             </p>
+            <div style="margin-top: 8px; border-radius: 8px; overflow: hidden; border: 1px solid #86efac; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              <img src="tru_cot_1_giao_an.jpg" alt="Phân hệ 1: Soạn giáo án điện tử 5 bước" style="width: 100%; height: auto; display: block;">
+            </div>
           </div>
 
           <div class="solution-feature-box">
@@ -504,6 +514,9 @@
             <p style="font-size: 0.9rem; color: #14532d; line-height: 1.5;">
               AI sáng tác tức thì các bài thơ 4 chữ, 5 chữ tươi vui; 3 câu đố tư duy dí dỏm và hoạt cảnh rối 3 phút giúp cô giáo mở đầu giờ dạy đầy bất ngờ, cuốn hút.
             </p>
+            <div style="margin-top: 8px; border-radius: 8px; overflow: hidden; border: 1px solid #86efac; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              <img src="tru_cot_2_smarttv.jpg" alt="Phân hệ 2: Trình chiếu Smart TV & Thơ ca trực quan" style="width: 100%; height: auto; display: block;">
+            </div>
           </div>
 
           <div class="solution-feature-box">
@@ -513,6 +526,9 @@
             <p style="font-size: 0.9rem; color: #14532d; line-height: 1.5;">
               Tích hợp bộ Prompt hình ảnh tối ưu phong cách hoạt hình mầm non (vector cute flat style, nét to rõ) tạo thẻ Flashcard số, tranh tô màu và trò chơi tương tác đa điểm chạm trên Smart TV.
             </p>
+            <div style="margin-top: 8px; border-radius: 8px; overflow: hidden; border: 1px solid #86efac; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              <img src="tru_cot_3_game_docx.jpg" alt="Phân hệ 3: Thẻ Flashcard & Xuất file Word chuẩn" style="width: 100%; height: auto; display: block;">
+            </div>
           </div>
         </div>
 
@@ -613,11 +629,65 @@
           <strong>QUÉT MÃ TRẢI NGHIỆM:</strong><br>
           <span style="opacity: 0.8;">Kho giáo án mẫu & học liệu số</span>
         </div>
-        <img class="qr-img" src="../QR_Code_KID_CONNECT_AI.png" alt="QR Code Dự án" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22white%22/><text x=%2250%22 y=%2255%22 font-size=%2216%22 text-anchor=%22middle%22 font-weight=%22bold%22>QR AI</text></svg>'">
+        <img class="qr-img" src="QR_Code_KID_LESSON_AI.png" alt="QR Code Dự án KID-LESSON AI" style="width: 76px; height: 76px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
       </div>
     </footer>
 
   </div>
 
+  <!-- EXPORT POSTER TO PNG SCRIPT -->
+  <script>
+    if (new URLSearchParams(window.location.search).get('export') === '1') {
+      const topBar = document.querySelector('.top-action-bar');
+      if (topBar) topBar.style.display = 'none';
+      document.body.style.padding = '0';
+      document.body.style.background = '#ffffff';
+    }
+
+    async function exportPosterPNG() {
+      const btn = document.getElementById('btn-export-png');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span>⏳</span> Đang tạo ảnh PNG...';
+      btn.disabled = true;
+
+      try {
+        const posterEl = document.querySelector('.poster-container');
+        
+        // Ensure all images are loaded
+        const images = posterEl.querySelectorAll('img');
+        await Promise.all(Array.from(images).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }));
+
+        const canvas = await html2canvas(posterEl, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false
+        });
+
+        const link = document.createElement('a');
+        link.download = 'Poster_KID_LESSON_AI_A0.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        btn.innerHTML = '<span>✅</span> Đã tải PNG!';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 3000);
+      } catch (err) {
+        console.error('Lỗi kết xuất ảnh PNG:', err);
+        alert('Không thể kết xuất ảnh PNG trực tiếp trên trình duyệt này: ' + err.message + '\nBạn có thể nhấn nút "In Khổ Lớn A0 (Print)" để lưu thành PDF sắc nét!');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+  </script>
 </body>
 </html>
