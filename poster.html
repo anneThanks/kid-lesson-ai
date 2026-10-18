@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POSTER TRIỂN LÃM A0 | KID-LESSON AI - TRƯỜNG MN PHÚC SƠN B</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4338ca;
+      --primary-gradient: linear-gradient(135deg, #3730a3 0%, #4f46e5 50%, #7c3aed 100%);
+      --accent-coral: #e11d48;
+      --accent-gold: #d97706;
+      --accent-teal: #0d9488;
+      --bg-poster: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Be Vietnam Pro', -apple-system, sans-serif;
+      background: #334155;
+      color: var(--text-main);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* TOP ACTION BAR */
+    .top-action-bar {
+      width: 100%;
+      max-width: 1400px;
+      background: #1e293b;
+      padding: 12px 24px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .btn-action {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .btn-action.gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    /* KHUNG POSTER KHOA HỌC CHUẨN A0 */
+    .poster-container {
+      width: 100%;
+      max-width: 1400px;
+      background: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* BANNER ĐỈNH (TOP HEADER POSTER) */
+    .poster-header {
+      background: var(--primary-gradient);
+      color: #ffffff;
+      padding: 32px 40px;
+      text-align: center;
+      position: relative;
+      border-bottom: 6px solid #fbbf24;
+    }
+
+    .header-super {
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fef08a;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .header-main-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .header-slogan {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 6px 20px;
+      border-radius: 9999px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header-meta-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e0e7ff;
+      flex-wrap: wrap;
+    }
+
+    /* BỐ CỤC 3 CỘT KHOA HỌC CHUẨN MẪU BAN TỔ CHỨC */
+    .poster-body {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr 1fr;
+      gap: 28px;
+      padding: 32px 36px;
+      background: #f8fafc;
+      flex: 1;
+    }
+
+    @media (max-width: 1024px) {
+      .poster-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .poster-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .poster-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card-heading {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #1e1b4b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 10px;
+    }
+
+    .card-heading.blue { color: #1e3a8a; border-bottom-color: #93c5fd; }
+    .card-heading.indigo { color: #3730a3; border-bottom-color: #a5b4fc; }
+    .card-heading.teal { color: #115e59; border-bottom-color: #99f6e4; }
+    .card-heading.coral { color: #9f1239; border-bottom-color: #fecdd3; }
+
+    /* Nội dung chi tiết các thẻ */
+    .metric-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 9999px;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .pain-point-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #fff1f2;
+      border-left: 4px solid #f43f5e;
+      padding: 12px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .solution-feature-box {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      padding: 14px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 10px;
+    }
+
+    .solution-feature-title {
+      font-weight: 800;
+      color: #15803d;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Biểu đồ số liệu thực tế */
+    .stat-hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      text-align: center;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #eef2ff, #fae8ff);
+      padding: 16px 10px;
+      border-radius: 12px;
+      border: 1px solid #c7d2fe;
+    }
+
+    .stat-number {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: #4338ca;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    /* Quy trình 3 bước trực quan */
+    .process-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .process-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 9999px;
+      background: #4f46e5;
+      color: #fff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Lời bình người trong cuộc */
+    .quote-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 14px;
+      border-radius: 0 10px 10px 0;
+      font-style: italic;
+      color: #78350f;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quote-author {
+      font-weight: 800;
+      text-align: right;
+      margin-top: 6px;
+      font-style: normal;
+      color: #b45309;
+      font-size: 0.85rem;
+    }
+
+    /* FOOTER POSTER */
+    .poster-footer {
+      background: #1e1b4b;
+      color: #fff;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 4px solid #fbbf24;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-left {
+      font-size: 0.88rem;
+      opacity: 0.9;
+    }
+
+    .footer-qr-col {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .qr-img {
+      width: 64px;
+      height: 64px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    /* PRINT RULES FOR A0 FORMAT */
+    @media print {
+      body {
+        background: #fff !important;
+        padding: 0 !important;
+      }
+      .top-action-bar { display: none !important; }
+      .poster-container {
+        box-shadow: none !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THANH CÔNG CỤ ĐIỀU HƯỚNG TRÊN CÙNG -->
+  <div class="top-action-bar">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="index.html" class="btn-action">
+        <span>⬅️</span> Về Ứng Dụng KID-LESSON AI
+      </a>
+      <span style="font-size: 0.9rem; opacity: 0.8;">| Khổ A0 Chuẩn Triển Lãm Khoa Học (Bộ GD&ĐT & RMIT)</span>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <button class="btn-action gold" onclick="window.print()">
+        <span>🖨️</span> In Khổ Lớn A0 (Print)
+      </button>
+    </div>
+  </div>
+
+  <!-- NỘI DUNG POSTER KHOA HỌC KHỔ A0 -->
+  <div class="poster-container">
+
+    <!-- BANNER ĐỈNH (TOP HEADER) -->
+    <header class="poster-header">
+      <div class="header-super">
+        <span>★ DIỄN ĐÀN ĐỔI MỚI SÁNG TẠO GIÁO DỤC VIỆT NAM VỚI TRÍ TUỆ NHÂN TẠO 2026 ★</span>
+        <span>•</span>
+        <span>BỘ GD&ĐT & ĐẠI HỌC RMIT VIỆT NAM</span>
+      </div>
+
+      <h1 class="header-main-title">
+        KID-LESSON AI: HỆ THỐNG TRỢ LÝ TRÍ TUỆ NHÂN TẠO TẠO SINH TRONG XÂY DỰNG KẾ HOẠCH BÀI DẠY (GIÁO ÁN) ĐIỆN TỬ VÀ KHO HỌC LIỆU SỐ ĐA PHƯƠNG TIỆN
+      </h1>
+
+      <div class="header-slogan">
+        ✨ GIẢI PHÓNG SỨC LAO ĐỘNG NHÀ GIÁO • KHƠI NGUỒN SÁNG TẠO BÀI GIẢNG MẦM NON ✨
+      </div>
+
+      <div class="header-meta-row">
+        <span>👩‍🏫 <strong>Tác giả:</strong> Giáo viên chủ trì & Tổ Chuyên môn MN</span>
+        <span>🏫 <strong>Đơn vị:</strong> Trường Mầm non Phúc Sơn B (UBND xã Phúc Sơn)</span>
+        <span>🏆 <strong>Phân bảng:</strong> BẢNG A (Khối Mầm non & Tiểu học)</span>
+      </div>
+    </header>
+
+    <!-- BỐ CỤC 3 CỘT KHOA HỌC -->
+    <main class="poster-body">
+
+      <!-- ==========================================
+           CỘT 1: BỐI CẢNH & THÁCH THỨC THỰC TIỄN
+           ========================================== -->
+      <section class="poster-column">
+
+        <div class="poster-card">
+          <h2 class="card-heading blue">
+            <span>📍</span> 1. Bối Cảnh Thực Tế Tại Cơ Sở
+          </h2>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-muted);">
+            Trường Mầm non Phúc Sơn B đóng trên địa bàn nông thôn. Giáo viên luôn tràn đầy tình yêu thương trẻ nhưng điều kiện cơ sở vật chất, kinh phí mua sắm đồ dùng trực quan còn gặp nhiều khó khăn, thiếu thốn.
+          </p>
+        </div>
+
+        <div class="poster-card">
+          <h2 class="card-heading coral">
+            <span>⚠️</span> 2. Ba Thách Thức Nhức Nhối
+          </h2>
+
+          <div class="pain-point-item">
+            <span class="metric-badge" style="background: #ffe4e6; color: #e11d48;">1</span>
+            <div>
+              <strong style="color: #9f1239;">Gánh nặng 12 - 15 giờ/tuần:</strong>
+              <p style="font-size: 0.88rem; color: #881337;">Mỗi tuần giáo viên phải soạn 10-15 giáo án chi tiết và tự vẽ đồ dùng thủ công thâu đêm ngoài giờ lên lớp.</p>
+            </div>
+          </div>
+
+          <div class="pain-point-item">
+            <span class="metric-badge" style="background: #ffe4e6; color: #e11d48;">2</span>
+            <div>
+              <strong style="color: #9f1239;">Giáo án sao chép rập khuôn:</strong>
+              <p style="font-size: 0.88rem; color: #881337;">Thiếu thời gian dẫn đến sao chép giáo án cũ trên mạng internet, câu chữ khô cứng, thiếu tính thực tiễn địa phương.</p>
+            </div>
+          </div>
+
+          <div class="pain-point-item">
+            <span class="metric-badge" style="background: #ffe4e6; color: #e11d48;">3</span>
+            <div>
+              <strong style="color: #9f1239;">Thiếu thốn học liệu trực quan:</strong>
+              <p style="font-size: 0.88rem; color: #881337;">Trẻ mầm non <em>"học bằng chơi, chơi mà học"</em>; bài dạy thiếu tranh ảnh, câu đố khiến trẻ nhanh chán và phân tán chú ý.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="poster-card">
+          <h2 class="card-heading indigo">
+            <span>🎯</span> 3. Mục Tiêu Đột Phá Của Sáng Kiến
+          </h2>
+          <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; color: var(--text-muted);">
+            <li><strong>Giảm ngay 80%</strong> thời gian chuẩn bị bài giảng hàng tuần của giáo viên.</li>
+            <li><strong>100% tiết dạy</strong> được trang bị tranh ảnh hoạt hình mầm non sắc nét, thơ ca mới lạ và trò chơi tương tác.</li>
+            <li><strong>Chi phí 0 đồng:</strong> Mọi trường vùng quê đều có thể áp dụng ngay lập tức mà không cần ngân sách.</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           CỘT 2: GIẢI PHÁP CÔNG NGHỆ & ĐỘT PHÁ SÁNG TẠO
+           ========================================== -->
+      <section class="poster-column">
+
+        <div class="poster-card" style="border: 2px solid #818cf8; background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);">
+          <h2 class="card-heading indigo">
+            <span>💡</span> Ý Tưởng: "Tổ Phó Chuyên Môn AI Ảo"
+          </h2>
+          <p style="font-size: 0.96rem; line-height: 1.6; color: #334155;">
+            Xây dựng quy trình tạo sinh thông minh (Generative AI Workflow) hoạt động như một <strong>Tổ phó Chuyên môn Mầm non ảo</strong>, đồng sáng tạo Kế hoạch bài dạy chuẩn mực và kho đồ dùng số chất lượng cao cùng giáo viên.
+          </p>
+        </div>
+
+        <div class="poster-card">
+          <h2 class="card-heading teal">
+            <span>⚙️</span> Ba Phân Hệ Công Nghệ Cốt Lõi
+          </h2>
+
+          <div class="solution-feature-box">
+            <div class="solution-feature-title">
+              <span>📝</span> Phân hệ 1: Soạn Kế Hoạch Bài Dạy 5 Bước Chuẩn Bộ GD&ĐT
+            </div>
+            <p style="font-size: 0.9rem; color: #14532d; line-height: 1.5;">
+              Tự động hóa toàn diện 3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ) theo Thông tư 51/2020/TT-BGDĐT và Tiến trình 3 bước lôi cuốn (Gây hứng thú $\rightarrow$ Trải nghiệm khám phá $\rightarrow$ Trò chơi củng cố).
+            </p>
+          </div>
+
+          <div class="solution-feature-box">
+            <div class="solution-feature-title">
+              <span>🌸</span> Phân hệ 2: Sáng Tác Thơ Ca, Câu Đố & Kịch Bản Rối Mới
+            </div>
+            <p style="font-size: 0.9rem; color: #14532d; line-height: 1.5;">
+              AI sáng tác tức thì các bài thơ 4 chữ, 5 chữ tươi vui; 3 câu đố tư duy dí dỏm và hoạt cảnh rối 3 phút giúp cô giáo mở đầu giờ dạy đầy bất ngờ, cuốn hút.
+            </p>
+          </div>
+
+          <div class="solution-feature-box">
+            <div class="solution-feature-title">
+              <span>🎨</span> Phân hệ 3: Tự Động Thiết Kế Thẻ Flashcard & Trò Chơi Canva 0đ
+            </div>
+            <p style="font-size: 0.9rem; color: #14532d; line-height: 1.5;">
+              Tích hợp bộ Prompt hình ảnh tối ưu phong cách hoạt hình mầm non (vector cute flat style, nét to rõ) tạo thẻ Flashcard số, tranh tô màu và trò chơi tương tác đa điểm chạm trên Smart TV.
+            </p>
+          </div>
+        </div>
+
+        <div class="poster-card">
+          <h2 class="card-heading blue">
+            <span>🚀</span> Quy Trình 3 Bước Siêu Tốc (Dưới 1 Phút)
+          </h2>
+          <div class="process-flow">
+            <div class="process-step">
+              <span class="step-num">1</span>
+              <div>
+                <strong>Chọn đề tài & độ tuổi:</strong>
+                <p style="font-size: 0.85rem; color: #64748b;">Cô nói hoặc chọn chủ đề trên ứng dụng.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <span class="step-num">2</span>
+              <div>
+                <strong>AI sinh trọn bộ bài dạy:</strong>
+                <p style="font-size: 0.85rem; color: #64748b;">Giáo án 5 bước + Thơ mới + Thẻ hình ảnh trong 30s.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <span class="step-num">3</span>
+              <div>
+                <strong>Cô duyệt & Trình chiếu:</strong>
+                <p style="font-size: 0.85rem; color: #64748b;">Xuất file Word in ký và chiếu thẻ hình ảnh lên Smart TV lớp.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           CỘT 3: TÁC ĐỘNG THỰC TẾ & NHÂN RỘNG BỀN VỮNG
+           ========================================== -->
+      <section class="poster-column">
+
+        <div class="poster-card">
+          <h2 class="card-heading indigo">
+            <span>📈</span> Dữ Liệu Thực Nghiệm Định Lượng Vượt Trội
+          </h2>
+          <div class="stat-hero-grid">
+            <div class="stat-box">
+              <div class="stat-number">80%</div>
+              <div class="stat-label">Thời gian soạn bài được tiết kiệm</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Tiết dạy có học liệu số trực quan</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">95.8%</div>
+              <div class="stat-label">Mức độ tập trung & hứng thú của trẻ</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="poster-card">
+          <h2 class="card-heading blue">
+            <span>💬</span> Tiếng Nói Người Trong Cuộc
+          </h2>
+          <div class="quote-box">
+            "KID-LESSON AI giúp tôi chỉ mất 15 phút để chuẩn bị một tiết dạy sinh động, trẻ thích thú ngắm tranh và đọc thơ mới mỗi ngày!"
+            <div class="quote-author">— Cô Nguyễn Thị Mai (Giáo viên lớp 5 tuổi)</div>
+          </div>
+          <div class="quote-box" style="margin-top: 10px; border-left-color: #10b981; background: #ecfdf5; color: #064e3b;">
+            "Sáng kiến chuyển đổi số thiết thực, giải quyết đúng nỗi đau thời gian của nhà giáo mầm non vùng nông thôn."
+            <div class="quote-author" style="color: #047857;">— Ban Giám hiệu Trường MN Phúc Sơn B</div>
+          </div>
+        </div>
+
+        <div class="poster-card">
+          <h2 class="card-heading teal">
+            <span>🛡️</span> Đạo Đức AI & Nhân Rộng Bền Vững
+          </h2>
+          <ul style="padding-left: 20px; font-size: 0.92rem; line-height: 1.6; color: var(--text-muted);">
+            <li><strong>Human-in-the-Loop:</strong> Giáo viên giữ quyền thẩm định và điều chỉnh cuối cùng trước khi đưa vào tiết dạy.</li>
+            <li><strong>An toàn trẻ thơ:</strong> Kiểm duyệt 100% nội dung hình ảnh trong sáng, vui tươi, không bạo lực.</li>
+            <li><strong>Chi phí 0 đồng:</strong> Vận hành trên công cụ AI miễn phí, tập huấn 30 phút là cô giáo lớn tuổi cũng làm được ngay.</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- FOOTER POSTER -->
+    <footer class="poster-footer">
+      <div class="footer-left">
+        <strong>TRƯỜNG MẦM NON PHÚC SƠN B • UBND XÃ PHÚC SƠN</strong><br>
+        Dự án tham dự Giải thưởng Tiên phong Ứng dụng AI trong Giáo dục Việt Nam 2026 (Bộ GD&ĐT & RMIT)
+      </div>
+
+      <div class="footer-qr-col">
+        <div style="text-align: right; font-size: 0.85rem;">
+          <strong>QUÉT MÃ TRẢI NGHIỆM:</strong><br>
+          <span style="opacity: 0.8;">Kho giáo án mẫu & học liệu số</span>
+        </div>
+        <img class="qr-img" src="../QR_Code_KID_CONNECT_AI.png" alt="QR Code Dự án" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22white%22/><text x=%2250%22 y=%2255%22 font-size=%2216%22 text-anchor=%22middle%22 font-weight=%22bold%22>QR AI</text></svg>'">
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+/* ==========================================================================
+   KID-LESSON AI - IN ẤN KẾ HOẠCH BÀI DẠY (GIÁO ÁN) CHUẨN A4
+   Bám sát Nghị định 30/2020/NĐ-CP & Thông tư 51/2020/TT-BGDĐT
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 20mm 15mm 20mm 20mm; /* Lề chuẩn văn bản hành chính */
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 13pt !important;
+    line-height: 1.5 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+  }
+
+  /* Ẩn toàn bộ giao diện điều khiển */
+  .competition-strip,
+  .app-top-header,
+  .app-navbar,
+  .config-sidebar,
+  .lesson-action-toolbar,
+  .btn-mic-record,
+  .modal-backdrop,
+  .toast-container,
+  #confetti-canvas,
+  .canva-prompts-banner,
+  .fc-actions,
+  .games-nav-switch,
+  .btn-sound-read,
+  .riddle-reveal-btn {
+    display: none !important;
+  }
+
+  .app-main-layout {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .workspace-grid {
+    display: block !important;
+  }
+
+  .lesson-display-container {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .lesson-paper {
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .paper-header-table {
+    border-bottom: 1.5pt solid #000 !important;
+    margin-bottom: 15pt !important;
+    padding-bottom: 10pt !important;
+  }
+
+  .paper-title {
+    font-size: 16pt !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    text-align: center !important;
+    margin: 15pt 0 5pt 0 !important;
+  }
+
+  .paper-subtitle {
+    font-size: 12pt !important;
+    font-style: italic !important;
+    color: #000 !important;
+    text-align: center !important;
+    margin-bottom: 15pt !important;
+  }
+
+  .section-head {
+    font-size: 13pt !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    background: none !important;
+    border-left: none !important;
+    padding: 0 !important;
+    margin-top: 15pt !important;
+    margin-bottom: 6pt !important;
+    text-transform: uppercase !important;
+  }
+
+  .sub-section-head {
+    font-size: 13pt !important;
+    font-weight: bold !important;
+    color: #000 !important;
+  }
+
+  .step-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    margin-bottom: 12pt !important;
+    page-break-inside: avoid;
+  }
+
+  .step-card-header {
+    background: #f0f0f0 !important;
+    color: #000 !important;
+    border-bottom: 1px solid #ccc !important;
+    font-weight: bold !important;
+  }
+
+  .activity-speaker {
+    color: #000 !important;
+    font-weight: bold !important;
+  }
+
+  .activity-content {
+    color: #000 !important;
+  }
+
+  /* Footer chữ ký cuối giáo án */
+  .paper-signature-table {
+    width: 100% !important;
+    margin-top: 30pt !important;
+    page-break-inside: avoid;
+  }
+
+  .signature-col {
+    width: 50% !important;
+    text-align: center !important;
+    font-size: 13pt !important;
+  }
+
+  .week-nav-bar {
+    display: none !important;
+  }
+
+  .plan-day-wrapper {
+    page-break-after: always !important;
+  }
+
+  .plan-day-title {
+    font-size: 14pt !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    margin: 12pt 0 !important;
+  }
+
+  .official-plan-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 12pt !important;
+    font-family: 'Times New Roman', Times, serif !important;
+  }
+
+  .official-plan-table th,
+  .official-plan-table td {
+    border: 1pt solid #000 !important;
+    padding: 6pt 8pt !important;
+    color: #000 !important;
+  }
+
+  .official-plan-table th {
+    background-color: #f2f2f2 !important;
+    font-weight: bold !important;
+  }
+}
+

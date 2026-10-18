@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>KID-LESSON AI | Trợ Lý Soạn Giáo Án Điện Tử & Kho Học Liệu Số Mầm Non</title>
+  <meta name="description" content="Hệ thống Trợ lý Trí tuệ nhân tạo tạo sinh trong xây dựng Kế hoạch bài dạy (Giáo án) điện tử 5 bước chuẩn Bộ GD&ĐT và thiết kế kho học liệu số đa phương tiện 0 đồng tại Trường Mầm non Phúc Sơn B.">
+  <meta name="keywords" content="KID-LESSON AI, Giáo án mầm non, Trợ lý AI giáo viên, Học liệu số, Mầm non Phúc Sơn B, Giải thưởng AI GDVN 2026, Bộ GD&ĐT, RMIT">
+  <link rel="stylesheet" href="css/style.css?v=1.0">
+  <link rel="stylesheet" href="css/print.css?v=1.0" media="print">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body>
+
+  <!-- DẢI THÔNG TIN DỰ THI QUỐC GIA -->
+  <div class="competition-strip">
+    <span class="comp-badge">BẢNG A: KHỐI MẦM NON & TIỂU HỌC</span>
+    <span>🏆 GIẢI THƯỞNG TIÊN PHONG ỨNG DỤNG AI TRONG GIÁO DỤC VIỆT NAM 2026</span>
+    <span>• Đơn vị phối hợp tổ chức: Bộ Giáo dục và Đào tạo & Đại học RMIT Việt Nam</span>
+  </div>
+
+  <!-- TOP HEADER -->
+  <header class="app-top-header">
+    <div class="header-inner">
+      <div class="brand-section">
+        <div class="brand-icon-wrap">
+          <span>📚</span>
+          <span class="sparkle-badge">✨</span>
+        </div>
+        <div class="brand-text-col">
+          <h1 class="brand-title">
+            KID-LESSON AI
+            <span class="brand-tag">MN PHÚC SƠN B</span>
+          </h1>
+          <p class="brand-sub">Trợ Lý AI Tạo Sinh Giáo Án Điện Tử 5 Bước & Kho Học Liệu Số 0 Đồng</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Nút Mở Poster A0 Triển Lãm -->
+        <a href="poster.html" class="btn-header-action primary" title="Xem Poster Triển Lãm Khoa Học (Khổ A0)">
+          <span>🎨</span> Poster A0
+        </a>
+
+        <!-- Nút Hướng Dẫn Sử Dụng -->
+        <button class="btn-header-action" id="btn-open-guide" title="Xem cẩm nang hướng dẫn sử dụng 3 bước">
+          <span>📖</span> Hướng Dẫn
+        </button>
+
+        <!-- Trạng thái Dual-Engine AI -->
+        <div class="engine-status-pill offline" id="engine-status-pill" title="Chế độ vận hành">
+          <span>⚡</span> Offline 0đ (Siêu tốc)
+        </div>
+
+        <!-- Nút Cài đặt AI & Tác giả -->
+        <button class="btn-header-action" id="btn-open-settings" title="Cấu hình Google Gemini AI Key & Thông tin giáo viên">
+          <span>⚙️</span> Cài Đặt
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="app-navbar">
+    <div class="nav-tabs-container">
+      <button class="nav-tab-btn active" data-tab="tab-lesson-plan">
+        <span>📝</span> Soạn Kế Hoạch Bài Dạy (Giáo Án 5 Bước)
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-library">
+        <span>📂</span> Thư Viện Giáo Án Của Cô
+      </button>
+      <a href="poster.html" class="nav-tab-btn" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center;" title="Xem Poster Khoa Học Khổ A0">
+        <span>🖼️</span> Poster Triển Lãm A0
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="app-main-layout">
+
+    <!-- ==========================================
+         TAB 1: SOẠN KẾ HOẠCH BÀI DẠY (GIÁO ÁN ĐIỆN TỬ 5 BƯỚC)
+         ========================================== -->
+    <section class="tab-content-panel active" id="tab-lesson-plan">
+      <div class="workspace-grid">
+        
+        <!-- CỘT TRÁI: BẢNG ĐIỀU KHIỂN & CHỌN ĐỀ TÀI -->
+        <aside class="config-sidebar">
+          <div class="sidebar-title-row">
+            <h3 class="sidebar-heading">
+              <span>🎯</span> Thiết Lập Tiết Dạy
+            </h3>
+          </div>
+
+          <!-- 1. Chọn Lứa Tuổi -->
+          <div class="form-group">
+            <label class="form-label" for="select-age">
+              <span>👶</span> Lứa tuổi mầm non:
+            </label>
+            <select class="custom-select" id="select-age">
+              <!-- Đổ dữ liệu từ js/data_preschool.js -->
+            </select>
+          </div>
+
+          <!-- 2. Chọn Tuần Học (Range Date) -->
+          <div class="form-group">
+            <label class="form-label" for="input-week-range">
+              <span>📅</span> Chọn Tuần học (Khoảng thời gian):
+            </label>
+            <select class="custom-select" id="select-week-preset">
+              <option value="26/01/2026 - 30/01/2026">Tuần 20: 26/01/2026 - 30/01/2026 (Mẫu Chuẩn)</option>
+              <option value="02/02/2026 - 06/02/2026">Tuần 21: 02/02/2026 - 06/02/2026</option>
+              <option value="09/02/2026 - 13/02/2026">Tuần 22: 09/02/2026 - 13/02/2026</option>
+              <option value="16/02/2026 - 20/02/2026">Tuần 23: 16/02/2026 - 20/02/2026</option>
+              <option value="custom">✏️ Nhập khoảng ngày tùy chỉnh...</option>
+            </select>
+            <input type="text" class="custom-input" id="input-week-range" 
+                   value="26/01/2026 - 30/01/2026" 
+                   placeholder="Nhập khoảng ngày: DD/MM/YYYY - DD/MM/YYYY" 
+                   style="margin-top: 6px;">
+          </div>
+
+          <!-- 3. Chọn Ngày Trong Tuần (Thứ 2, 3, 4, 5, 6) -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>🗓️</span> Chọn ngày dạy trong tuần:
+            </label>
+            <!-- Chọn ngày dạy trong tuần -->
+            <div class="day-pills-container" id="day-pills-container">
+              <button type="button" class="day-pill-btn active" data-day="mon" id="day-pill-mon">
+                <span class="day-code">T2</span>
+                <span class="day-name">Thứ Hai</span>
+                <span class="day-badge" id="badge-mon">Âm nhạc</span>
+              </button>
+              <button type="button" class="day-pill-btn" data-day="tue" id="day-pill-tue">
+                <span class="day-code">T3</span>
+                <span class="day-name">Thứ Ba</span>
+                <span class="day-badge" id="badge-tue">Nhận biết</span>
+              </button>
+              <button type="button" class="day-pill-btn" data-day="wed" id="day-pill-wed">
+                <span class="day-code">T4</span>
+                <span class="day-name">Thứ Tư</span>
+                <span class="day-badge" id="badge-wed">Tạo hình</span>
+              </button>
+              <button type="button" class="day-pill-btn" data-day="thu" id="day-pill-thu">
+                <span class="day-code">T5</span>
+                <span class="day-name">Thứ Năm</span>
+                <span class="day-badge" id="badge-thu">Văn học</span>
+              </button>
+              <button type="button" class="day-pill-btn" data-day="fri" id="day-pill-fri">
+                <span class="day-code">T6</span>
+                <span class="day-name">Thứ Sáu</span>
+                <span class="day-badge" id="badge-fri">Vận động</span>
+              </button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px;">
+              <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Ngày dạy của tiết:</span>
+              <input type="text" class="custom-input" id="input-lesson-date" value="26/01/2026" placeholder="DD/MM/YYYY" style="width: 140px; padding: 6px 10px; font-size: 0.85rem; text-align: center;">
+            </div>
+          </div>
+
+          <!-- 4. CẤU HÌNH THỂ LOẠI & NỘI DUNG HOẠT ĐỘNG (CHO NGÀY ĐANG CHỌN) -->
+          <div class="form-group config-card-highlight">
+            <div class="activity-config-header">
+              <label class="form-label" for="select-activity-type" style="margin-bottom: 0;">
+                <span>🎭</span> Thể loại & Hoạt động (<strong id="active-day-label" style="color: #4f46e5;">Thứ Hai</strong>):
+              </label>
+            </div>
+
+            <!-- Loại hoạt động chính -->
+            <select class="custom-select" id="select-activity-type" style="margin-top: 6px;">
+              <!-- Đổ từ data_preschool.js activityTypes -->
+            </select>
+
+            <!-- Nội dung trọng tâm (NDTT) & Nội dung kết hợp (NDKH) -->
+            <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 6px;">
+              <div>
+                <span class="sub-label">🎯 Nội dung trọng tâm (NDTT):</span>
+                <input type="text" class="custom-input" id="input-ndtt" value="NH: Hoa thơm, bướm lượn" placeholder="Ví dụ: NH: Hoa thơm, bướm lượn..." style="font-size: 0.83rem; padding: 6px 10px; margin-top: 2px;">
+              </div>
+              <div>
+                <span class="sub-label">🎲 Nội dung kết hợp (NDKH):</span>
+                <input type="text" class="custom-input" id="input-ndkh" value="TCÂN: Ai nhanh nhất" placeholder="Ví dụ: TCÂN: Ai nhanh nhất..." style="font-size: 0.83rem; padding: 6px 10px; margin-top: 2px;">
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Chủ đề bài dạy (Gộp tất cả hoặc cho phép nhập mới) -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="form-label" for="input-topic">
+                <span>🌟</span> Chủ đề bài học:
+              </label>
+              <button type="button" class="btn-text-action" id="btn-clear-topic" title="Xóa để gõ chủ đề mới">
+                ➕ Nhập mới
+              </button>
+            </div>
+            <input type="text" class="custom-input" id="input-topic" 
+                   list="topics-datalist" 
+                   value="Thế giới Động vật - Các loài côn trùng và hoa mùa xuân" 
+                   placeholder="Chọn từ danh sách hoặc gõ chủ đề mới...">
+            <datalist id="topics-datalist">
+              <!-- Đổ toàn bộ chủ đề gộp từ data_preschool.js -->
+            </datalist>
+            <p style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
+              💡 <em>Cô có thể bấm mũi tên để chọn từ danh sách hoặc gõ tự do bất kỳ chủ đề mới nào.</em>
+            </p>
+          </div>
+
+          <!-- 6. Tên đề tài bài học -->
+          <div class="form-group">
+            <label class="form-label" for="input-lesson-title">
+              <span>✏️</span> Tên đề tài bài dạy:
+            </label>
+            <input type="text" class="custom-input" id="input-lesson-title" 
+                   value="Nghe hát: 'Hoa thơm bướm lượn' (Dân ca quan họ Bắc Ninh)" 
+                   placeholder="Nhập tên đề tài bài dạy...">
+            
+            <!-- Gợi ý nhanh 1-click -->
+            <div style="font-size: 0.78rem; font-weight: 600; color: #64748b; margin-top: 6px;">
+              Gợi ý bài dạy tiêu biểu theo ngày (Bấm chọn nhanh):
+            </div>
+            <div class="preset-chips-box" id="preset-chips-box">
+              <!-- Đổ động từ data_preschool.js -->
+            </div>
+          </div>
+
+          <!-- Nút Tạo Kế Hoạch Bằng AI -->
+          <div style="margin-top: 6px;">
+            <button type="button" class="btn-generate-main" id="btn-generate-all" style="width: 100%;">
+              <span>✨</span> Bấm Tạo Kế Hoạch Bài Dạy Bằng AI
+            </button>
+          </div>
+        </aside>
+
+        <!-- CỘT PHẢI: KẾ HOẠCH BÀI DẠY (GIÁO ÁN CHI TIẾT) -->
+        <section class="lesson-display-container" id="lesson-display-container">
+          <!-- Đổ nội dung giáo án hoàn chỉnh từ js/app.js -->
+        </section>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TAB 2: THƯ VIỆN BÀI DẠY CỦA CÔ (LOCAL STORAGE LIBRARY)
+         ========================================== -->
+    <section class="tab-content-panel" id="tab-library">
+      <div class="library-container">
+        <div class="library-top-bar">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem; color: #1e1b4b; display: flex; align-items: center; gap: 8px;">
+              <span>📂</span> Kho Giáo Án & Học Liệu Đã Lưu
+            </h2>
+            <p style="font-size: 0.85rem; color: #64748b;">
+              Toàn bộ bài dạy của cô được bảo mật lưu trên máy tính cá nhân (không lộ thông tin lên mạng).
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-tool" id="btn-export-library-json" title="Xuất toàn bộ giáo án ra file JSON để sao lưu hoặc gửi cho đồng nghiệp">
+              <span>📤</span> Xuất File Sao Lưu
+            </button>
+            <button class="btn-tool" id="btn-import-library-json" title="Nhập danh sách giáo án từ file sao lưu JSON">
+              <span>📥</span> Nhập File Giáo Án
+            </button>
+            <input type="file" id="file-import-input" accept=".json" style="display: none;">
+          </div>
+        </div>
+
+        <div class="library-cards-grid" id="library-cards-grid">
+          <!-- Đổ danh sách bài dạy đã lưu từ LocalStorage -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       MODAL: CÀI ĐẶT CẤU HÌNH AI & TÁC GIẢ
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-settings">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span>⚙️</span> Cài Đặt Trợ Lý AI & Thông Tin Sư Phạm
+        </h3>
+        <button type="button" class="btn-tool" id="btn-close-settings" style="border: none; font-size: 1.2rem;">✖</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="input-gemini-key">
+            <span>🔑</span> Google Gemini API Key (Tùy chọn):
+          </label>
+          <div class="key-input-wrapper">
+            <input type="password" class="custom-input" id="input-gemini-key" placeholder="AIzaSy... (Để trống để dùng chế độ Offline 0đ)">
+            <button type="button" class="btn-toggle-eye" id="btn-toggle-key-visibility" title="Hiện/Ẩn mã Key">👁️</button>
+            <button type="button" class="btn-test-key" id="btn-test-gemini-key" title="Kiểm tra kết nối trực tiếp với Google Gemini AI">⚡ Kiểm tra kết nối</button>
+          </div>
+
+          <!-- Banner phản hồi trạng thái Key trực quan theo thời gian thực -->
+          <div id="key-status-banner" class="key-status-banner offline">
+            <span class="status-banner-icon" id="key-status-icon">⚡</span>
+            <div class="status-banner-body">
+              <div class="status-banner-title" id="key-status-title">Chế độ Sư Phạm Heuristic Offline 0đ</div>
+              <div class="status-banner-desc" id="key-status-desc">Hệ thống sẵn sàng hoạt động 100% không cần key, không cần Internet, chi phí 0đ.</div>
+            </div>
+          </div>
+
+          <p style="font-size: 0.78rem; color: #64748b; margin-top: 4px;">
+            💡 <em>KID-LESSON AI hoạt động 100% mượt mà ngay cả khi không có Key. Khi dán Key cá nhân, hệ thống sẽ tự động chuyển sang chế độ Cloud AI để sinh kế hoạch bài dạy và học liệu độc đáo không giới hạn.</em>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-gemini-model">
+            <span>🧠</span> Mô hình AI sử dụng (Dùng chung 1 Key trên):
+          </label>
+          <select class="custom-select" id="select-gemini-model">
+            <option value="gemini-2.5-flash">⚡ Gemini 2.5 Flash (Nhanh nhất & Tối ưu giáo dục - Khuyên dùng)</option>
+            <option value="gemini-2.5-pro">💎 Gemini 2.5 Pro (Cao cấp nhất - Tư duy sư phạm & Sáng tạo thơ đỉnh cao)</option>
+            <option value="gemini-1.5-pro">🌟 Gemini 1.5 Pro (Chuyên sâu, chuẩn cấu trúc Thông tư 51 Bộ GD&ĐT)</option>
+            <option value="gemini-1.5-flash">🚀 Gemini 1.5 Flash (Bền bỉ, tiết kiệm hạn ngạch gọi)</option>
+            <option value="custom">🛠️ Tùy chỉnh (Nhập mã mô hình khác...)</option>
+          </select>
+          <div id="wrapper-custom-model" style="display: none; margin-top: 6px;">
+            <input type="text" class="custom-input" id="input-custom-model" placeholder="Nhập tên mô hình, ví dụ: gemini-2.0-flash-exp">
+          </div>
+          <p style="font-size: 0.78rem; color: #475569; margin-top: 4px; line-height: 1.45;">
+            💡 <em><strong>Tin vui:</strong> Cùng 1 Google API Key, cô có toàn quyền sử dụng cả dòng mô hình <strong>Pro cao cấp</strong> lẫn dòng <strong>Flash</strong> mà không cần tạo key mới! Dòng <strong>Pro</strong> sáng tác thơ, truyện và kịch bản sư phạm tinh tế nhất; dòng <strong>Flash</strong> cho tốc độ phản hồi tức thì.</em>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-teacher-name">
+            <span>👩‍🏫</span> Tên cô giáo phụ trách bài dạy:
+          </label>
+          <input type="text" class="custom-input" id="input-teacher-name" value="Cô giáo Trường Mầm non Đồng Tâm">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-school-name">
+            <span>🏫</span> Đơn vị công tác:
+          </label>
+          <input type="text" class="custom-input" id="input-school-name" value="Trường Mầm non Đồng Tâm">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" id="btn-save-settings">
+          Lưu Cấu Hình
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: HƯỚNG DẪN SỬ DỤNG 3 BƯỚC
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-guide">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span>📖</span> Cẩm Nang 3 Bước Soạn Bài Cùng KID-LESSON AI
+        </h3>
+        <button type="button" class="btn-tool" id="btn-close-guide" style="border: none; font-size: 1.2rem;">✖</button>
+      </div>
+      <div class="modal-body" style="line-height: 1.8;">
+        <div style="background: #eef2ff; padding: 14px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #4f46e5;">
+          <strong>Bước 1: Chọn hoặc nói yêu cầu bài học (10 giây)</strong>
+          <p style="font-size: 0.88rem; color: #475569;">
+            Cô chọn Lứa tuổi, Chủ đề tuần và Lĩnh vực phát triển; gõ tên bài hoặc bấm micro nói trực tiếp tên bài học.
+          </p>
+        </div>
+
+        <div style="background: #ecfdf5; padding: 14px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #10b981;">
+          <strong>Bước 2: AI tự động sinh trọn bộ Kế hoạch & Học liệu (20 giây)</strong>
+          <p style="font-size: 0.88rem; color: #475569;">
+            AI tự động lập kế hoạch 5 bước chuẩn Thông tư 51, sáng tác thơ mới, 3 câu đố vui và chuẩn bị thẻ tranh trực quan.
+          </p>
+        </div>
+
+        <div style="background: #fffbeb; padding: 14px; border-radius: 12px; border-left: 4px solid #f59e0b;">
+          <strong>Bước 3: Cô duyệt, xuất file Word và trình chiếu (30 giây)</strong>
+          <p style="font-size: 0.88rem; color: #475569;">
+            Cô có thể bấm vào văn bản chỉnh sửa theo ý mình (Human-in-the-Loop), bấm <strong>Xuất Word (.docx)</strong> nộp chuyên môn hoặc mở Smart TV cho trẻ chơi trò chơi đố vui củng cố bài!
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" onclick="document.getElementById('modal-guide').classList.remove('active')">
+          Đã Hiểu & Bắt Đầu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: CANVA SLIDE STUDIO & TRÌNH CHIẾU AI
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-canva-studio">
+    <div class="modal-window modal-window-wide">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span>🎨</span> Studio Slide Canva & Trình Chiếu Bài Giảng AI
+        </h3>
+        <button type="button" class="btn-tool" id="btn-close-canva-studio" style="border: none; font-size: 1.2rem;">✖</button>
+      </div>
+      <div class="modal-body">
+        <!-- Thông tin bài dạy -->
+        <div class="canva-lesson-header">
+          <div class="canva-badge-pill" id="canva-preview-day-badge">Thứ Hai • Âm nhạc</div>
+          <h2 class="canva-preview-title" id="canva-preview-title">Đề tài bài dạy</h2>
+          <p class="canva-preview-sub" id="canva-preview-sub">Chủ đề: Thế giới động vật | Lớp Mẫu giáo (3-4 tuổi)</p>
+        </div>
+
+        <!-- 3 Lựa Chọn Hành Động Nhanh -->
+        <div class="canva-actions-cards-grid">
+          <!-- Card 1: Xuất PPTX kéo thả Canva -->
+          <div class="canva-action-card highlight">
+            <div class="card-icon-bubble" style="background: #e0f2fe; color: #0284c7;">📥</div>
+            <h4>Tải File .pptx Kéo Thả Vào Canva</h4>
+            <p>File PowerPoint chuẩn tỷ lệ 16:9, typography và màu sắc mầm non. Chỉ cần kéo thả file vào Canva là có ngay slide bài giảng lung linh.</p>
+            <div class="card-btns-row">
+              <button type="button" class="btn-primary" id="btn-download-pptx-canva">
+                <span>⚡</span> Tải File .pptx (Chuẩn Canva)
+              </button>
+              <button type="button" class="btn-outline" id="btn-open-canva-web">
+                <span>🚀</span> Mở Canva (canva.com)
+              </button>
+            </div>
+            <div class="canva-step-guide">
+              <span>💡 Cách dùng: <strong>1.</strong> Bấm tải file .pptx ➔ <strong>2.</strong> Mở Canva ➔ <strong>3.</strong> Kéo thả file vừa tải vào Canva để chọn theme mầm non & sticker động!</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Trình chiếu Smart TV Trực Tiếp -->
+          <div class="canva-action-card">
+            <div class="card-icon-bubble" style="background: #ecfdf5; color: #059669;">🖥️</div>
+            <h4>Trình Chiếu Smart TV Trực Tiếp (0đ)</h4>
+            <p>Trình chiếu slide tương tác ngay trên trình duyệt lớp học. Chạy 100% Offline, tích hợp giọng đọc AI tiếng Việt và âm thanh chúc mừng.</p>
+            <div class="card-btns-row">
+              <button type="button" class="btn-success" id="btn-launch-smart-tv">
+                <span>▶️</span> Bắt Đầu Chiếu Toàn Màn Hình
+              </button>
+            </div>
+            <div class="canva-step-guide">
+              <span>💡 Dành cho lớp học có Smart TV hoặc máy chiếu, không cần mạng Internet.</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Sao chép Dàn ý cho Canva AI -->
+          <div class="canva-action-card">
+            <div class="card-icon-bubble" style="background: #fef3c7; color: #d97706;">📋</div>
+            <h4>Sao Chép Dàn Ý Cho Canva Magic AI</h4>
+            <p>Dán vào tính năng <em>Magic Design for Presentations</em> của Canva để Canva AI tự vẽ hình minh họa và tạo thiết kế tự động.</p>
+            <div class="card-btns-row">
+              <button type="button" class="btn-outline" id="btn-copy-canva-prompt">
+                <span>📋</span> Sao Chép Dàn Ý Slide AI
+              </button>
+            </div>
+            <div class="canva-step-guide">
+              <span>💡 Mở Canva ➔ Chọn Magic Design ➔ Dán dàn ý để AI tự động vẽ layout.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Xem trước danh sách 6 slide thu nhỏ -->
+        <div class="canva-preview-section">
+          <h4 style="font-size: 1rem; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>📑</span> Danh Sách 6 Slide Sư Phạm Chuẩn Bị Chiếu:
+          </h4>
+          <div class="canva-slides-thumbnails" id="canva-slides-thumbnails">
+            <!-- Đổ 6 thẻ slide từ canva_slide_builder.js -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="btn-close-canva-footer">
+          Đóng Hộp Thoại
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: TRÌNH CHIẾU SMART TV LỚP HỌC (FULLSCREEN SLIDE PLAYER)
+       ========================================== -->
+  <div class="smart-tv-presentation-overlay" id="modal-smart-tv-presentation">
+    <div class="tv-player-header">
+      <div class="tv-player-brand">
+        <span class="tv-live-badge">🔴 SMART TV MODE</span>
+        <span class="tv-school-title">Trường Mầm Non Phúc Sơn B • Lớp Học Thông Minh</span>
+      </div>
+      <div class="tv-player-controls">
+        <button type="button" class="btn-tv-tool" id="btn-tv-speak" title="Đọc nội dung bài học bằng giọng đọc AI tiếng Việt">
+          <span>🔊</span> Đọc Cho Bé Nghe
+        </button>
+        <button type="button" class="btn-tv-tool" id="btn-tv-fullscreen" title="Phóng to / Thu nhỏ toàn màn hình">
+          <span>⛶</span> Toàn Màn Hình
+        </button>
+        <button type="button" class="btn-tv-tool btn-tv-close" id="btn-tv-close" title="Thoát trình chiếu (Phím ESC)">
+          <span>✖</span> Thoát
+        </button>
+      </div>
+    </div>
+
+    <!-- KHUNG CHIẾU SLIDE 16:9 CHÍNH -->
+    <div class="tv-slide-screen">
+      <div class="tv-slide-viewport" id="smart-tv-slide-viewport">
+        <!-- Đổ động từ CanvaSlideBuilder.renderTvSlide() -->
+      </div>
+    </div>
+
+    <!-- THANH ĐIỀU KHIỂN CHUYỂN SLIDE PHÍA DƯỚI -->
+    <div class="tv-player-footer">
+      <button type="button" class="btn-tv-nav" id="btn-tv-prev">
+        <span>❮</span> Trang Trước
+      </button>
+      <div class="tv-slide-counter-pill" id="smart-tv-counter">
+        Slide 1 / 6
+      </div>
+      <button type="button" class="btn-tv-nav primary" id="btn-tv-next">
+        <span>Trang Sau</span> ❯
+      </button>
+    </div>
+  </div>
+
+  <!-- CANVAS CONFETTI HIỆU ỨNG PHÁO HOA GIẤY -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- JAVASCRIPT MODULES -->
+  <script src="js/pptxgen.bundle.js"></script>
+  <script src="js/data_preschool.js?v=1.0"></script>
+  <script src="js/speech.js?v=1.0"></script>
+  <script src="js/ai_engine.js?v=1.0"></script>
+  <script src="js/games.js?v=1.0"></script>
+  <script src="js/canva_slide_builder.js?v=1.0"></script>
+  <script src="js/app.js?v=1.0"></script>
+</body>
+</html>
