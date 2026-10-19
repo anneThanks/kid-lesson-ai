@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedActivityType: "am_nhac",
     selectedTopic: "Thế giới Động vật - Các loài côn trùng và hoa mùa xuân",
     lessonTitle: "Nghe hát: 'Hoa thơm bướm lượn' (Dân ca quan họ Bắc Ninh) - NDKH: TCÂN: 'Ai nhanh nhất'",
-    teacherName: localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Trường Mầm non Đồng Tâm",
-    schoolName: localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Đồng Tâm",
+    teacherName: localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên",
+    schoolName: localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B",
     
     currentLessonPlan: null,
     weeklyPlanCache: {}, // Lưu các bài của Thứ 2 -> Thứ 6
@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     currentCanvaPrompts: null,
     activeTab: "tab-lesson-plan"
   };
+
+  window.appState = appState;
 
   // Nạp 5 bài mẫu vàng từ PRE_SCHOOL_DATA.sampleWeeklyPlan kèm ndtt, ndkh, badge
   const defaultDayMeta = {
@@ -56,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
         dayData.ndtt = defaultDayMeta[k].ndtt;
         dayData.ndkh = defaultDayMeta[k].ndkh;
       }
+      dayData.teacher = appState.teacherName;
+      dayData.school = appState.schoolName;
       appState.weeklyPlanCache[k] = dayData;
     });
     appState.currentLessonPlan = appState.weeklyPlanCache["mon"];
@@ -546,7 +550,8 @@ document.addEventListener("DOMContentLoaded", () => {
         weekRange: appState.weekRange,
         ageObj: ageObj,
         lessonTitle: title || ndtt || actObj.name,
-        teacherName: appState.teacherName
+        teacherName: appState.teacherName,
+        schoolName: appState.schoolName
       });
 
       plan.objectives = generated.objectives;
@@ -559,6 +564,8 @@ document.addEventListener("DOMContentLoaded", () => {
       plan.duration = ageObj.duration;
     }
 
+    plan.teacher = appState.teacherName;
+    plan.school = appState.schoolName;
     plan.activityType = actId;
     plan.activityTypeName = actObj.name;
     plan.title = title || ndtt || actObj.name;
@@ -755,10 +762,13 @@ document.addEventListener("DOMContentLoaded", () => {
         weekRange: appState.weekRange,
         ageId: appState.selectedAge,
         lessonTitle: appState.lessonTitle,
-        teacherName: appState.teacherName
+        teacherName: appState.teacherName,
+        schoolName: appState.schoolName
       });
 
-      // Bổ sung badge và NDTT/NDKH
+      // Bổ sung thông tin sư phạm và NDTT/NDKH
+      lessonPlan.teacher = appState.teacherName;
+      lessonPlan.school = appState.schoolName;
       lessonPlan.badge = getBadgeForActivity(appState.selectedActivityType);
       lessonPlan.ndtt = els.inputNdtt ? els.inputNdtt.value : lessonPlan.title;
       lessonPlan.ndkh = els.inputNdkh ? els.inputNdkh.value : "";
@@ -848,7 +858,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       paperHtml = `
         <div class="lesson-paper" id="printable-lesson-paper" contenteditable="true" spellcheck="false" title="Bấm vào văn bản bất kỳ để chỉnh sửa trực tiếp">
-          ${renderAdministrativeHeader()}
+          ${renderAdministrativeHeader(plan)}
           <h1 class="paper-title">KẾ HOẠCH GIÁO DỤC TUẦN (5 NGÀY CHUẨN)</h1>
           <div class="paper-subtitle">
             Chủ đề: <strong>${plan.topic || plan.topicName}</strong><br>
@@ -856,18 +866,18 @@ document.addEventListener("DOMContentLoaded", () => {
             Giáo viên phụ trách: <strong>${plan.teacher || appState.teacherName}</strong>
           </div>
           ${daysContent}
-          ${renderSignatureTable(plan.teacher)}
+          ${renderSignatureTable(plan.teacher || appState.teacherName)}
         </div>
       `;
     } else {
       paperHtml = `
         <div class="lesson-paper" id="printable-lesson-paper" contenteditable="true" spellcheck="false" title="Bấm vào văn bản bất kỳ để chỉnh sửa trực tiếp">
-          ${renderAdministrativeHeader()}
+          ${renderAdministrativeHeader(plan)}
           <div class="paper-subtitle" style="text-align: right; font-style: italic; margin-bottom: 8px;">
-            Tuần học: ${plan.weekRange || appState.weekRange} | Lớp: ${plan.ageName || "Mẫu giáo"}
+            Tuần học: ${plan.weekRange || appState.weekRange} | Lớp: ${plan.ageName || "Mẫu giáo"} | GV: <strong>${plan.teacher || appState.teacherName}</strong>
           </div>
           ${renderSingleDayTableHtml(plan)}
-          ${renderSignatureTable(plan.teacher)}
+          ${renderSignatureTable(plan.teacher || appState.teacherName)}
         </div>
       `;
     }
@@ -880,19 +890,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Render tiêu ngữ hành chính quản lý nhà nước
-  function renderAdministrativeHeader() {
+  function renderAdministrativeHeader(plan) {
+    const school = (plan && plan.school) || appState.schoolName || "Trường Mầm non Phúc Sơn B";
+    const schoolUpper = school.toUpperCase();
+
+    // Lấy tên địa phương từ trường học (ví dụ: Trường Mầm non Phúc Sơn B -> Phúc Sơn)
+    let place = school.replace(/^(Trường\s+)?(Mầm\s+non\s+|MN\s+)/i, "").trim() || "Phúc Sơn";
+    const commune = place.replace(/\s+[AB]$/i, "");
+
+    const upperAgency = commune.toLowerCase().includes("phúc sơn")
+      ? "ỦY BAN NHÂN DÂN XÃ PHÚC SƠN"
+      : `PHÒNG GIÁO DỤC VÀ ĐÀO TẠO`;
+
+    const now = new Date();
+    const dateStr = `${place}, ngày ${now.getDate()} tháng ${now.getMonth() + 1} năm ${now.getFullYear()}`;
+
     return `
       <table class="paper-header-table" style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
         <tr>
           <td style="width: 50%; vertical-align: top; text-align: left; font-size: 11pt;">
-            <strong>ỦY BAN NHÂN DÂN HUYỆN PHÚC SƠN</strong><br>
-            <strong>TRƯỜNG MẦM NON ĐỒNG TÂM</strong><br>
+            <strong>${upperAgency}</strong><br>
+            <strong>${schoolUpper}</strong><br>
             <em>Tổ Chuyên Môn Khối Mầm Non</em>
           </td>
           <td style="width: 50%; vertical-align: top; text-align: right; font-size: 11pt;">
             <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong><br>
             <strong>Độc lập - Tự do - Hạnh phúc</strong><br>
-            <em>Đồng Tâm, ngày ${new Date().getDate()} tháng ${new Date().getMonth() + 1} năm ${new Date().getFullYear()}</em>
+            <em>${dateStr}</em>
           </td>
         </tr>
       </table>
@@ -1006,6 +1030,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Render chữ ký cuối bài
   function renderSignatureTable(teacherName) {
+    const actualTeacher = teacherName || appState.teacherName || "Cô giáo Trường Mầm non Phúc Sơn B";
     return `
       <table class="paper-signature-table" style="width: 100%; margin-top: 28px; border-collapse: collapse; font-family: 'Times New Roman', Times, serif;">
         <tr>
@@ -1017,7 +1042,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td style="width: 50%; text-align: center; vertical-align: top; font-size: 12pt;">
             <strong>GIÁO VIÊN SOẠN BÀI</strong><br>
             <em>(Ký và ghi rõ họ tên)</em><br><br><br><br><br>
-            <strong>${teacherName || "Cô giáo Trường Mầm non Đồng Tâm"}</strong>
+            <strong>${actualTeacher}</strong>
           </td>
         </tr>
       </table>
@@ -1263,6 +1288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const paperEl = document.getElementById("printable-lesson-paper");
     const contentHtml = paperEl ? paperEl.innerHTML : "";
 
+    const schoolClean = (plan.school || appState.schoolName || "MN_Phuc_Son_B").replace(/[^a-zA-Z0-9\u00C0-\u1EF9]/g, "_").slice(0, 30);
     const titlePrefix = isFullWeek ? "Ke_Hoach_Tuan" : `Giao_An_${plan.dayOfWeek}`;
 
     const wordDocument = `
@@ -1271,7 +1297,7 @@ document.addEventListener("DOMContentLoaded", () => {
             xmlns='http://www.w3.org/TR/REC-html40'>
       <head>
         <meta charset='utf-8'>
-        <title>${titlePrefix}_MN_Dong_Tam</title>
+        <title>${titlePrefix}_${schoolClean}</title>
         <!--[if gte mso 9]>
         <xml>
           <w:WordDocument>
@@ -1319,7 +1345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const link = document.createElement("a");
     const safeName = (plan.title || "Giao_An").replace(/[^a-zA-Z0-9\u00C0-\u1EF9]/g, "_").slice(0, 30);
     link.href = url;
-    link.download = `${titlePrefix}_${safeName}_MN_Dong_Tam.doc`;
+    link.download = `${titlePrefix}_${safeName}_${schoolClean}.doc`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1559,8 +1585,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      if (els.inputTeacherName) els.inputTeacherName.value = appState.teacherName || "Cô giáo Trường Mầm non Đồng Tâm";
-      if (els.inputSchoolName) els.inputSchoolName.value = appState.schoolName || "Trường Mầm non Đồng Tâm";
+      if (els.inputTeacherName) els.inputTeacherName.value = appState.teacherName || "Cô giáo Nguyễn Thị Tiên";
+      if (els.inputSchoolName) els.inputSchoolName.value = appState.schoolName || "Trường Mầm non Phúc Sơn B";
 
       updateModalKeyStatus(aiEngine.apiKey);
     }
@@ -1701,9 +1727,29 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.setItem("kid_lesson_school_name", school);
         }
 
+        // CẬP NHẬT TỨC THÌ VÀO CÁC KẾ HOẠCH BÀI GIẢNG TRONG BỘ NHỚ
+        Object.keys(appState.weeklyPlanCache).forEach(k => {
+          if (appState.weeklyPlanCache[k]) {
+            if (teacher) appState.weeklyPlanCache[k].teacher = teacher;
+            if (school) appState.weeklyPlanCache[k].school = school;
+          }
+        });
+
+        if (appState.currentLessonPlan) {
+          if (teacher) appState.currentLessonPlan.teacher = teacher;
+          if (school) appState.currentLessonPlan.school = school;
+          renderLessonPlanPaper(appState.currentLessonPlan, appState.viewMode === "full_week");
+        }
+
+        // Cập nhật tiêu đề Smart TV nếu đang có trên DOM
+        const tvSchoolEl = document.querySelector(".tv-school-title");
+        if (tvSchoolEl && school) {
+          tvSchoolEl.textContent = `${school} • Lớp Học Thông Minh`;
+        }
+
         updateEngineStatusBadge();
         els.modalSettings.classList.remove("active");
-        showToast(`✅ Đã lưu cấu hình AI (${model}) & Thông tin Sư phạm!`);
+        showToast(`✅ Đã lưu cấu hình AI (${model}) & Cập nhật bài giảng cho ${teacher || "Cô giáo"}!`);
       };
     }
 

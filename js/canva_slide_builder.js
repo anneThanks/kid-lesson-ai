@@ -45,7 +45,8 @@
       const topic = plan.topic || plan.topicName || "Bé Khám Phá Thế Giới";
       const ageName = plan.ageName || "Mẫu giáo";
       const duration = plan.duration || "20 - 25 phút";
-      const teacher = plan.teacher || "Cô giáo Trường Mầm non";
+      const teacher = plan.teacher || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
+      const school = plan.school || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm Non Phúc Sơn B";
       const dayOfWeek = plan.dayOfWeek || "Thứ Hai";
       const date = plan.date || "26/01/2026";
       const weekRange = plan.weekRange || "";
@@ -80,7 +81,7 @@
             { icon: "📅", label: "Ngày dạy", value: `${dayOfWeek}, ${date}` },
             { icon: "👩‍🏫", label: "Giáo viên", value: teacher }
           ],
-          school: "TRƯỜNG MẦM NON PHÚC SƠN B • UBND XÃ PHÚC SƠN",
+          school: school.toUpperCase(),
           accentColor: PALETTE.primary,
           bgColor: PALETTE.primaryLight,
           speechText: `Chào mừng các bé đến với tiết học: ${title}. Cô chúc cả lớp có một giờ học thật vui và bổ ích!`
@@ -200,8 +201,8 @@
 
       const pres = new PptxGenJS();
       pres.layout = "LAYOUT_16x9"; // 13.33 x 7.5 inches chuẩn Smart TV & Canva
-      pres.author = plan.teacher || "KID-LESSON AI";
-      pres.company = "Trường Mầm Non Phúc Sơn B";
+      pres.author = plan.teacher || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
+      pres.company = plan.school || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm Non Phúc Sơn B";
       pres.title = plan.title || "Slide Bài Giảng Mầm Non";
 
       slides.forEach((s) => {

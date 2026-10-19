@@ -134,14 +134,15 @@ class KidLessonAIEngine {
   // ==========================================
   // PHÂN HỆ 1: TẠO KẾ HOẠCH BÀI DẠY (BẢNG 4 CỘT CHUẨN GDMN)
   // ==========================================
-  async generateLessonPlan({ topic, customTopic, activityType, dayOfWeek, date, weekRange, ageId, lessonTitle, teacherName }) {
+  async generateLessonPlan({ topic, customTopic, activityType, dayOfWeek, date, weekRange, ageId, lessonTitle, teacherName, schoolName }) {
     const data = window.PRE_SCHOOL_DATA;
     const actualTopic = (customTopic || topic || "Thế giới Động vật - Các loài côn trùng và hoa mùa xuân").trim();
     const actualActivityType = activityType || "am_nhac";
     const actObj = data.activityTypes.find(a => a.id === actualActivityType) || data.activityTypes[0];
     const ageObj = data.ageGroups.find(a => a.id === ageId) || data.ageGroups[1];
     const actualLessonTitle = (lessonTitle || "").trim() || `${actObj.name}: Khám phá ${actualTopic}`;
-    const actualTeacher = (teacherName || "").trim() || "Cô giáo Trường Mầm non Đồng Tâm";
+    const actualTeacher = (teacherName || "").trim() || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
+    const actualSchool = (schoolName || "").trim() || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B";
     const actualDay = dayOfWeek || "Thứ Hai";
     const actualDate = date || "26/01/2026";
     const actualWeekRange = weekRange || "26/01/2026 - 30/01/2026";
@@ -159,11 +160,14 @@ class KidLessonAIEngine {
           ageName: ageObj.name,
           duration: ageObj.duration,
           lessonTitle: actualLessonTitle,
-          teacherName: actualTeacher
+          teacherName: actualTeacher,
+          schoolName: actualSchool
         });
         if (cloudResult && cloudResult.title) {
           cloudResult.engineUsed = "Gemini Cloud AI (" + this.modelName + ")";
           cloudResult.isOffline = false;
+          cloudResult.teacher = actualTeacher;
+          cloudResult.school = actualSchool;
           return cloudResult;
         }
       } catch (err) {
@@ -181,15 +185,18 @@ class KidLessonAIEngine {
       weekRange: actualWeekRange,
       ageObj,
       lessonTitle: actualLessonTitle,
-      teacherName: actualTeacher
+      teacherName: actualTeacher,
+      schoolName: actualSchool
     });
   }
 
   // Offline Engine sinh Kế hoạch bài dạy theo bảng 4 cột chuẩn
-  generateOfflineLessonPlan({ topic, activityType, actObj, dayOfWeek, date, weekRange, ageObj, lessonTitle, teacherName }) {
+  generateOfflineLessonPlan({ topic, activityType, actObj, dayOfWeek, date, weekRange, ageObj, lessonTitle, teacherName, schoolName }) {
     const data = window.PRE_SCHOOL_DATA;
     const lowerTitle = (lessonTitle || "").toLowerCase().trim();
     const actualActObj = actObj || (data.activityTypes.find(a => a.id === activityType) || { name: "Hoạt động Giáo dục" });
+    const actualTeacher = (teacherName || "").trim() || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
+    const actualSchool = (schoolName || "").trim() || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B";
 
     // 1. Kiểm tra trong bộ Kế hoạch tuần mẫu (5 ngày vàng chuẩn của trường)
     if (data.sampleWeeklyPlan && data.sampleWeeklyPlan.days) {
@@ -210,7 +217,8 @@ class KidLessonAIEngine {
 
       if (matchedDay) {
         const tpl = JSON.parse(JSON.stringify(matchedDay));
-        tpl.teacher = teacherName;
+        tpl.teacher = actualTeacher;
+        tpl.school = actualSchool;
         tpl.dayOfWeek = dayOfWeek;
         tpl.date = date;
         tpl.weekRange = weekRange;
@@ -667,7 +675,10 @@ class KidLessonAIEngine {
     };
   }
 
-  async callGeminiForLessonPlan({ topicName, activityTypeName, activityType, dayOfWeek, date, weekRange, ageName, duration, lessonTitle, teacherName }) {
+  async callGeminiForLessonPlan({ topicName, activityTypeName, activityType, dayOfWeek, date, weekRange, ageName, duration, lessonTitle, teacherName, schoolName }) {
+    const actualTeacher = (teacherName || "").trim() || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
+    const actualSchool = (schoolName || "").trim() || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B";
+
     const systemPrompt = `Bạn là Chuyên gia Phương pháp Giáo dục Mầm non am hiểu sâu sắc Chương trình GDMN của Bộ Giáo dục và Đào tạo Việt Nam (Thông tư 51/2020/TT-BGDĐT).
 Nhiệm vụ: Soạn Kế hoạch bài dạy theo đúng chuẩn cấu trúc BẢNG 4 CỘT của Bộ GD&ĐT (Cột 1: Hoạt động | Cột 2: Mục đích | Cột 3: Chuẩn bị | Cột 4: Cách tiến hành).
 Hãy trả về DUY NHẤT một chuỗi JSON hợp lệ (không kèm markdown \`\`\`json ở ngoài), theo đúng cấu trúc sau:
@@ -681,7 +692,8 @@ Hãy trả về DUY NHẤT một chuỗi JSON hợp lệ (không kèm markdown \
   "activityTypeName": "${activityTypeName}",
   "ageName": "${ageName}",
   "duration": "${duration}",
-  "teacher": "${teacherName}",
+  "teacher": "${actualTeacher}",
+  "school": "${actualSchool}",
   "activityCol": "- ${activityTypeName}:\n- NDTT: ${lessonTitle}\n+ NDKH: Trò chơi củng cố",
   "objectives": {
     "knowledge": ["2-3 gạch đầu dòng mục tiêu kiến thức cụ thể, đo lường được"],
@@ -707,8 +719,8 @@ Hãy trả về DUY NHẤT một chuỗi JSON hợp lệ (không kèm markdown \
 - Đề tài bài dạy: "${lessonTitle}"
 - Chủ đề: "${topicName}"
 - Lứa tuổi: ${ageName} (${duration})
-- Người thực hiện: ${teacherName}
-- Đơn vị: Trường Mầm non Đồng Tâm`;
+- Người thực hiện: ${actualTeacher}
+- Đơn vị: ${actualSchool}`;
 
     const responseText = await this.executeGeminiRequest(systemPrompt, userPrompt);
     const cleaned = responseText.replace(/```json[\r\n]*/g, "").replace(/```[\r\n]*/g, "").trim();
