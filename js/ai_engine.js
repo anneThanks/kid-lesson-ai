@@ -134,12 +134,12 @@ class KidLessonAIEngine {
   // ==========================================
   // PHÂN HỆ 1: TẠO KẾ HOẠCH BÀI DẠY (BẢNG 4 CỘT CHUẨN GDMN)
   // ==========================================
-  async generateLessonPlan({ topic, customTopic, activityType, dayOfWeek, date, weekRange, ageId, lessonTitle, teacherName, schoolName }) {
+  async generateLessonPlan({ topic, customTopic, activityType, dayOfWeek, date, weekRange, ageId, lessonTitle, subValues = {}, teacherName, schoolName }) {
     const data = window.PRE_SCHOOL_DATA;
     const actualTopic = (customTopic || topic || "Thế giới Động vật - Các loài côn trùng và hoa mùa xuân").trim();
     const actualActivityType = activityType || "am_nhac";
-    const actObj = data.activityTypes.find(a => a.id === actualActivityType) || data.activityTypes[0];
-    const ageObj = data.ageGroups.find(a => a.id === ageId) || data.ageGroups[1];
+    const actObj = (data.activityTypes && data.activityTypes.find(a => a.id === actualActivityType)) || data.activityTypes[0];
+    const ageObj = (data.ageGroups && data.ageGroups.find(a => a.id === ageId)) || data.ageGroups[1];
     const actualLessonTitle = (lessonTitle || "").trim() || `${actObj.name}: Khám phá ${actualTopic}`;
     const actualTeacher = (teacherName || "").trim() || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
     const actualSchool = (schoolName || "").trim() || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B";
@@ -160,6 +160,7 @@ class KidLessonAIEngine {
           ageName: ageObj.name,
           duration: ageObj.duration,
           lessonTitle: actualLessonTitle,
+          subValues: subValues,
           teacherName: actualTeacher,
           schoolName: actualSchool
         });
@@ -168,6 +169,7 @@ class KidLessonAIEngine {
           cloudResult.isOffline = false;
           cloudResult.teacher = actualTeacher;
           cloudResult.school = actualSchool;
+          cloudResult.subValues = subValues;
           return cloudResult;
         }
       } catch (err) {
@@ -185,21 +187,43 @@ class KidLessonAIEngine {
       weekRange: actualWeekRange,
       ageObj,
       lessonTitle: actualLessonTitle,
+      subValues: subValues,
       teacherName: actualTeacher,
       schoolName: actualSchool
     });
   }
 
   // Offline Engine sinh Kế hoạch bài dạy theo bảng 4 cột chuẩn
-  generateOfflineLessonPlan({ topic, activityType, actObj, dayOfWeek, date, weekRange, ageObj, lessonTitle, teacherName, schoolName }) {
+  generateOfflineLessonPlan({ topic, activityType, actObj, dayOfWeek, date, weekRange, ageObj, lessonTitle, subValues = {}, teacherName, schoolName }) {
     const data = window.PRE_SCHOOL_DATA;
     const lowerTitle = (lessonTitle || "").toLowerCase().trim();
-    const actualActObj = actObj || (data.activityTypes.find(a => a.id === activityType) || { name: "Hoạt động Giáo dục" });
+    const actualActObj = actObj || (data.activityTypes && data.activityTypes.find(a => a.id === activityType)) || { name: "Hoạt động Giáo dục" };
     const actualTeacher = (teacherName || "").trim() || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
     const actualSchool = (schoolName || "").trim() || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B";
+    const actualTopic = (topic || (window.appState && window.appState.selectedTopic) || "Thế giới Động vật").trim();
 
-    // 1. Kiểm tra trong bộ Kế hoạch tuần mẫu (5 ngày vàng chuẩn của trường)
-    if (data.sampleWeeklyPlan && data.sampleWeeklyPlan.days) {
+    // 1. ƯU TIÊN SỐ 1: Bộ Ma trận Sư phạm Chuyên sâu theo Chủ đề (Theme Pedagogy Registry)
+    if (data && typeof data.getThematicPlan === "function") {
+      const thematicResult = data.getThematicPlan({
+        activityType,
+        topic: actualTopic,
+        ageObj,
+        lessonTitle,
+        subValues,
+        teacherName: actualTeacher,
+        schoolName: actualSchool,
+        dayOfWeek,
+        date,
+        weekRange
+      });
+      if (thematicResult) {
+        return thematicResult;
+      }
+    }
+
+    // 2. Fallback Kế hoạch tuần mẫu cũ (nếu chủ đề trùng với động vật / côn trùng mùa xuân)
+    const isSpringAnimalTopic = actualTopic.toLowerCase().includes("côn trùng") || actualTopic.toLowerCase().includes("hoa mùa xuân");
+    if (isSpringAnimalTopic && data.sampleWeeklyPlan && data.sampleWeeklyPlan.days) {
       const days = data.sampleWeeklyPlan.days;
       let matchedDay = null;
 
@@ -225,7 +249,7 @@ class KidLessonAIEngine {
         tpl.ageId = ageObj.id;
         tpl.ageName = ageObj.name;
         tpl.duration = ageObj.duration;
-        tpl.topic = topic;
+        tpl.topic = actualTopic;
         tpl.engineUsed = "Offline Sư Phạm Heuristic Engine (0đ)";
         tpl.isOffline = true;
         if (lessonTitle && !lessonTitle.includes("Mẫu Chuẩn")) {
@@ -628,11 +652,31 @@ class KidLessonAIEngine {
 
     const targetPack = actSpecificObjectives[activityType] || actSpecificObjectives.am_nhac;
 
-    // Soạn text Cột 1
+    // Soạn text Cột 1 theo chuẩn phân cấp từng thể loại hoạt động
     let activityCol = `-${actualActObj.name}:`;
-    activityCol += `\n- NDTT: ${lessonTitle}`;
-    if (activityType === "am_nhac") activityCol += `\n+ NDKH: TCÂN: Ai nhanh nhất`;
-    else if (activityType === "van_dong") activityCol += `\n+ NDKH: TCVĐ: Trò chơi dân gian`;
+    if (activityType === "am_nhac") {
+      const p1 = subValues.ndtt || lessonTitle;
+      const p2 = subValues.ndkh;
+      activityCol += `\n- NDTT: ${p1}`;
+      if (p2) activityCol += `\n+ NDKH: ${p2}`;
+    } else if (activityType === "nhan_biet") {
+      const p1 = subValues.sub_nhan_biet || lessonTitle;
+      activityCol += `\n- ${p1}`;
+    } else if (activityType === "tao_hinh") {
+      const p1 = subValues.sub_tao_hinh || lessonTitle;
+      activityCol += `\n- ${p1}`;
+    } else if (activityType === "van_hoc") {
+      const p1 = subValues.sub_van_hoc || lessonTitle;
+      activityCol += `\n- Thơ/truyện: ${p1}`;
+    } else if (activityType === "van_dong") {
+      const p1 = subValues.sub_ptcb || lessonTitle;
+      const p2 = subValues.sub_tcvd;
+      activityCol += `\n- Phát triển cơ bản: ${p1}`;
+      if (p2) activityCol += `\n+ Trò chơi vận động: ${p2}`;
+    } else {
+      const p1 = subValues.sub_khac || lessonTitle;
+      activityCol += `\n- ${p1}`;
+    }
 
     // Soạn các bước tiến trình
     let introText = `1. Ổn định tổ chức: (1 - 2 phút)\n- Cô cùng trẻ hát/đọc câu đố dẫn dắt sinh động về chủ đề '${topic}'.\n- Giới thiệu đề tài: Hôm nay cô con mình sẽ cùng khám phá bài học '${lessonTitle}' nhé!`;
@@ -652,6 +696,9 @@ class KidLessonAIEngine {
       ageName: ageObj.name,
       duration: ageObj.duration,
       teacher: teacherName,
+      subValues: subValues,
+      ndtt: subValues.ndtt || subValues.sub_nhan_biet || subValues.sub_tao_hinh || subValues.sub_van_hoc || subValues.sub_ptcb || lessonTitle,
+      ndkh: subValues.ndkh || subValues.sub_tcvd || "",
       activityCol: activityCol,
       objectives: {
         knowledge: targetPack.know,
@@ -675,12 +722,63 @@ class KidLessonAIEngine {
     };
   }
 
-  async callGeminiForLessonPlan({ topicName, activityTypeName, activityType, dayOfWeek, date, weekRange, ageName, duration, lessonTitle, teacherName, schoolName }) {
+  async callGeminiForLessonPlan({ topicName, activityTypeName, activityType, dayOfWeek, date, weekRange, ageName, duration, lessonTitle, subValues = {}, teacherName, schoolName }) {
     const actualTeacher = (teacherName || "").trim() || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
     const actualSchool = (schoolName || "").trim() || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm non Phúc Sơn B";
 
-    const systemPrompt = `Bạn là Chuyên gia Phương pháp Giáo dục Mầm non am hiểu sâu sắc Chương trình GDMN của Bộ Giáo dục và Đào tạo Việt Nam (Thông tư 51/2020/TT-BGDĐT).
+    let subStructureDesc = "";
+    let exampleCol1 = "";
+    if (activityType === "am_nhac") {
+      const p1 = subValues.ndtt || lessonTitle;
+      const p2 = subValues.ndkh || "TCÂN: Ai nhanh nhất";
+      subStructureDesc = `- Nội dung trọng tâm (NDTT): "${p1}"\n- Nội dung kết hợp (NDKH): "${p2}"`;
+      exampleCol1 = `-${activityTypeName}:\\n- NDTT: ${p1}\\n+ NDKH: ${p2}`;
+    } else if (activityType === "nhan_biet") {
+      const p1 = subValues.sub_nhan_biet || lessonTitle;
+      subStructureDesc = `- Các nội dung liên quan đến nhận biết: "${p1}"`;
+      exampleCol1 = `-${activityTypeName}:\\n- ${p1}`;
+    } else if (activityType === "tao_hinh") {
+      const p1 = subValues.sub_tao_hinh || lessonTitle;
+      subStructureDesc = `- Các nội dung liên quan đến tạo hình: "${p1}"`;
+      exampleCol1 = `-${activityTypeName}:\\n- ${p1}`;
+    } else if (activityType === "van_hoc") {
+      const p1 = subValues.sub_van_hoc || lessonTitle;
+      subStructureDesc = `- Thơ/truyện: "${p1}"`;
+      exampleCol1 = `-${activityTypeName}:\\n- Thơ/truyện: ${p1}`;
+    } else if (activityType === "van_dong") {
+      const p1 = subValues.sub_ptcb || lessonTitle;
+      const p2 = subValues.sub_tcvd || "TCVĐ: Trò chơi vận động";
+      subStructureDesc = `- Phát triển cơ bản: "${p1}"\n- Trò chơi vận động: "${p2}"`;
+      exampleCol1 = `-${activityTypeName}:\\n- Phát triển cơ bản: ${p1}\\n+ Trò chơi vận động: ${p2}`;
+    } else {
+      const p1 = subValues.sub_khac || lessonTitle;
+      subStructureDesc = `- Nội dung hoạt động: "${p1}"`;
+      exampleCol1 = `-${activityTypeName}:\\n- ${p1}`;
+    }
+
+    const systemPrompt = `Bạn là Chuyên gia Phương pháp Giáo dục Mầm non hàng đầu Việt Nam, am hiểu sâu sắc Chương trình GDMN của Bộ Giáo dục và Đào tạo (Thông tư 51/2020/TT-BGDĐT).
 Nhiệm vụ: Soạn Kế hoạch bài dạy theo đúng chuẩn cấu trúc BẢNG 4 CỘT của Bộ GD&ĐT (Cột 1: Hoạt động | Cột 2: Mục đích | Cột 3: Chuẩn bị | Cột 4: Cách tiến hành).
+
+★ NGUYÊN TẮC CỐT LÕI - CHỦ ĐỀ VÀ NỘI DUNG PHÂN CẤP LÀ BẮT BUỘC:
+- Chủ đề "${topicName}" kết hợp cùng cấu trúc nội dung phân cấp bên dưới là linh hồn chỉ đạo toàn bộ tiết dạy:
+${subStructureDesc}
+- Cột 1 (Hoạt động): PHẢI trình bày đúng cấu trúc:
+${exampleCol1}
+- Cột 2 (Mục đích - yêu cầu):
+  + Kiến thức: 2-3 gạch đầu dòng đo lường được về kiến thức của chủ đề và nội dung phân cấp trên.
+  + Kỹ năng: 3-4 gạch đầu dòng rèn luyện kỹ năng chuyên biệt cho độ tuổi ${ageName}.
+  + Thái độ: 2 gạch đầu dòng giáo dục tình cảm nhân văn, ý thức, thói quen gắn liền với chủ đề.
+- Cột 3 (Chuẩn bị):
+  + Đồ dùng của cô: 3-4 giáo cụ trực quan cụ thể, tranh ảnh, mô hình, nhạc bài hát, slide điện tử CHUYÊN BIỆT THEO CHỦ ĐỀ (không dùng từ chung chung).
+  + Đồ dùng của trẻ: 2-3 món học cụ mini, lô tô, mũ múa theo chủ đề cho từng trẻ.
+- Cột 4 (Cách tiến hành 3 bước hoàn chỉnh):
+  + 1. Ổn định tổ chức: Lời dẫn, câu đố có vần điệu vui nhộn hoặc bài thơ/tình huống hấp dẫn VỀ CHỦ ĐỀ.
+  + 2. Phương pháp, hình thức tổ chức:
+     * Khám phá / Làm mẫu / Đàm thoại: Có lời thoại cô hỏi - trẻ trả lời chi tiết về các đặc điểm, công dụng, ý nghĩa của đối tượng trong chủ đề.
+     * Trẻ thực hành cá nhân, nhóm và tập thể.
+     * Trò chơi củng cố bài học: Nêu rõ Tên trò chơi theo chủ đề, Cách chơi và Luật chơi hào hứng.
+  + 3. Kết thúc: Tuyên dương, dặn dò giáo dục hành vi thực tế cuộc sống theo chủ đề.
+
 Hãy trả về DUY NHẤT một chuỗi JSON hợp lệ (không kèm markdown \`\`\`json ở ngoài), theo đúng cấu trúc sau:
 {
   "title": "${lessonTitle}",
@@ -694,33 +792,36 @@ Hãy trả về DUY NHẤT một chuỗi JSON hợp lệ (không kèm markdown \
   "duration": "${duration}",
   "teacher": "${actualTeacher}",
   "school": "${actualSchool}",
-  "activityCol": "- ${activityTypeName}:\n- NDTT: ${lessonTitle}\n+ NDKH: Trò chơi củng cố",
+  "activityCol": "${exampleCol1}",
   "objectives": {
-    "knowledge": ["2-3 gạch đầu dòng mục tiêu kiến thức cụ thể, đo lường được"],
-    "skills": ["3-4 gạch đầu dòng mục tiêu kỹ năng rèn luyện"],
-    "attitudes": ["2 gạch đầu dòng mục tiêu thái độ giáo dục"]
+    "knowledge": ["2-3 gạch đầu dòng mục tiêu kiến thức cụ thể về chủ đề ${topicName}"],
+    "skills": ["3-4 gạch đầu dòng mục tiêu kỹ năng rèn luyện cho độ tuổi ${ageName}"],
+    "attitudes": ["2 gạch đầu dòng mục tiêu thái độ giáo dục gắn với chủ đề ${topicName}"]
   },
   "preparation": {
-    "teacher": ["3-4 món đồ dùng của cô, có slide AI và học liệu số, màn hình Smart TV"],
-    "students": ["2-3 món đồ dùng của trẻ, rổ học cụ, trang phục"]
+    "teacher": ["3-4 món đồ dùng trực quan, mô hình, tranh ảnh, slide AI về chủ đề ${topicName}"],
+    "students": ["2-3 món đồ dùng, lô tô, trang phục của trẻ theo chủ đề ${topicName}"]
   },
   "procedure": {
-    "intro": "1. Ổn định tổ chức: (1 - 2 phút)\n- Nội dung cô dẫn dắt bằng lời thoại, câu đố, âm nhạc vui tươi...",
-    "instruction": "2. Phương pháp, hình thức tổ chức: (18 - 22 phút)\n- Tiến trình cụ thể có lời thoại cô - trẻ, các trò chơi củng cố 1, 2...",
-    "conclusion": "3. Kết thúc: (1 - 2 phút)\n- Nhận xét tuyên dương, chuyển hoạt động."
+    "intro": "1. Ổn định tổ chức: (1 - 2 phút)\n- Lời thoại dẫn dắt bằng câu đố vần điệu / tình huống sinh động về chủ đề ${topicName}...",
+    "instruction": "2. Phương pháp, hình thức tổ chức: (18 - 22 phút)\n- Đàm thoại gợi mở có câu hỏi cô - trẻ cụ thể về ${topicName}...\n- Cô làm mẫu và hướng dẫn trẻ thực hành...\n- Trò chơi củng cố sôi nổi theo chủ đề...",
+    "conclusion": "3. Kết thúc: (1 - 2 phút)\n- Nhận xét tuyên dương, dặn dò liên hệ thực tế cuộc sống theo chủ đề ${topicName}."
   },
   "assessment": "",
   "adjustment": ""
 }`;
 
-    const userPrompt = `Hãy soạn giáo án chi tiết cho:
-- Ngày trong tuần: ${dayOfWeek}, ngày ${date} (Kế hoạch tuần: ${weekRange})
-- Loại hoạt động: ${activityTypeName} (${activityType})
+    const userPrompt = `Hãy soạn Kế hoạch bài dạy chi tiết đậm đà bản sắc Sư phạm GDMN cho:
+- Chủ đề trọng tâm: "${topicName}"
 - Đề tài bài dạy: "${lessonTitle}"
-- Chủ đề: "${topicName}"
-- Lứa tuổi: ${ageName} (${duration})
-- Người thực hiện: ${actualTeacher}
-- Đơn vị: ${actualSchool}`;
+- Cấu trúc nội dung phân cấp:
+${subStructureDesc}
+- Loại hoạt động: ${activityTypeName} (${activityType})
+- Lứa tuổi: ${ageName} (Thời lượng: ${duration})
+- Ngày trong tuần: ${dayOfWeek}, ngày ${date} (Kế hoạch tuần: ${weekRange})
+- Giáo viên thực hiện: ${actualTeacher}
+- Đơn vị: ${actualSchool}
+Lưu ý: Mọi chi tiết trong bài dạy (câu hỏi, đồ dùng, trò chơi, mục tiêu) PHẢI THẤM ĐẪM MÀU SẮC CỦA CHỦ ĐỀ "${topicName}".`;
 
     const responseText = await this.executeGeminiRequest(systemPrompt, userPrompt);
     const cleaned = responseText.replace(/```json[\r\n]*/g, "").replace(/```[\r\n]*/g, "").trim();

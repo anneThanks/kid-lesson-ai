@@ -78,6 +78,13 @@
     margin-bottom: 15pt !important;
   }
 
+  .paper-topic-banner {
+    border: 1pt solid #000 !important;
+    background: transparent !important;
+    padding: 6pt 10pt !important;
+    margin-bottom: 12pt !important;
+  }
+
   .section-head {
     font-size: 13pt !important;
     font-weight: bold !important;

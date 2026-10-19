@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const aiEngine = new KidLessonAIEngine();
   const speechSystem = new KidLessonSpeech();
   const gamesSystem = new KidLessonGames(speechSystem);
+  const calendarPicker = new KidLessonCalendarPicker();
 
   // Khởi tạo Canvas Pháo hoa Confetti
   const confettiCanvas = document.getElementById("confetti-canvas");
@@ -40,13 +41,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.appState = appState;
 
-  // Nạp 5 bài mẫu vàng từ PRE_SCHOOL_DATA.sampleWeeklyPlan kèm ndtt, ndkh, badge
+  // Nạp 5 bài mẫu vàng từ PRE_SCHOOL_DATA.sampleWeeklyPlan kèm ndtt, ndkh, subValues, badge
   const defaultDayMeta = {
-    mon: { badge: "Âm nhạc", ndtt: "NH: Hoa thơm, bướm lượn", ndkh: "TCÂN: Ai nhanh nhất" },
-    tue: { badge: "Nhận biết", ndtt: "Ôn nhận biết hình tròn, hình vuông", ndkh: "Trò chơi tương tác AI & Bé khéo tay" },
-    wed: { badge: "Tạo hình", ndtt: "In màu trang trí cánh bướm", ndkh: "Trưng bày tranh hoa bướm" },
-    thu: { badge: "Văn học", ndtt: "Thơ: Ong và bướm (Nhược Thủy)", ndkh: "TC: Ai nhanh nhất (Cắm ong bướm)" },
-    fri: { badge: "Vận động", ndtt: "VĐCB: Ném và bắt bóng bằng 2 tay", ndkh: "TCVĐ: Kéo co" }
+    mon: {
+      badge: "Âm nhạc",
+      subValues: { ndtt: "NH: Hoa thơm, bướm lượn", ndkh: "TCÂN: Ai nhanh nhất" },
+      ndtt: "NH: Hoa thơm, bướm lượn",
+      ndkh: "TCÂN: Ai nhanh nhất"
+    },
+    tue: {
+      badge: "Nhận biết",
+      subValues: { sub_nhan_biet: "Ôn nhận biết hình tròn, hình vuông" },
+      ndtt: "Ôn nhận biết hình tròn, hình vuông",
+      ndkh: ""
+    },
+    wed: {
+      badge: "Tạo hình",
+      subValues: { sub_tao_hinh: "In màu trang trí cánh bướm" },
+      ndtt: "In màu trang trí cánh bướm",
+      ndkh: ""
+    },
+    thu: {
+      badge: "Làm quen văn học",
+      subValues: { sub_van_hoc: "Thơ: Ong và bướm (Nhược Thủy)" },
+      ndtt: "Thơ: Ong và bướm (Nhược Thủy)",
+      ndkh: ""
+    },
+    fri: {
+      badge: "Vận động",
+      subValues: { sub_ptcb: "VĐCB: Ném và bắt bóng bằng 2 tay", sub_tcvd: "TCVĐ: Kéo co" },
+      ndtt: "VĐCB: Ném và bắt bóng bằng 2 tay",
+      ndkh: "TCVĐ: Kéo co"
+    }
   };
 
   if (window.PRE_SCHOOL_DATA && window.PRE_SCHOOL_DATA.sampleWeeklyPlan) {
@@ -55,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dayData = JSON.parse(JSON.stringify(sampleDays[k]));
       if (defaultDayMeta[k]) {
         dayData.badge = defaultDayMeta[k].badge;
+        dayData.subValues = JSON.parse(JSON.stringify(defaultDayMeta[k].subValues));
         dayData.ndtt = defaultDayMeta[k].ndtt;
         dayData.ndkh = defaultDayMeta[k].ndkh;
       }
@@ -74,14 +101,17 @@ document.addEventListener("DOMContentLoaded", () => {
     dayPillsContainer: document.getElementById("day-pills-container"),
     inputLessonDate: document.getElementById("input-lesson-date"),
     
-    // Cấu hình Thể loại & Hoạt động Real-time
+    // Cấu hình Thể loại & Hoạt động Real-time (Sơ đồ phân cấp nội dung con)
     activeDayLabel: document.getElementById("active-day-label"),
     selectActivityType: document.getElementById("select-activity-type"),
+    activitySubfieldsContainer: document.getElementById("activity-subfields-container"),
     inputNdtt: document.getElementById("input-ndtt"),
     inputNdkh: document.getElementById("input-ndkh"),
 
     inputTopic: document.getElementById("input-topic"),
-    topicsDatalist: document.getElementById("topics-datalist"),
+    topicComboboxWrapper: document.getElementById("topic-combobox-wrapper"),
+    btnToggleTopicDropdown: document.getElementById("btn-toggle-topic-dropdown"),
+    topicDropdownMenu: document.getElementById("topic-dropdown-menu"),
     btnClearTopic: document.getElementById("btn-clear-topic"),
     inputLessonTitle: document.getElementById("input-lesson-title"),
     presetChipsBox: document.getElementById("preset-chips-box"),
@@ -184,6 +214,192 @@ document.addEventListener("DOMContentLoaded", () => {
     updateEngineStatusBadge();
   }
 
+  // ==========================================
+  // HỆ THỐNG CẤU HÌNH PHÂN CẤP THỂ LOẠI HOẠT ĐỘNG
+  // ==========================================
+
+  // 1. Lấy dữ liệu các trường con từ giao diện DOM
+  function getSubValuesFromDOM() {
+    const vals = {};
+    if (!els.activitySubfieldsContainer) return vals;
+    const inputs = els.activitySubfieldsContainer.querySelectorAll(".activity-subfield-input");
+    inputs.forEach(inp => {
+      const k = inp.dataset.key;
+      if (k) vals[k] = inp.value.trim();
+    });
+    return vals;
+  }
+
+  // 2. Điền dữ liệu vào các trường con trên giao diện DOM
+  function setSubValuesToDOM(subValues = {}) {
+    if (!els.activitySubfieldsContainer) return;
+    const inputs = els.activitySubfieldsContainer.querySelectorAll(".activity-subfield-input");
+    inputs.forEach(inp => {
+      const k = inp.dataset.key;
+      if (k && subValues[k] !== undefined) {
+        inp.value = subValues[k];
+      }
+    });
+  }
+
+  // 3. Xây dựng nội dung Cột 1 ("Hoạt động") chuẩn quy cách theo sơ đồ thể loại
+  function buildActivityColText(actId, subValues = {}) {
+    const data = window.PRE_SCHOOL_DATA;
+    const act = (data.activityTypes && data.activityTypes.find(a => a.id === actId)) || { name: "Hoạt động Giáo dục" };
+    const aName = act.name;
+
+    if (actId === "am_nhac") {
+      const p1 = subValues.ndtt || "";
+      const p2 = subValues.ndkh || "";
+      let res = `-${aName}:`;
+      if (p1) res += `\n- NDTT: ${p1}`;
+      if (p2) res += `\n+ NDKH: ${p2}`;
+      return res;
+    }
+
+    if (actId === "nhan_biet") {
+      const p1 = subValues.sub_nhan_biet || "";
+      let res = `-${aName}:`;
+      if (p1) res += `\n- ${p1}`;
+      return res;
+    }
+
+    if (actId === "tao_hinh") {
+      const p1 = subValues.sub_tao_hinh || "";
+      let res = `-${aName}:`;
+      if (p1) res += `\n- ${p1}`;
+      return res;
+    }
+
+    if (actId === "van_hoc") {
+      const p1 = subValues.sub_van_hoc || "";
+      let res = `-${aName}:`;
+      if (p1) res += `\n- Thơ/truyện: ${p1}`;
+      return res;
+    }
+
+    if (actId === "van_dong") {
+      const p1 = subValues.sub_ptcb || "";
+      const p2 = subValues.sub_tcvd || "";
+      let res = `-${aName}:`;
+      if (p1) res += `\n- Phát triển cơ bản: ${p1}`;
+      if (p2) res += `\n+ Trò chơi vận động: ${p2}`;
+      return res;
+    }
+
+    const p1 = subValues.sub_khac || "";
+    let res = `-${aName}:`;
+    if (p1) res += `\n- ${p1}`;
+    return res;
+  }
+
+  // 4. Tổng hợp Tên đề tài bài dạy từ các nội dung con
+  function buildTitleFromSubValues(actId, subValues = {}, fallbackTitle = "") {
+    if (actId === "am_nhac") {
+      const p1 = subValues.ndtt || "";
+      const p2 = subValues.ndkh || "";
+      if (p1 && p2) return `${p1} - NDKH: ${p2}`;
+      return p1 || p2 || fallbackTitle;
+    }
+    if (actId === "nhan_biet") {
+      return subValues.sub_nhan_biet || fallbackTitle;
+    }
+    if (actId === "tao_hinh") {
+      return subValues.sub_tao_hinh || fallbackTitle;
+    }
+    if (actId === "van_hoc") {
+      return subValues.sub_van_hoc || fallbackTitle;
+    }
+    if (actId === "van_dong") {
+      const p1 = subValues.sub_ptcb || "";
+      const p2 = subValues.sub_tcvd || "";
+      if (p1 && p2) return `${p1} - ${p2}`;
+      return p1 || p2 || fallbackTitle;
+    }
+    return subValues.sub_khac || fallbackTitle;
+  }
+
+  // 5. Trích xuất subValues từ một bài preset
+  function getSubValuesFromPreset(actId, preset) {
+    if (!preset) return {};
+    if (preset.subValues) return Object.assign({}, preset.subValues);
+    if (actId === "am_nhac") {
+      return { ndtt: preset.ndtt || preset.title || "", ndkh: preset.ndkh || "" };
+    }
+    if (actId === "nhan_biet") {
+      return { sub_nhan_biet: preset.sub_nhan_biet || preset.ndtt || preset.title || "" };
+    }
+    if (actId === "tao_hinh") {
+      return { sub_tao_hinh: preset.sub_tao_hinh || preset.ndtt || preset.title || "" };
+    }
+    if (actId === "van_hoc") {
+      return { sub_van_hoc: preset.sub_van_hoc || preset.ndtt || preset.title || "" };
+    }
+    if (actId === "van_dong") {
+      return {
+        sub_ptcb: preset.sub_ptcb || preset.ndtt || preset.title || "",
+        sub_tcvd: preset.sub_tcvd || preset.ndkh || ""
+      };
+    }
+    return { sub_khac: preset.ndtt || preset.title || "" };
+  }
+
+  // 6. Render động các ô nội dung con tương ứng với thể loại đang chọn
+  function renderActivitySubfields(actId, initialSubValues = {}) {
+    if (!els.activitySubfieldsContainer) return;
+    const data = window.PRE_SCHOOL_DATA;
+    const act = (data.activityTypes && data.activityTypes.find(a => a.id === actId)) || data.activityTypes[0];
+    const subFields = act.subFields || [
+      { key: "sub_general", label: "Nội dung hoạt động:", placeholder: "Nhập nội dung hoạt động..." }
+    ];
+
+    els.activitySubfieldsContainer.innerHTML = subFields.map(sf => {
+      const currentVal = initialSubValues[sf.key] || "";
+      return `
+        <div class="activity-subfield-group" data-key="${sf.key}">
+          <label class="activity-subfield-label" for="input-sub-${sf.key}">
+            ${sf.label}
+          </label>
+          <input type="text" 
+                 class="activity-subfield-input custom-input" 
+                 id="input-sub-${sf.key}" 
+                 data-key="${sf.key}" 
+                 value="${escapeHtml(currentVal)}" 
+                 placeholder="${escapeHtml(sf.placeholder || '')}">
+        </div>
+      `;
+    }).join("");
+
+    // Gắn sự kiện realtime input cho các ô con
+    const inputs = els.activitySubfieldsContainer.querySelectorAll(".activity-subfield-input");
+    inputs.forEach(inp => {
+      inp.addEventListener("input", debounce(() => {
+        const subVals = getSubValuesFromDOM();
+        const day = appState.selectedDay;
+        const plan = appState.weeklyPlanCache[day];
+        if (!plan) return;
+
+        plan.subValues = subVals;
+        // Tự động đồng bộ alias ndtt/ndkh cho các module khác
+        plan.ndtt = subVals.ndtt || subVals.sub_nhan_biet || subVals.sub_tao_hinh || subVals.sub_van_hoc || subVals.sub_ptcb || "";
+        plan.ndkh = subVals.ndkh || subVals.sub_tcvd || "";
+
+        // Tự động tổng hợp sang tiêu đề bài học nếu phù hợp
+        const synthesized = buildTitleFromSubValues(actId, subVals, plan.title);
+        if (synthesized) {
+          plan.title = synthesized;
+          appState.lessonTitle = synthesized;
+          if (els.inputLessonTitle) {
+            els.inputLessonTitle.value = synthesized;
+          }
+        }
+
+        // Tái sinh bảng giáo án với nội dung mới kết hợp cùng chủ đề bài học
+        updateActivePlanRealtime({ rebuildContent: true });
+      }, 100));
+    });
+  }
+
   // Đồng bộ form cấu hình với dữ liệu của ngày đang chọn
   function syncConfigFormWithDay(dayId) {
     const daysNameMap = { mon: "Thứ Hai", tue: "Thứ Ba", wed: "Thứ Tư", thu: "Thứ Năm", fri: "Thứ Sáu" };
@@ -196,8 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const plan = appState.weeklyPlanCache[dayId] || {
       activityType: "am_nhac",
       badge: "Âm nhạc",
-      ndtt: "",
-      ndkh: "",
+      subValues: { ndtt: "", ndkh: "" },
       title: "",
       date: appState.selectedDate,
       topic: appState.selectedTopic
@@ -208,13 +423,17 @@ document.addEventListener("DOMContentLoaded", () => {
       appState.selectedActivityType = plan.activityType;
     }
 
-    if (els.inputNdtt) {
-      els.inputNdtt.value = plan.ndtt || plan.title || "";
+    // Khởi tạo subValues nếu chưa có
+    if (!plan.subValues) {
+      plan.subValues = getSubValuesFromPreset(plan.activityType, {
+        title: plan.title,
+        ndtt: plan.ndtt,
+        ndkh: plan.ndkh
+      });
     }
 
-    if (els.inputNdkh) {
-      els.inputNdkh.value = plan.ndkh || "";
-    }
+    // Render động các ô con của thể loại hoạt động
+    renderActivitySubfields(plan.activityType, plan.subValues);
 
     if (els.inputLessonTitle) {
       els.inputLessonTitle.value = plan.title || "";
@@ -251,72 +470,85 @@ document.addEventListener("DOMContentLoaded", () => {
     return map[actId] || "Hoạt động";
   }
 
-  // Danh sách các bài dạy mẫu tiêu biểu theo từng loại hoạt động
-  function getPresetsForActivity(actId) {
+  // Danh sách các bài dạy mẫu tiêu biểu theo từng loại hoạt động VÀ CHỦ ĐỀ
+  function getPresetsForActivity(actId, topic) {
+    const data = window.PRE_SCHOOL_DATA;
+    const currentTopic = (topic || appState.selectedTopic || (els.inputTopic && els.inputTopic.value) || "").trim();
+    if (data && typeof data.getThematicPresets === "function") {
+      const thematic = data.getThematicPresets(actId, currentTopic);
+      if (thematic && thematic.length > 0) {
+        return thematic;
+      }
+    }
+
     const presets = {
       am_nhac: [
-        { title: "Nghe hát: 'Hoa thơm bướm lượn' (Quan họ Bắc Ninh) - NDKH: TCÂN: 'Ai nhanh nhất'", ndtt: "NH: Hoa thơm, bướm lượn", ndkh: "TCÂN: Ai nhanh nhất", tag: "Mẫu Chuẩn" },
-        { title: "Dạy hát: 'Con bướm vàng' - NDKH: Nghe hát: 'Bướm hoa'", ndtt: "DH: Con bướm vàng", ndkh: "NH: Bướm hoa", tag: "Dạy hát" },
-        { title: "Vận động múa: 'Em yêu cây xanh' - NDKH: TCÂN: 'Tai ai tinh'", ndtt: "VĐM: Em yêu cây xanh", ndkh: "TCÂN: Tai ai tinh", tag: "Vận động múa" },
-        { title: "Nghe hát: 'Chị ong nâu và em bé' - NDKH: Biểu diễn tự do", ndtt: "NH: Chị ong nâu và em bé", ndkh: "Biểu diễn tự do", tag: "Nghe hát" }
+        { title: `Dạy hát về ${currentTopic || 'bài học mầm non'} - NDKH: TCÂN: Ai nhanh nhất`, ndtt: `DH: Bài học ${currentTopic}`, ndkh: "TCÂN: Ai nhanh nhất", tag: "Dạy hát" },
+        { title: `Nghe hát giai điệu về ${currentTopic || 'thiên nhiên'} - NDKH: VĐTN`, ndtt: `NH: Khám phá ${currentTopic}`, ndkh: "VĐTN: Vỗ tay", tag: "Nghe hát" }
       ],
       nhan_biet: [
-        { title: "Ôn nhận biết hình tròn, hình vuông (Trợ giảng AI 'Hình học vui nhộn')", ndtt: "Ôn nhận biết hình tròn, hình vuông", ndkh: "Trò chơi tương tác AI & Bé khéo tay", tag: "Mẫu Chuẩn" },
-        { title: "Nhận biết phân biệt: Màu đỏ - Màu vàng của hoa mùa xuân", ndtt: "Nhận biết màu đỏ - màu vàng", ndkh: "TC: Chọn hoa đúng màu", tag: "Màu sắc" },
-        { title: "Nhận biết to - nhỏ: Quả bưởi to và Quả cam nhỏ", ndtt: "Nhận biết to - nhỏ", ndkh: "TC: Về đúng vườn quả", tag: "Toán sơ đẳng" },
-        { title: "Khám phá khoa học: Bạn Gà trống và Bạn Vịt bầu", ndtt: "Phân biệt Gà trống và Vịt bầu", ndkh: "TC: Về đúng ngôi nhà", tag: "Khám phá KH" }
+        { title: `Khám phá khoa học: ${currentTopic || 'Thế giới xung quanh'}`, ndtt: `Khám phá: ${currentTopic}`, ndkh: "TC: Thử tài tinh mắt", tag: "Mẫu Chuẩn" }
       ],
       tao_hinh: [
-        { title: "In màu trang trí cánh bướm", ndtt: "In màu trang trí cánh bướm", ndkh: "Trưng bày tranh hoa bướm", tag: "Mẫu Chuẩn" },
-        { title: "Vẽ và tô màu những bông hoa tươi thắm tặng cô", ndtt: "Vẽ hoa tươi thắm", ndkh: "Bé ngắm hoa đẹp", tag: "Vẽ" },
-        { title: "Nặn chú sâu con ngộ nghĩnh từ đất nặn", ndtt: "Nặn chú sâu con", ndkh: "Trưng bày vườn sâu", tag: "Nặn" },
-        { title: "Xé dán cánh hoa mùa xuân rực rỡ", ndtt: "Xé dán cánh hoa", ndkh: "Bé khéo tay", tag: "Xé dán" }
+        { title: `Vẽ và tô màu bức tranh về ${currentTopic || 'hoa lá'}`, ndtt: `Vẽ: ${currentTopic}`, ndkh: "Triển lãm tranh", tag: "Vẽ" }
       ],
       van_hoc: [
-        { title: "Thơ: 'Ong và bướm' (Nhược Thủy) - Mô hình kịch rối que", ndtt: "Thơ: Ong và bướm (Nhược Thủy)", ndkh: "TC: Ai nhanh nhất", tag: "Mẫu Chuẩn" },
-        { title: "Thơ: 'Hoa cúc vàng' (Nguyễn Viết Bình)", ndtt: "Thơ: Hoa cúc vàng", ndkh: "Đàm thoại & ngâm thơ", tag: "Thơ" },
-        { title: "Truyện cổ tích: 'Quả táo của ai?'", ndtt: "Truyện: Quả táo của ai", ndkh: "Đóng kịch rối nhân vật", tag: "Truyện kể" },
-        { title: "Đồng dao: 'Rải ranh / Kéo cưa lừa xẻ'", ndtt: "Đồng dao dân gian", ndkh: "Trò chơi vận động", tag: "Đồng dao" }
+        { title: `Thơ: Bài thơ về ${currentTopic || 'tuổi thơ'}`, ndtt: `Thơ: ${currentTopic}`, ndkh: "Kịch rối que", tag: "Thơ" }
       ],
       van_dong: [
-        { title: "VĐCB: Ném và bắt bóng bằng 2 tay - TCVĐ: Kéo co", ndtt: "VĐCB: Ném và bắt bóng bằng 2 tay", ndkh: "TCVĐ: Kéo co", tag: "Mẫu Chuẩn" },
-        { title: "VĐCB: Bò chui qua cổng - TCVĐ: Cáo và thỏ", ndtt: "VĐCB: Bò chui qua cổng", ndkh: "TCVĐ: Cáo và thỏ", tag: "Bò chui" },
-        { title: "VĐCB: Đi trong đường hẹp đầu đội túi cát - TCVĐ: Mèo đuổi chuột", ndtt: "VĐCB: Đi thăng bằng đường hẹp", ndkh: "TCVĐ: Mèo đuổi chuột", tag: "Thăng bằng" },
-        { title: "VĐCB: Bật liên tục qua các vòng - TCVĐ: Gắp cua bỏ giỏ", ndtt: "VĐCB: Bật qua các vòng", ndkh: "TCVĐ: Gắp cua bỏ giỏ", tag: "Bật nhảy" }
+        { title: `VĐCB: Vượt chướng ngại vật - TCVĐ: Tiếp sức`, ndtt: `VĐCB: Vượt chướng ngại vật`, ndkh: "TCVĐ: Tiếp sức", tag: "Vận động" }
       ]
     };
     return presets[actId] || presets.am_nhac;
   }
 
-  // Cập nhật chip gợi ý bài học nhanh theo ngày & loại hoạt động
-  function updatePresetChips() {
+  // Cập nhật chip gợi ý bài học nhanh theo ngày & loại hoạt động & CHỦ ĐỀ
+  function updatePresetChips(topicOverride) {
     if (!els.presetChipsBox) return;
 
     const act = appState.selectedActivityType;
-    const list = getPresetsForActivity(act);
+    const topic = (topicOverride || appState.selectedTopic || (els.inputTopic && els.inputTopic.value) || "").trim();
+    const list = getPresetsForActivity(act, topic);
 
-    els.presetChipsBox.innerHTML = list.map(item => `
-      <span class="chip-tag" data-title="${escapeHtml(item.title)}" data-ndtt="${escapeHtml(item.ndtt || '')}" data-ndkh="${escapeHtml(item.ndkh || '')}">
-        <span>${item.tag === "Mẫu Chuẩn" ? "⭐" : "💡"}</span> ${escapeHtml(item.title)}
-      </span>
-    `).join("");
+    els.presetChipsBox.innerHTML = list.map(item => {
+      const sVals = getSubValuesFromPreset(act, item);
+      return `
+        <span class="chip-tag" 
+              data-title="${escapeHtml(item.title)}" 
+              data-ndtt="${escapeHtml(item.ndtt || '')}" 
+              data-ndkh="${escapeHtml(item.ndkh || '')}"
+              data-sub="${escapeHtml(JSON.stringify(sVals))}">
+          <span>${item.tag === "Mẫu Chuẩn" ? "⭐" : "💡"}</span> ${escapeHtml(item.title)}
+        </span>
+      `;
+    }).join("");
 
     // Gắn sự kiện click chip -> Cập nhật real-time ngay lập tức toàn bộ bảng bên phải
     els.presetChipsBox.querySelectorAll(".chip-tag").forEach(chip => {
       chip.onclick = () => {
         const title = chip.dataset.title;
-        const ndtt = chip.dataset.ndtt;
-        const ndkh = chip.dataset.ndkh;
+        let sVals = {};
+        try {
+          sVals = JSON.parse(chip.dataset.sub || "{}");
+        } catch (e) {
+          sVals = getSubValuesFromPreset(act, {
+            title: title,
+            ndtt: chip.dataset.ndtt,
+            ndkh: chip.dataset.ndkh
+          });
+        }
+
+        const day = appState.selectedDay;
+        if (appState.weeklyPlanCache[day]) {
+          appState.weeklyPlanCache[day].subValues = sVals;
+        }
+
+        // Cập nhật các ô input con trên giao diện
+        setSubValuesToDOM(sVals);
 
         if (title && els.inputLessonTitle) {
           els.inputLessonTitle.value = title;
           appState.lessonTitle = title;
-        }
-        if (ndtt && els.inputNdtt) {
-          els.inputNdtt.value = ndtt;
-        }
-        if (ndkh && els.inputNdkh) {
-          els.inputNdkh.value = ndkh;
         }
 
         // Live update toàn bộ 4 cột của bảng kế hoạch bên phải tức thì
@@ -408,7 +640,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const subTitleEl = document.querySelector(".paper-subtitle");
     if (subTitleEl) {
-      subTitleEl.textContent = `Tuần học: ${plan.weekRange || appState.weekRange} | Lớp: ${plan.ageName || "Mẫu giáo"}`;
+      subTitleEl.innerHTML = `Lớp: <strong>${escapeHtml(plan.ageName || "Mẫu giáo")}</strong> | Tuần: <strong>${escapeHtml(plan.weekRange || appState.weekRange)}</strong> | GV: <strong>${escapeHtml(plan.teacher || appState.teacherName)}</strong>`;
+    }
+    const topicEl = document.querySelector(".paper-topic-text");
+    if (topicEl) {
+      topicEl.textContent = plan.topic || plan.topicName || appState.selectedTopicName || "Khám phá";
     }
   }
 
@@ -441,14 +677,21 @@ document.addEventListener("DOMContentLoaded", () => {
           navBtn.textContent = `${dayCode}: ${defaultBadge}`;
         }
 
-        // Tự động nạp mẫu bài dạy chuẩn đầu tiên của thể loại mới vào các ô input
-        const presets = getPresetsForActivity(actId);
+        // Tự động nạp mẫu bài dạy chuẩn đầu tiên của thể loại mới vào các ô con và title
+        const presets = getPresetsForActivity(actId, appState.selectedTopic);
+        let firstSubVals = {};
         if (presets && presets.length > 0) {
           const first = presets[0];
+          firstSubVals = getSubValuesFromPreset(actId, first);
           if (els.inputLessonTitle) els.inputLessonTitle.value = first.title;
-          if (els.inputNdtt) els.inputNdtt.value = first.ndtt;
-          if (els.inputNdkh) els.inputNdkh.value = first.ndkh;
           appState.lessonTitle = first.title;
+        }
+
+        // Render lại subfields theo thể loại mới và điền giá trị mẫu
+        renderActivitySubfields(actId, firstSubVals);
+        if (appState.weeklyPlanCache[day]) {
+          appState.weeklyPlanCache[day].activityType = actId;
+          appState.weeklyPlanCache[day].subValues = firstSubVals;
         }
 
         // Cập nhật chips gợi ý và update toàn bộ bảng bên phải
@@ -467,27 +710,29 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // 3. Thay đổi NDTT (Nội dung trọng tâm) -> Cập nhật Cột 1 và bài dạy real-time
-    if (els.inputNdtt) {
-      els.inputNdtt.addEventListener("input", debounce(() => {
-        updateActivePlanRealtime({ rebuildContent: false });
-      }, 80));
-    }
-
-    // 4. Thay đổi NDKH (Nội dung kết hợp) -> Cập nhật Cột 1 real-time
-    if (els.inputNdkh) {
-      els.inputNdkh.addEventListener("input", debounce(() => {
-        updateActivePlanRealtime({ rebuildContent: false });
-      }, 80));
-    }
-
     // 5. Thay đổi Tên bài dạy -> Cập nhật title, Cột 1 và tái sinh Mục đích, Chuẩn bị, Tiến trình real-time
     if (els.inputLessonTitle) {
       els.inputLessonTitle.addEventListener("input", debounce((e) => {
-        appState.lessonTitle = e.target.value;
+        const val = e.target.value;
+        appState.lessonTitle = val;
         const day = appState.selectedDay;
-        if (appState.weeklyPlanCache[day]) {
-          appState.weeklyPlanCache[day].title = e.target.value;
+        const plan = appState.weeklyPlanCache[day];
+        if (plan) {
+          plan.title = val;
+          // Đồng bộ ô con tương ứng nếu là hoạt động một trường
+          if (plan.activityType === "nhan_biet") {
+            if (!plan.subValues) plan.subValues = {};
+            plan.subValues.sub_nhan_biet = val;
+            setSubValuesToDOM(plan.subValues);
+          } else if (plan.activityType === "tao_hinh") {
+            if (!plan.subValues) plan.subValues = {};
+            plan.subValues.sub_tao_hinh = val;
+            setSubValuesToDOM(plan.subValues);
+          } else if (plan.activityType === "van_hoc") {
+            if (!plan.subValues) plan.subValues = {};
+            plan.subValues.sub_van_hoc = val;
+            setSubValuesToDOM(plan.subValues);
+          }
         }
         updateActivePlanRealtime({ rebuildContent: true });
       }, 120));
@@ -506,19 +751,197 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 7. Thay đổi Chủ đề bài học -> Cập nhật realtime và tái sinh nội dung phù hợp chủ đề
-    if (els.inputTopic) {
-      const onTopicChange = debounce((e) => {
-        appState.selectedTopic = e.target.value;
-        const day = appState.selectedDay;
-        if (appState.weeklyPlanCache[day]) {
-          appState.weeklyPlanCache[day].topic = e.target.value;
-        }
-        updateActivePlanRealtime({ rebuildContent: true });
-      }, 150);
+    function applyNewTopic(newTopic) {
+      const trimmed = (newTopic || "").trim();
+      appState.selectedTopic = trimmed;
+      const day = appState.selectedDay;
+      if (appState.weeklyPlanCache[day]) {
+        appState.weeklyPlanCache[day].topic = trimmed;
+      }
 
-      els.inputTopic.addEventListener("input", onTopicChange);
-      els.inputTopic.addEventListener("change", onTopicChange);
+      // Cập nhật ngay danh sách chip gợi ý bài học phù hợp với chủ đề mới
+      updatePresetChips(trimmed);
+
+      // Tự động kiểm tra xem tiêu đề hiện tại có cần chuyển sang bài flagship của chủ đề mới không
+      const currentTitle = (els.inputLessonTitle ? els.inputLessonTitle.value : "").trim();
+      const actId = els.selectActivityType ? els.selectActivityType.value : "am_nhac";
+      const data = window.PRE_SCHOOL_DATA;
+      const theme = data && typeof data.findThemeByTopic === "function" ? data.findThemeByTopic(trimmed) : null;
+
+      if (theme && theme.activities && theme.activities[actId]) {
+        const flagship = theme.activities[actId].flagship;
+        const isOldDefaultTitle = !currentTitle || 
+          currentTitle.includes("Hoa thơm bướm lượn") || 
+          currentTitle.includes("Mẫu Chuẩn") ||
+          currentTitle.includes("hình tròn, hình vuông") ||
+          currentTitle.includes("cánh bướm") ||
+          currentTitle.includes("Ong và bướm") ||
+          currentTitle.includes("bóng bằng 2 tay");
+
+        if (isOldDefaultTitle && flagship) {
+          const firstSubVals = getSubValuesFromPreset(actId, flagship);
+          if (els.inputLessonTitle) els.inputLessonTitle.value = flagship.title;
+          appState.lessonTitle = flagship.title;
+          setSubValuesToDOM(firstSubVals);
+          if (appState.weeklyPlanCache[day]) {
+            appState.weeklyPlanCache[day].subValues = firstSubVals;
+          }
+        }
+      }
+
+      updateActivePlanRealtime({ rebuildContent: true });
+      if (trimmed.length >= 3) {
+        showToast(`🌟 Đã áp dụng chủ đề: "${trimmed.slice(0, 30)}..."`);
+      }
     }
+
+    const debouncedApplyTopicInput = debounce((val) => {
+      applyNewTopic(val);
+    }, 150);
+
+    // ==========================================
+    // COMBOBOX CHỦ ĐỀ BÀI HỌC (CLICK MỞ NGAY TOÀN BỘ DANH SÁCH MÀ KHÔNG CẦN BẤM NHẬP MỚI)
+    // ==========================================
+    function getTopicIcon(t) {
+      if (t.includes("Động vật")) return "🐾";
+      if (t.includes("Thực vật")) return "🌸";
+      if (t.includes("Giao thông")) return "🚗";
+      if (t.includes("Gia đình")) return "🏡";
+      if (t.includes("Bản thân")) return "👶";
+      if (t.includes("Nghề nghiệp")) return "👨‍⚕️";
+      if (t.includes("Trường")) return "🏫";
+      if (t.includes("Nước") || t.includes("Hiện tượng")) return "💧";
+      if (t.includes("Quê hương") || t.includes("Bác Hồ")) return "🇻🇳";
+      if (t.includes("Lễ hội") || t.includes("Tết")) return "🏮";
+      return "🌟";
+    }
+
+    function renderTopicDropdown(filterText = "", showAll = false) {
+      if (!els.topicDropdownMenu) return;
+      const data = window.PRE_SCHOOL_DATA;
+      if (!data || !data.allTopics) return;
+
+      const currentTopic = (els.inputTopic && els.inputTopic.value ? els.inputTopic.value : appState.selectedTopic || "").trim().toLowerCase();
+      const normFilter = (filterText || "").trim().toLowerCase();
+
+      let topics = data.allTopics;
+      if (!showAll && normFilter.length > 0) {
+        topics = data.allTopics.filter(t => t.toLowerCase().includes(normFilter));
+      }
+
+      if (topics.length === 0) {
+        els.topicDropdownMenu.innerHTML = `
+          <div class="topic-dropdown-empty">
+            Không tìm thấy chủ đề sẵn có. Cô có thể gõ tự do chủ đề này!
+          </div>
+        `;
+        return;
+      }
+
+      let html = `<div class="topic-dropdown-header">🌟 Danh sách chủ đề bài học (${topics.length}):</div>`;
+      html += topics.map(t => {
+        const isSelected = t.toLowerCase() === currentTopic;
+        const icon = getTopicIcon(t);
+        return `
+          <div class="topic-dropdown-item ${isSelected ? 'is-selected' : ''}" data-topic="${escapeHtml(t)}">
+            <span class="topic-item-icon">${icon}</span>
+            <span class="topic-item-text">${escapeHtml(t)}</span>
+            ${isSelected ? '<span class="topic-item-check">✓</span>' : ''}
+          </div>
+        `;
+      }).join("");
+
+      els.topicDropdownMenu.innerHTML = html;
+
+      // Gắn sự kiện click cho từng mục trong dropdown
+      els.topicDropdownMenu.querySelectorAll(".topic-dropdown-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const topicVal = item.dataset.topic;
+          if (topicVal) {
+            if (els.inputTopic) els.inputTopic.value = topicVal;
+            applyNewTopic(topicVal);
+            closeTopicDropdown();
+          }
+        });
+      });
+    }
+
+    function openTopicDropdown(showAll = true, filterText = "") {
+      if (!els.topicDropdownMenu) return;
+      renderTopicDropdown(filterText, showAll);
+      els.topicDropdownMenu.style.display = "block";
+      if (els.topicComboboxWrapper) {
+        els.topicComboboxWrapper.classList.add("is-open");
+      }
+
+      // Tự động cuộn đến mục đang chọn
+      const selectedItem = els.topicDropdownMenu.querySelector(".topic-dropdown-item.is-selected");
+      if (selectedItem) {
+        selectedItem.scrollIntoView({ block: "nearest" });
+      }
+    }
+
+    function closeTopicDropdown() {
+      if (!els.topicDropdownMenu) return;
+      els.topicDropdownMenu.style.display = "none";
+      if (els.topicComboboxWrapper) {
+        els.topicComboboxWrapper.classList.remove("is-open");
+      }
+    }
+
+    function toggleTopicDropdown() {
+      if (!els.topicDropdownMenu) return;
+      if (els.topicDropdownMenu.style.display === "block") {
+        closeTopicDropdown();
+      } else {
+        openTopicDropdown(true); // Luôn mở toàn bộ danh sách khi click!
+      }
+    }
+
+    if (els.inputTopic) {
+      // 1. Khi bấm vào ô input -> MỞ NGAY TOÀN BỘ 24 CHỦ ĐỀ MÀ KHÔNG CẦN BẤM NHẬP MỚI!
+      els.inputTopic.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openTopicDropdown(true);
+      });
+
+      // 2. Khi gõ phím -> Lọc danh sách và áp dụng realtime
+      els.inputTopic.addEventListener("input", (e) => {
+        const val = e.target.value;
+        openTopicDropdown(false, val);
+        debouncedApplyTopicInput(val);
+      });
+
+      els.inputTopic.addEventListener("change", (e) => {
+        applyNewTopic(e.target.value);
+      });
+    }
+
+    // 3. Khi bấm vào nút mũi tên ▼
+    if (els.btnToggleTopicDropdown) {
+      els.btnToggleTopicDropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleTopicDropdown();
+      });
+    }
+
+    // 4. Bấm bên ngoài ô -> Đóng dropdown
+    document.addEventListener("click", (e) => {
+      if (els.topicComboboxWrapper && !els.topicComboboxWrapper.contains(e.target)) {
+        closeTopicDropdown();
+      }
+    });
+
+    // 5. Phím ESC -> Đóng dropdown
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && els.topicDropdownMenu && els.topicDropdownMenu.style.display === "block") {
+        closeTopicDropdown();
+      }
+    });
+
+    els.openTopicDropdown = openTopicDropdown;
+    els.closeTopicDropdown = closeTopicDropdown;
   }
 
   // Cập nhật nội dung Cột 1 ("Hoạt động"), Cột 2 ("Mục đích"), Cột 3 ("Chuẩn bị"), Cột 4 ("Cách tiến hành")
@@ -530,16 +953,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = window.PRE_SCHOOL_DATA;
     const actId = els.selectActivityType ? els.selectActivityType.value : plan.activityType;
-    const actObj = data.activityTypes.find(a => a.id === actId) || { name: "Hoạt động Giáo dục" };
-    const ndtt = (els.inputNdtt ? els.inputNdtt.value : plan.ndtt || "").trim();
-    const ndkh = (els.inputNdkh ? els.inputNdkh.value : plan.ndkh || "").trim();
-    const title = (els.inputLessonTitle ? els.inputLessonTitle.value : plan.title || "").trim();
+    const actObj = (data.activityTypes && data.activityTypes.find(a => a.id === actId)) || { name: "Hoạt động Giáo dục" };
+
+    // Lấy subValues từ DOM
+    const subValues = getSubValuesFromDOM();
+    plan.subValues = Object.assign({}, plan.subValues || {}, subValues);
+
+    // Đồng bộ alias ndtt/ndkh cho các module khác
+    const ndtt = plan.subValues.ndtt || plan.subValues.sub_nhan_biet || plan.subValues.sub_tao_hinh || plan.subValues.sub_van_hoc || plan.subValues.sub_ptcb || plan.title || "";
+    const ndkh = plan.subValues.ndkh || plan.subValues.sub_tcvd || "";
+    plan.ndtt = ndtt;
+    plan.ndkh = ndkh;
+
+    const title = (els.inputLessonTitle ? els.inputLessonTitle.value : plan.title || "").trim() || buildTitleFromSubValues(actId, plan.subValues, actObj.name);
     const topic = (els.inputTopic ? els.inputTopic.value : plan.topic || appState.selectedTopic).trim();
     const date = (els.inputLessonDate ? els.inputLessonDate.value : plan.date || appState.selectedDate).trim();
     const ageId = (els.selectAge ? els.selectAge.value : appState.selectedAge);
-    const ageObj = data.ageGroups.find(a => a.id === ageId) || data.ageGroups[1];
+    const ageObj = (data.ageGroups && data.ageGroups.find(a => a.id === ageId)) || data.ageGroups[1];
 
-    // Nếu yêu cầu tái tạo nội dung (khi đổi thể loại, click preset, đổi tên bài, đổi chủ đề, hoặc đổi lứa tuổi):
+    // Nếu yêu cầu tái tạo nội dung (khi đổi thể loại, sửa ô con, click preset, đổi tên bài, đổi chủ đề, hoặc đổi lứa tuổi):
     if (options.rebuildContent) {
       const generated = aiEngine.generateOfflineLessonPlan({
         topic: topic || appState.selectedTopic,
@@ -549,7 +981,8 @@ document.addEventListener("DOMContentLoaded", () => {
         date: date,
         weekRange: appState.weekRange,
         ageObj: ageObj,
-        lessonTitle: title || ndtt || actObj.name,
+        lessonTitle: title,
+        subValues: plan.subValues,
         teacherName: appState.teacherName,
         schoolName: appState.schoolName
       });
@@ -568,18 +1001,13 @@ document.addEventListener("DOMContentLoaded", () => {
     plan.school = appState.schoolName;
     plan.activityType = actId;
     plan.activityTypeName = actObj.name;
-    plan.title = title || ndtt || actObj.name;
-    plan.ndtt = ndtt;
-    plan.ndkh = ndkh;
+    plan.title = title;
     plan.topic = topic;
     plan.date = date;
     plan.badge = getBadgeForActivity(actId);
 
-    // Soạn text Cột 1 chuẩn quy cách
-    let col1Text = `-${actObj.name}:`;
-    if (ndtt) col1Text += `\n- NDTT: ${ndtt}`;
-    if (ndkh) col1Text += `\n+ NDKH: ${ndkh}`;
-    plan.activityCol = col1Text;
+    // Soạn text Cột 1 chuẩn quy cách theo sơ đồ thể loại hoạt động
+    plan.activityCol = buildActivityColText(actId, plan.subValues);
 
     // Lưu lại cache
     appState.weeklyPlanCache[day] = plan;
@@ -592,6 +1020,8 @@ document.addEventListener("DOMContentLoaded", () => {
       renderLessonPlanPaper(plan, true);
     }
   }
+
+  window.updateActivePlanRealtime = updateActivePlanRealtime;
 
   // 6. ĐIỀU HƯỚNG NGÀY TRONG TUẦN (THỨ 2 -> THỨ 6)
   function initDayPills() {
@@ -656,24 +1086,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Xử lý bộ chọn khoảng ngày (Week Preset)
   function initWeekPresets() {
-    if (els.selectWeekPreset && els.inputWeekRange) {
-      els.selectWeekPreset.onchange = () => {
-        const val = els.selectWeekPreset.value;
-        if (val !== "custom") {
-          els.inputWeekRange.value = val;
-          appState.weekRange = val;
-          calculateDateForDay(appState.selectedDay);
-          updateActivePlanRealtime({ rebuildContent: false });
-          showToast(`Đã chọn khoảng tuần: ${val}`);
-        } else {
-          els.inputWeekRange.focus();
-        }
-      };
+    if (els.inputWeekRange) {
+      if (els.selectWeekPreset) {
+        els.selectWeekPreset.onchange = () => {
+          const val = els.selectWeekPreset.value;
+          if (val !== "custom") {
+            els.inputWeekRange.value = val;
+            appState.weekRange = val;
+            calculateDateForDay(appState.selectedDay);
+            updateActivePlanRealtime({ rebuildContent: false });
+            showToast(`Đã chọn khoảng tuần: ${val}`);
+          } else if (window.calendarPicker) {
+            calendarPicker.open({ mode: "week", targetInputId: "input-week-range" });
+          }
+        };
+      }
 
       els.inputWeekRange.onchange = () => {
         appState.weekRange = els.inputWeekRange.value;
         calculateDateForDay(appState.selectedDay);
         updateActivePlanRealtime({ rebuildContent: false });
+      };
+
+      // Bấm vào ô input tuần -> Mở ngay cửa sổ chọn lịch
+      els.inputWeekRange.onclick = () => {
+        calendarPicker.open({ mode: "week", targetInputId: "input-week-range" });
       };
     }
 
@@ -684,7 +1121,103 @@ document.addEventListener("DOMContentLoaded", () => {
         els.inputTopic.focus();
         appState.selectedTopic = "";
         updateActivePlanRealtime({ rebuildContent: false });
-        showToast("✏️ Cô hãy gõ chủ đề mới!");
+        if (typeof els.openTopicDropdown === "function") {
+          els.openTopicDropdown(true);
+        }
+        showToast("✏️ Cô hãy gõ hoặc chọn chủ đề mới!");
+      };
+    }
+
+    // Nút Đồng bộ chủ đề cho cả tuần (T2 - T6)
+    const btnSyncWeek = document.getElementById("btn-sync-week-topic");
+    if (btnSyncWeek) {
+      btnSyncWeek.onclick = () => {
+        const topic = (els.inputTopic ? els.inputTopic.value : appState.selectedTopic || "").trim();
+        if (!topic) {
+          showToast("⚠️ Cô hãy chọn hoặc gõ tên chủ đề trước nhé!");
+          if (els.inputTopic) els.inputTopic.focus();
+          return;
+        }
+
+        appState.selectedTopic = topic;
+        const data = window.PRE_SCHOOL_DATA;
+        const theme = data && typeof data.findThemeByTopic === "function" ? data.findThemeByTopic(topic) : null;
+        const dayActivityMap = {
+          mon: "am_nhac",
+          tue: "nhan_biet",
+          wed: "tao_hinh",
+          thu: "van_hoc",
+          fri: "van_dong"
+        };
+        const daysNameMap = { mon: "Thứ Hai", tue: "Thứ Ba", wed: "Thứ Tư", thu: "Thứ Năm", fri: "Thứ Sáu" };
+
+        const days = ["mon", "tue", "wed", "thu", "fri"];
+        days.forEach(d => {
+          const actId = dayActivityMap[d] || "am_nhac";
+          const actObj = (data.activityTypes && data.activityTypes.find(a => a.id === actId)) || { name: "Hoạt động Giáo dục" };
+          const ageId = els.selectAge ? els.selectAge.value : appState.selectedAge;
+          const ageObj = (data.ageGroups && data.ageGroups.find(a => a.id === ageId)) || data.ageGroups[1];
+          const date = calculateDateForDay(d);
+
+          let lessonTitle = "";
+          let subValues = {};
+
+          if (theme && theme.activities && theme.activities[actId]) {
+            const flagship = theme.activities[actId].flagship;
+            lessonTitle = flagship.title;
+            subValues = flagship.subValues ? { ...flagship.subValues } : getSubValuesFromPreset(actId, flagship);
+          } else {
+            lessonTitle = `${actObj.name}: Khám phá ${topic}`;
+            subValues = getSubValuesFromPreset(actId, { title: lessonTitle });
+          }
+
+          const generated = aiEngine.generateOfflineLessonPlan({
+            topic: topic,
+            activityType: actId,
+            actObj: actObj,
+            dayOfWeek: daysNameMap[d] || "Thứ Hai",
+            date: date,
+            weekRange: appState.weekRange,
+            ageObj: ageObj,
+            lessonTitle: lessonTitle,
+            teacherName: appState.teacherName,
+            schoolName: appState.schoolName,
+            subValues: subValues
+          });
+
+          generated.teacher = appState.teacherName;
+          generated.school = appState.schoolName;
+          generated.activityType = actId;
+          generated.activityTypeName = actObj.name;
+          generated.title = lessonTitle;
+          generated.subValues = subValues;
+          const vals = Object.values(subValues || {});
+          generated.ndtt = vals[0] || lessonTitle;
+          generated.ndkh = vals[1] || "";
+          generated.topic = topic;
+          generated.date = date;
+          generated.badge = getBadgeForActivity(actId);
+          generated.activityCol = buildActivityColText(actId, subValues);
+
+          appState.weeklyPlanCache[d] = generated;
+
+          // Cập nhật badge trên Day pill
+          const badgeEl = document.getElementById(`badge-${d}`);
+          if (badgeEl) badgeEl.textContent = generated.badge;
+        });
+
+        // Đồng bộ form hiện tại với ngày đang chọn
+        syncConfigFormWithDay(appState.selectedDay);
+        updatePresetChips(topic);
+        updateActivePlanRealtime({ rebuildContent: false });
+
+        if (window.gamesSystem && typeof window.gamesSystem.triggerConfetti === "function") {
+          window.gamesSystem.triggerConfetti();
+        }
+        if (window.speechSystem && typeof window.speechSystem.playCorrectSound === "function") {
+          window.speechSystem.playCorrectSound();
+        }
+        showToast(`🎉 Đã đồng bộ trọn vẹn chủ đề "${topic.slice(0, 30)}..." cho cả 5 ngày (T2 - T6)!`);
       };
     }
   }
@@ -718,7 +1251,14 @@ document.addEventListener("DOMContentLoaded", () => {
           if (els.inputLessonTitle) {
             els.inputLessonTitle.value = text;
             appState.lessonTitle = text;
-            if (els.inputNdtt) els.inputNdtt.value = text;
+            const currentSub = getSubValuesFromDOM();
+            const keys = Object.keys(currentSub);
+            if (keys.length > 0) {
+              const primaryInput = document.getElementById(`subfield-${keys[0]}`);
+              if (primaryInput) {
+                primaryInput.value = text;
+              }
+            }
             updateActivePlanRealtime({ rebuildContent: true });
             showToast(`Đã nhận diện: "${text}"`);
           }
@@ -754,6 +1294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       showToast(`✨ AI đang xây dựng Kế hoạch ${currentDayName} (${appState.selectedActivityType})...`);
 
+      const subValues = getSubValuesFromDOM();
       const lessonPlan = await aiEngine.generateLessonPlan({
         topic: appState.selectedTopic,
         activityType: appState.selectedActivityType,
@@ -763,15 +1304,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ageId: appState.selectedAge,
         lessonTitle: appState.lessonTitle,
         teacherName: appState.teacherName,
-        schoolName: appState.schoolName
+        schoolName: appState.schoolName,
+        subValues: subValues
       });
 
-      // Bổ sung thông tin sư phạm và NDTT/NDKH
+      // Bổ sung thông tin sư phạm và NDTT/NDKH/subValues
       lessonPlan.teacher = appState.teacherName;
       lessonPlan.school = appState.schoolName;
       lessonPlan.badge = getBadgeForActivity(appState.selectedActivityType);
-      lessonPlan.ndtt = els.inputNdtt ? els.inputNdtt.value : lessonPlan.title;
-      lessonPlan.ndkh = els.inputNdkh ? els.inputNdkh.value : "";
+      lessonPlan.subValues = subValues;
+      const vals = Object.values(subValues || {});
+      lessonPlan.ndtt = vals[0] || lessonPlan.title;
+      lessonPlan.ndkh = vals[1] || "";
+      lessonPlan.activityCol = buildActivityColText(appState.selectedActivityType, subValues);
 
       // Lưu vào cache tuần và cập nhật hiển thị
       appState.weeklyPlanCache[appState.selectedDay] = lessonPlan;
@@ -860,10 +1405,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="lesson-paper" id="printable-lesson-paper" contenteditable="true" spellcheck="false" title="Bấm vào văn bản bất kỳ để chỉnh sửa trực tiếp">
           ${renderAdministrativeHeader(plan)}
           <h1 class="paper-title">KẾ HOẠCH GIÁO DỤC TUẦN (5 NGÀY CHUẨN)</h1>
-          <div class="paper-subtitle">
-            Chủ đề: <strong>${plan.topic || plan.topicName}</strong><br>
-            Khoảng thời gian: <strong>${appState.weekRange}</strong> | Lứa tuổi: <strong>${plan.ageName || "Mẫu giáo"}</strong><br>
-            Giáo viên phụ trách: <strong>${plan.teacher || appState.teacherName}</strong>
+          <div class="paper-topic-banner" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 12px 18px; margin: 12px 0 20px 0; text-align: center;">
+            <div style="font-size: 11pt; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+              CHỦ ĐỀ: <span class="paper-topic-text">${escapeHtml(plan.topic || plan.topicName || appState.selectedTopicName || "Giáo dục Mầm non")}</span>
+            </div>
+            <div class="paper-subtitle" style="font-size: 11pt; color: #334155; margin-bottom: 0;">
+              Thời gian thực hiện: <strong>${escapeHtml(plan.weekRange || appState.weekRange)}</strong> | Lứa tuổi: <strong>${escapeHtml(plan.ageName || "Mẫu giáo")}</strong> | GV phụ trách: <strong>${escapeHtml(plan.teacher || appState.teacherName)}</strong>
+            </div>
           </div>
           ${daysContent}
           ${renderSignatureTable(plan.teacher || appState.teacherName)}
@@ -873,8 +1421,15 @@ document.addEventListener("DOMContentLoaded", () => {
       paperHtml = `
         <div class="lesson-paper" id="printable-lesson-paper" contenteditable="true" spellcheck="false" title="Bấm vào văn bản bất kỳ để chỉnh sửa trực tiếp">
           ${renderAdministrativeHeader(plan)}
-          <div class="paper-subtitle" style="text-align: right; font-style: italic; margin-bottom: 8px;">
-            Tuần học: ${plan.weekRange || appState.weekRange} | Lớp: ${plan.ageName || "Mẫu giáo"} | GV: <strong>${plan.teacher || appState.teacherName}</strong>
+          <h1 class="paper-title" style="font-size: 15pt; text-transform: uppercase; margin: 8px 0; text-align: center; color: #1e293b;">KẾ HOẠCH BÀI DẠY (HOẠT ĐỘNG HỌC CÓ CHỦ ĐÍCH)</h1>
+          <div class="paper-topic-banner" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px 16px; margin: 8px 0 16px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span style="font-size: 10pt; font-weight: 700; color: #1e40af; background: #dbeafe; padding: 3px 8px; border-radius: 4px; margin-right: 6px;">CHỦ ĐỀ</span>
+              <strong style="font-size: 12pt; color: #0f172a;" class="paper-topic-text">${escapeHtml(plan.topic || plan.topicName || appState.selectedTopicName || "Khám phá")}</strong>
+            </div>
+            <div class="paper-subtitle" style="font-size: 11pt; color: #334155; margin-bottom: 0;">
+              Lớp: <strong>${escapeHtml(plan.ageName || "Mẫu giáo")}</strong> | Tuần: <strong>${escapeHtml(plan.weekRange || appState.weekRange)}</strong> | GV: <strong>${escapeHtml(plan.teacher || appState.teacherName)}</strong>
+            </div>
           </div>
           ${renderSingleDayTableHtml(plan)}
           ${renderSignatureTable(plan.teacher || appState.teacherName)}
@@ -1364,6 +1919,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .plan-day-title { font-size: 14pt; font-weight: bold; text-align: center; margin: 15pt 0 10pt 0; }
           .paper-title { font-size: 16pt; font-weight: bold; text-align: center; }
           .paper-subtitle { text-align: center; font-size: 12pt; font-style: italic; margin-bottom: 15pt; }
+          .paper-topic-banner { border: 1pt solid #000; padding: 6pt 10pt; margin: 8pt 0 14pt 0; text-align: center; }
           .cell-block-title { font-weight: bold; margin-top: 4pt; }
           ul { margin: 2pt 0 4pt 15pt; padding: 0; }
           li { margin-bottom: 2pt; }
@@ -1822,8 +2378,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3200);
   }
 
+  window.showToast = showToast;
+
   // 16. KHỞI CHẠY LẦN ĐẦU
   function startApp() {
+    calendarPicker.init();
     initDropdowns();
     initDayPills();
     initWeekPresets();

@@ -22,7 +22,21 @@ const PRE_SCHOOL_DATA = {
       icon: "🎵",
       domainId: "tham_my",
       defaultDayId: "mon",
-      description: "Dạy hát, nghe hát, vận động theo nhạc, trò chơi âm nhạc"
+      description: "Dạy hát, nghe hát, vận động theo nhạc, trò chơi âm nhạc",
+      subFields: [
+        {
+          key: "ndtt",
+          label: "🎯 Nội dung trọng tâm (NDTT):",
+          placeholder: "Ví dụ: NH: Hoa thơm, bướm lượn (hoặc DH: Con bướm vàng, VĐM: Em yêu cây xanh)...",
+          prefix: "- NDTT: "
+        },
+        {
+          key: "ndkh",
+          label: "🎲 Nội dung kết hợp (NDKH):",
+          placeholder: "Ví dụ: TCÂN: Ai nhanh nhất (hoặc NH: Bướm hoa, TCÂN: Tai ai tinh)...",
+          prefix: "+ NDKH: "
+        }
+      ]
     },
     {
       id: "nhan_biet",
@@ -31,7 +45,15 @@ const PRE_SCHOOL_DATA = {
       icon: "🧠",
       domainId: "nhan_thuc",
       defaultDayId: "tue",
-      description: "Nhận biết tập nói, Khám phá KH, Toán sơ đẳng, Hình khối & Màu sắc"
+      description: "Nhận biết tập nói, Khám phá KH, Toán sơ đẳng, Hình khối & Màu sắc",
+      subFields: [
+        {
+          key: "sub_nhan_biet",
+          label: "🔍 Các nội dung liên quan đến nhận biết:",
+          placeholder: "Ví dụ: Ôn nhận biết hình tròn, hình vuông; Phân biệt màu đỏ - màu vàng; Nhận biết to - nhỏ...",
+          prefix: "- "
+        }
+      ]
     },
     {
       id: "tao_hinh",
@@ -40,7 +62,15 @@ const PRE_SCHOOL_DATA = {
       icon: "🎨",
       domainId: "tham_my",
       defaultDayId: "wed",
-      description: "Vẽ, nặn, xé dán, in màu, chấm màu, trang trí tranh ảnh sáng tạo"
+      description: "Vẽ, nặn, xé dán, in màu, chấm màu, trang trí tranh ảnh sáng tạo",
+      subFields: [
+        {
+          key: "sub_tao_hinh",
+          label: "🎨 Các nội dung liên quan đến tạo hình:",
+          placeholder: "Ví dụ: In màu trang trí cánh bướm; Vẽ hoa mùa xuân; Nặn chú sâu con; Xé dán cánh hoa...",
+          prefix: "- "
+        }
+      ]
     },
     {
       id: "van_hoc",
@@ -49,16 +79,38 @@ const PRE_SCHOOL_DATA = {
       icon: "📖",
       domainId: "ngon_ngu",
       defaultDayId: "thu",
-      description: "Thơ, truyện kể, ca dao đồng dao, đàm thoại trích dẫn, kịch rối"
+      description: "Thơ, truyện kể, ca dao đồng dao, đàm thoại trích dẫn, kịch rối",
+      subFields: [
+        {
+          key: "sub_van_hoc",
+          label: "📚 Thơ/truyện:",
+          placeholder: "Ví dụ: Thơ: 'Ong và bướm' (Nhược Thủy); Truyện cổ tích: 'Quả táo của ai?'...",
+          prefix: "- "
+        }
+      ]
     },
     {
       id: "van_dong",
-      name: "Hoạt động Phát triển vận động",
-      shortName: "Phát triển vận động",
+      name: "Hoạt động Phát triển giáo dục",
+      shortName: "Phát triển giáo dục",
       icon: "🏃",
       domainId: "the_chat",
       defaultDayId: "fri",
-      description: "VĐCB, BTPTC, trò chơi vận động rèn khéo léo và thể lực"
+      description: "Phát triển cơ bản (VĐCB), Trò chơi vận động rèn khéo léo và thể lực",
+      subFields: [
+        {
+          key: "sub_ptcb",
+          label: "🏃 Phát triển cơ bản:",
+          placeholder: "Ví dụ: VĐCB: Ném và bắt bóng bằng 2 tay; Bò chui qua cổng; Đi trong đường hẹp...",
+          prefix: "- Phát triển cơ bản: "
+        },
+        {
+          key: "sub_tcvd",
+          label: "🎯 Trò chơi vận động:",
+          placeholder: "Ví dụ: TCVĐ: Kéo co; TCVĐ: Cáo và thỏ; TCVĐ: Mèo đuổi chuột...",
+          prefix: "+ Trò chơi vận động: "
+        }
+      ]
     },
     {
       id: "khac",
@@ -67,7 +119,15 @@ const PRE_SCHOOL_DATA = {
       icon: "⭐",
       domainId: "tinh_cam_xh",
       defaultDayId: "",
-      description: "Kỹ năng sống, trải nghiệm, giao lưu tập thể"
+      description: "Kỹ năng sống, trải nghiệm, giao lưu tập thể",
+      subFields: [
+        {
+          key: "sub_khac",
+          label: "⭐ Nội dung hoạt động:",
+          placeholder: "Ví dụ: Kỹ năng sống: Bé biết rửa tay đúng cách...",
+          prefix: "- "
+        }
+      ]
     }
   ],
 
@@ -77,7 +137,7 @@ const PRE_SCHOOL_DATA = {
     { id: "tue", name: "Thứ Ba", shortName: "T3", defaultActivity: "nhan_biet", label: "Thứ Ba - Nhận biết", offsetDays: 1 },
     { id: "wed", name: "Thứ Tư", shortName: "T4", defaultActivity: "tao_hinh", label: "Thứ Tư - Tạo hình", offsetDays: 2 },
     { id: "thu", name: "Thứ Năm", shortName: "T5", defaultActivity: "van_hoc", label: "Thứ Năm - Văn học", offsetDays: 3 },
-    { id: "fri", name: "Thứ Sáu", shortName: "T6", defaultActivity: "van_dong", label: "Thứ Sáu - Vận động", offsetDays: 4 }
+    { id: "fri", name: "Thứ Sáu", shortName: "T6", defaultActivity: "van_dong", label: "Thứ Sáu - Phát triển giáo dục", offsetDays: 4 }
   ],
 
   // 1d. TẤT CẢ CHỦ ĐỀ GỘP (CHỌN HOẶC TỰ NHẬP MỚI)
@@ -510,7 +570,8 @@ const PRE_SCHOOL_DATA = {
         activityType: "am_nhac",
         activityTypeName: "Hoạt động Âm nhạc",
         title: "Nghe hát: 'Hoa thơm bướm lượn' (Dân ca quan họ Bắc Ninh) - NDKH: TCÂN: 'Ai nhanh nhất'",
-        activityCol: "- Âm nhạc:\n- NDTT: NH: Hoa thơm, bướm lượn\n+ NDKH: TCÂN: Ai nhanh nhất.",
+        activityCol: "- Hoạt động Âm nhạc:\n- NDTT: NH: Hoa thơm, bướm lượn\n+ NDKH: TCÂN: Ai nhanh nhất",
+        subValues: { ndtt: "NH: Hoa thơm, bướm lượn", ndkh: "TCÂN: Ai nhanh nhất" },
         objectives: {
           knowledge: [
             "Trẻ biết tên bài hát, cảm nhận được giai điệu bài hát 'Hoa thơm bướm lượn'.",
@@ -574,7 +635,8 @@ const PRE_SCHOOL_DATA = {
         activityType: "nhan_biet",
         activityTypeName: "Hoạt động Nhận biết",
         title: "Ôn nhận biết hình tròn, hình vuông (Ứng dụng Trợ giảng AI)",
-        activityCol: "- Hoạt động nhận biết:\nÔn nhận biết hình tròn, hình vuông",
+        activityCol: "- Hoạt động Nhận biết:\n- Ôn nhận biết hình tròn, hình vuông",
+        subValues: { sub_nhan_biet: "Ôn nhận biết hình tròn, hình vuông" },
         objectives: {
           knowledge: [
             "Trẻ nhận biết và gọi đúng tên hình tròn, hình vuông thông qua trò chơi.",
@@ -653,7 +715,8 @@ const PRE_SCHOOL_DATA = {
         activityType: "tao_hinh",
         activityTypeName: "Hoạt động Tạo hình",
         title: "In màu trang trí cánh bướm",
-        activityCol: "- Hoạt động tạo hình:\n- In màu trang trí cánh bướm",
+        activityCol: "- Hoạt động Tạo hình:\n- In màu trang trí cánh bướm",
+        subValues: { sub_tao_hinh: "In màu trang trí cánh bướm" },
         objectives: {
           knowledge: [
             "Trẻ nhận biết các màu xanh, vàng, đỏ của khuy áo, của các hình tròn.",
@@ -728,7 +791,8 @@ const PRE_SCHOOL_DATA = {
         activityType: "van_hoc",
         activityTypeName: "Hoạt động Làm quen văn học",
         title: "Thơ: 'Ong và bướm' (Tác giả: Nhược Thủy)",
-        activityCol: "- Làm quen văn học:\nThơ: Ong và bướm",
+        activityCol: "- Hoạt động Làm quen văn học:\n- Thơ/truyện: Thơ: Ong và bướm (Nhược Thủy)",
+        subValues: { sub_van_hoc: "Thơ: Ong và bướm (Nhược Thủy)" },
         objectives: {
           knowledge: [
             "Trẻ biết tên bài thơ: 'Ong và bướm'.",
@@ -802,9 +866,10 @@ const PRE_SCHOOL_DATA = {
         weekRange: "26/01/2026 - 30/01/2026",
         topic: "Thế giới Động vật - Các loài côn trùng và hoa mùa xuân",
         activityType: "van_dong",
-        activityTypeName: "Hoạt động Phát triển vận động",
+        activityTypeName: "Hoạt động Phát triển giáo dục",
         title: "VĐCB: Ném và bắt bóng bằng 2 tay - TCVĐ: Kéo co",
-        activityCol: "- Phát triển vận động:\n- Ném và bắt bóng bằng 2 tay\n- TCVĐ: Kéo co.",
+        activityCol: "- Hoạt động Phát triển giáo dục:\n- Phát triển cơ bản: VĐCB: Ném và bắt bóng bằng 2 tay\n+ Trò chơi vận động: TCVĐ: Kéo co",
+        subValues: { sub_ptcb: "VĐCB: Ném và bắt bóng bằng 2 tay", sub_tcvd: "TCVĐ: Kéo co" },
         objectives: {
           knowledge: [
             "Trẻ nhớ tên vận động, biết dùng sức của đôi tay ném và bắt bóng bằng hai tay, không làm rơi bóng xuống đất.",
