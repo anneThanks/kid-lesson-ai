@@ -223,7 +223,8 @@
       }
 
       const pres = new PptxGenJS();
-      pres.layout = "LAYOUT_16x9"; // 13.33 x 7.5 inches chuẩn Smart TV & Canva
+      // Thiết lập chuẩn Widescreen 16:9 (13.333 x 7.5 inches) tương thích 100% PowerPoint hiện đại & Canva 1920x1080
+      pres.layout = "LAYOUT_WIDE";
       pres.author = plan.teacher || (window.appState && window.appState.teacherName) || localStorage.getItem("kid_lesson_teacher_name") || "Cô giáo Nguyễn Thị Tiên";
       pres.company = plan.school || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm Non Phúc Sơn B";
       pres.title = plan.title || "Slide Bài Giảng Mầm Non";
@@ -240,7 +241,7 @@
           x: 0.6,
           y: 0.35,
           w: 12.13,
-          h: 0.65,
+          h: 0.6,
           fill: { color: s.accentColor }
         });
 
@@ -248,7 +249,7 @@
           x: 0.8,
           y: 0.35,
           w: 8.0,
-          h: 0.65,
+          h: 0.6,
           fontSize: 13,
           bold: true,
           color: "FFFFFF",
@@ -260,7 +261,7 @@
           x: 9.0,
           y: 0.35,
           w: 3.5,
-          h: 0.65,
+          h: 0.6,
           fontSize: 11,
           color: "FFFFFF",
           fontFace: "Arial",
@@ -268,9 +269,9 @@
           valign: "middle"
         });
 
-        // 3. Khung ảnh minh họa bên phải (Right Photo Frame)
+        // 3. Khung ảnh minh họa bên phải (Right Photo Frame: x: 7.95 -> 12.73, y: 1.15 -> 6.75)
         const photoX = 7.95;
-        const photoY = 1.25;
+        const photoY = 1.15;
         const photoW = 4.78;
         const photoH = 5.6;
 
@@ -300,22 +301,42 @@
           }
         }
 
-        // 4. Nội dung Sư phạm bên trái (Left Content Box: x: 0.6, w: 7.05)
+        // 4. Nội dung Sư phạm bên trái (Left Content Box: x: 0.6, w: 7.05, y: 1.15 -> 6.75)
         if (s.type === "title") {
           slide.addShape("rect", {
             x: 0.6,
-            y: 1.25,
+            y: 1.15,
             w: 7.05,
             h: 5.6,
             fill: { color: "FFFFFF" },
             line: { color: PALETTE.cardBorder, width: 1.5 }
           });
 
+          slide.addShape("rect", {
+            x: 0.85,
+            y: 1.35,
+            w: 3.6,
+            h: 0.4,
+            fill: { color: PALETTE.primaryLight }
+          });
+          slide.addText(s.tag, {
+            x: 0.85,
+            y: 1.35,
+            w: 3.6,
+            h: 0.4,
+            fontSize: 11,
+            bold: true,
+            color: PALETTE.primary,
+            fontFace: "Arial",
+            align: "center",
+            valign: "middle"
+          });
+
           slide.addText(s.title, {
-            x: 0.9,
-            y: 1.5,
-            w: 6.45,
-            h: 1.5,
+            x: 0.85,
+            y: 1.85,
+            w: 6.55,
+            h: 1.3,
             fontSize: 22,
             bold: true,
             color: PALETTE.dark,
@@ -324,24 +345,24 @@
           });
 
           slide.addText(s.subtitle, {
-            x: 0.9,
-            y: 3.05,
-            w: 6.45,
-            h: 0.5,
-            fontSize: 15,
+            x: 0.85,
+            y: 3.25,
+            w: 6.55,
+            h: 0.45,
+            fontSize: 14.5,
             italic: true,
             color: PALETTE.sky,
             fontFace: "Arial"
           });
 
           // 4 Hộp Metadata (2x2 grid)
-          const metaW = 3.05;
-          const metaH = 0.95;
+          const metaW = 3.1;
+          const metaH = 0.9;
           s.meta.forEach((m, idx) => {
             const col = idx % 2;
             const row = Math.floor(idx / 2);
-            const mx = 0.9 + col * (metaW + 0.35);
-            const my = 3.75 + row * (metaH + 0.2);
+            const mx = 0.85 + col * (metaW + 0.35);
+            const my = 3.85 + row * (metaH + 0.15);
 
             slide.addShape("rect", {
               x: mx,
@@ -365,10 +386,10 @@
           });
 
           slide.addText(s.school, {
-            x: 0.9,
+            x: 0.85,
             y: 6.15,
-            w: 6.45,
-            h: 0.45,
+            w: 6.55,
+            h: 0.4,
             fontSize: 11,
             bold: true,
             color: PALETTE.muted,
@@ -378,9 +399,9 @@
         } else if (s.type === "objectives") {
           slide.addText(s.title, {
             x: 0.6,
-            y: 1.25,
+            y: 1.15,
             w: 7.05,
-            h: 0.5,
+            h: 0.45,
             fontSize: 19,
             bold: true,
             color: PALETTE.dark,
@@ -389,18 +410,18 @@
 
           slide.addText(s.subtitle, {
             x: 0.6,
-            y: 1.75,
+            y: 1.62,
             w: 7.05,
-            h: 0.4,
+            h: 0.35,
             fontSize: 12.5,
             bold: true,
             color: PALETTE.sky,
             fontFace: "Arial"
           });
 
-          // 3 Hộp Mục tiêu xếp tầng
-          const cardH = 1.35;
-          const startY = 2.25;
+          // 3 Hộp Mục tiêu xếp tầng (Không bao giờ tràn trang)
+          const cardH = 1.45;
+          const startY = 2.10;
           s.columns.forEach((col, idx) => {
             const cy = startY + idx * (cardH + 0.15);
 
@@ -428,7 +449,7 @@
               x: 0.8,
               y: cy + 0.45,
               w: 6.65,
-              h: 0.8,
+              h: 0.9,
               fontSize: 11.5,
               color: PALETTE.text,
               fontFace: "Arial",
@@ -439,9 +460,9 @@
         } else if (s.type === "game") {
           slide.addText(s.title, {
             x: 0.6,
-            y: 1.25,
+            y: 1.15,
             w: 7.05,
-            h: 0.5,
+            h: 0.45,
             fontSize: 19,
             bold: true,
             color: PALETTE.dark,
@@ -450,9 +471,9 @@
 
           slide.addText(s.subtitle, {
             x: 0.6,
-            y: 1.75,
+            y: 1.62,
             w: 7.05,
-            h: 0.4,
+            h: 0.35,
             fontSize: 13,
             bold: true,
             color: PALETTE.emerald,
@@ -461,9 +482,9 @@
 
           slide.addShape("rect", {
             x: 0.6,
-            y: 2.25,
+            y: 2.10,
             w: 7.05,
-            h: 3.4,
+            h: 3.55,
             fill: { color: "FFFFFF" },
             line: { color: PALETTE.cardBorder, width: 1.5 }
           });
@@ -471,15 +492,15 @@
           const gameLines = s.rules.map(r => ({ text: r, options: { bullet: false, fontSize: 12.5, color: PALETTE.text, fontFace: "Arial" } }));
           slide.addText(gameLines, {
             x: 0.8,
-            y: 2.45,
+            y: 2.25,
             w: 6.65,
-            h: 3.0,
+            h: 3.25,
             valign: "top"
           });
 
           slide.addShape("rect", {
             x: 0.6,
-            y: 5.8,
+            y: 5.80,
             w: 7.05,
             h: 0.95,
             fill: { color: PALETTE.emeraldLight },
@@ -487,7 +508,7 @@
           });
           slide.addText(s.tip, {
             x: 0.8,
-            y: 5.8,
+            y: 5.80,
             w: 6.65,
             h: 0.95,
             fontSize: 12,
@@ -501,9 +522,9 @@
           // Slide thông thường: Intro, Instruction, Conclusion
           slide.addText(s.title, {
             x: 0.6,
-            y: 1.25,
+            y: 1.15,
             w: 7.05,
-            h: 0.5,
+            h: 0.45,
             fontSize: 19,
             bold: true,
             color: PALETTE.dark,
@@ -513,9 +534,9 @@
           if (s.subtitle) {
             slide.addText(s.subtitle, {
               x: 0.6,
-              y: 1.75,
+              y: 1.62,
               w: 7.05,
-              h: 0.4,
+              h: 0.35,
               fontSize: 13,
               bold: true,
               color: s.accentColor,
@@ -526,7 +547,7 @@
           if (s.type === "conclusion") {
             slide.addShape("rect", {
               x: 0.6,
-              y: 2.25,
+              y: 2.10,
               w: 7.05,
               h: 0.85,
               fill: { color: PALETTE.amberLight },
@@ -534,7 +555,7 @@
             });
             slide.addText(s.praise, {
               x: 0.8,
-              y: 2.25,
+              y: 2.10,
               w: 6.65,
               h: 0.85,
               fontSize: 12,
@@ -546,17 +567,17 @@
 
             slide.addShape("rect", {
               x: 0.6,
-              y: 3.25,
+              y: 3.10,
               w: 7.05,
-              h: 2.4,
+              h: 2.55,
               fill: { color: "FFFFFF" },
               line: { color: PALETTE.cardBorder, width: 1.5 }
             });
             slide.addText(s.content, {
               x: 0.8,
-              y: 3.4,
+              y: 3.25,
               w: 6.65,
-              h: 2.1,
+              h: 2.25,
               fontSize: 12.5,
               color: PALETTE.text,
               fontFace: "Arial",
@@ -565,7 +586,7 @@
 
             slide.addShape("rect", {
               x: 0.6,
-              y: 5.8,
+              y: 5.80,
               w: 7.05,
               h: 0.95,
               fill: { color: PALETTE.roseLight },
@@ -573,7 +594,7 @@
             });
             slide.addText(s.wish, {
               x: 0.8,
-              y: 5.8,
+              y: 5.80,
               w: 6.65,
               h: 0.95,
               fontSize: 11.5,
@@ -587,18 +608,18 @@
             // Intro, Instruction
             slide.addShape("rect", {
               x: 0.6,
-              y: 2.25,
+              y: 2.10,
               w: 7.05,
-              h: 3.4,
+              h: 3.55,
               fill: { color: "FFFFFF" },
               line: { color: PALETTE.cardBorder, width: 1.5 }
             });
 
             slide.addText(s.content, {
               x: 0.8,
-              y: 2.45,
+              y: 2.25,
               w: 6.65,
-              h: 3.0,
+              h: 3.25,
               fontSize: 12.5,
               color: PALETTE.text,
               fontFace: "Arial",
@@ -608,7 +629,7 @@
             if (s.tip) {
               slide.addShape("rect", {
                 x: 0.6,
-                y: 5.8,
+                y: 5.80,
                 w: 7.05,
                 h: 0.95,
                 fill: { color: s.bgColor },
@@ -616,7 +637,7 @@
               });
               slide.addText(s.tip, {
                 x: 0.8,
-                y: 5.8,
+                y: 5.80,
                 w: 6.65,
                 h: 0.95,
                 fontSize: 12,
