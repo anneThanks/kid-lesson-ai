@@ -35,8 +35,25 @@
     currentPlan: null,
     currentSlideIndex: 0,
     isPlayingVoice: false,
+    customImages: {},
 
-    // 1. TRÍCH XUẤT 6 SLIDE SƯ PHẠM TỪ KẾ HOẠCH BÀI DẠY
+    // Đổi ảnh cho slide cụ thể (Base64 hoặc URL)
+    updateSlideImage(index, dataUrl) {
+      this.customImages[index] = dataUrl;
+      if (this.currentSlides && this.currentSlides[index]) {
+        this.currentSlides[index].image = dataUrl;
+      }
+    },
+
+    // Khôi phục bộ ảnh minh họa mặc định
+    resetSlideImages() {
+      this.customImages = {};
+      if (this.currentPlan) {
+        this.extractSlides(this.currentPlan);
+      }
+    },
+
+    // 1. TRÍCH XUẤT 6 SLIDE SƯ PHẠM TỪ KẾ HOẠCH BÀI DẠY (KÈM ẢNH MINH HỌA)
     extractSlides(plan) {
       if (!plan) return [];
       this.currentPlan = plan;
@@ -68,13 +85,14 @@
       const cleanConc = concRaw.replace(/^3\.\s*Kết thúc:\s*/i, "").trim();
 
       const slides = [
-        // SLIDE 1: TRANG BÌA
+        // SLIDE 1: TRANG BÌA (Ảnh lớp học mầm non tươi vui)
         {
           index: 1,
           type: "title",
           tag: "BÀI GIẢNG ĐIỆN TỬ MẦM NON",
           title: title,
           subtitle: `Chủ đề: ${topic}`,
+          image: this.customImages[0] || "images/slides/slide_welcome.jpg",
           meta: [
             { icon: "👶", label: "Lứa tuổi", value: ageName },
             { icon: "⏱️", label: "Thời lượng", value: duration },
@@ -87,13 +105,14 @@
           speechText: `Chào mừng các bé đến với tiết học: ${title}. Cô chúc cả lớp có một giờ học thật vui và bổ ích!`
         },
 
-        // SLIDE 2: MỤC TIÊU BÀI HỌC (BÉ SẼ HỌC GÌ?)
+        // SLIDE 2: MỤC TIÊU BÀI HỌC (Ảnh bé học bảng chữ cái ABC, số 123)
         {
           index: 2,
           type: "objectives",
           tag: "MỤC TIÊU TIẾT DẠY",
           title: "Bé Học Được Những Gì Hôm Nay?",
           subtitle: "3 Trụ cột phát triển toàn diện theo chuẩn Bộ GD&ĐT",
+          image: this.customImages[1] || "images/slides/slide_objectives.jpg",
           columns: [
             {
               title: "🧠 1. Kiến Thức",
@@ -119,13 +138,14 @@
           speechText: `Trong bài học này, các bé sẽ được trang bị các kiến thức mới, rèn luyện kỹ năng quan sát, tự tin và nuôi dưỡng thái độ yêu thương trường lớp!`
         },
 
-        // SLIDE 3: HOẠT ĐỘNG 1 - KHỞI ĐỘNG & GÂY HỨNG THÚ
+        // SLIDE 3: HOẠT ĐỘNG 1 - KHỞI ĐỘNG (Ảnh bé ca hát, múa nhạc)
         {
           index: 3,
           type: "intro",
           tag: "HOẠT ĐỘNG 1: KHỞI ĐỘNG",
           title: "Bé Cùng Khởi Động & Gây Hứng Thú",
           subtitle: "Ổn định tổ chức & Đố vui / Thơ ca mở màn",
+          image: this.customImages[2] || "images/slides/slide_warmup.jpg",
           content: cleanIntro,
           tip: "💡 Bé hãy ngồi thật ngoan, chú ý lắng nghe và đoán xem cô mang đến điều bất ngờ gì nào!",
           accentColor: PALETTE.amber,
@@ -133,13 +153,14 @@
           speechText: `Hoạt động 1: Khởi động và gây hứng thú. ${cleanIntro.slice(0, 180)}`
         },
 
-        // SLIDE 4: HOẠT ĐỘNG 2 - KHÁM PHÁ & TRẢI NGHIỆM
+        // SLIDE 4: HOẠT ĐỘNG 2 - KHÁM PHÁ TRỌNG TÂM (Ảnh hoa bướm, khoa học thiên nhiên)
         {
           index: 4,
           type: "instruction",
           tag: "HOẠT ĐỘNG 2: TRỌNG TÂM",
           title: "Bé Khám Phá & Trải Nghiệm Mới",
           subtitle: `Nội dung trọng tâm (NDTT): ${ndtt}`,
+          image: this.customImages[3] || "images/slides/slide_discovery.jpg",
           content: cleanInstruct,
           tip: "🌸 Bé cùng tương tác, trả lời to rõ và khám phá những điều thú vị cùng cô nhé!",
           accentColor: PALETTE.primary,
@@ -147,13 +168,14 @@
           speechText: `Hoạt động 2: Khám phá trọng tâm bài học. ${ndtt}. ${cleanInstruct.slice(0, 200)}`
         },
 
-        // SLIDE 5: HOẠT ĐỘNG 3 - TRÒ CHƠI CỦNG CỐ
+        // SLIDE 5: HOẠT ĐỘNG 3 - TRÒ CHƠI CỦNG CỐ (Ảnh ghép tranh, vòng quay kỳ diệu)
         {
           index: 5,
           type: "game",
           tag: "HOẠT ĐỘNG 3: TRÒ CHƠI",
           title: "Bé Chơi Vui Củng Cố Bài Học",
           subtitle: `Nội dung kết hợp (NDKH): ${ndkh}`,
+          image: this.customImages[4] || "images/slides/slide_minigame.jpg",
           content: "Cô tổ chức cho các bé tham gia trò chơi vận động hoặc câu đố tương tác ôn luyện kiến thức vừa học.",
           rules: [
             "🎯 Luật chơi: Bé lắng nghe hiệu lệnh của cô và phối hợp cùng bạn bè.",
@@ -166,13 +188,14 @@
           speechText: `Hoạt động 3: Trò chơi củng cố: ${ndkh}. Các bé hãy cùng cô chơi thật vui và nhận hoa bé ngoan nào!`
         },
 
-        // SLIDE 6: HOẠT ĐỘNG 4 - KẾT THÚC & TUYÊN DƯƠNG
+        // SLIDE 6: HOẠT ĐỘNG 4 - KẾT THÚC & TUYÊN DƯƠNG (Ảnh trao cờ, hoa Bé Ngoan, sao vàng)
         {
           index: 6,
           type: "conclusion",
           tag: "HOẠT ĐỘNG 4: KẾT THÚC",
           title: "Tuyên Dương & Kết Thúc Tiết Học",
           subtitle: "Nhận xét giờ học & Giáo dục bài học thực tế",
+          image: this.customImages[5] || "images/slides/slide_cheer.jpg",
           content: cleanConc || "Cô nhận xét, tuyên dương tinh thần học tập hăng hái của cả lớp. Giáo dục trẻ tình yêu thiên nhiên, biết vâng lời ông bà, cha mẹ và cô giáo.",
           praise: "🎉 Cả lớp chúng mình hôm nay học rất ngoan, chú ý lắng nghe và hăng hái phát biểu!",
           wish: "🌸 Chúc các bé luôn chăm ngoan, khỏe mạnh và luôn yêu thích từng giờ học ở trường mầm non! Hẹn gặp lại các bé vào tiết học sau!",
@@ -186,7 +209,7 @@
       return slides;
     },
 
-    // 2. XUẤT FILE POWERPOINT (.PPTX) CHUẨN 16:9 TƯƠNG THÍCH 100% CANVA
+    // 2. XUẤT FILE POWERPOINT (.PPTX) CHUẨN 16:9 TƯƠNG THÍCH 100% CANVA (KÈM ẢNH MINH HỌA)
     async exportPptx(plan) {
       if (typeof PptxGenJS === "undefined") {
         alert("Thư viện PptxGenJS chưa sẵn sàng. Vui lòng thử lại!");
@@ -205,7 +228,8 @@
       pres.company = plan.school || (window.appState && window.appState.schoolName) || localStorage.getItem("kid_lesson_school_name") || "Trường Mầm Non Phúc Sơn B";
       pres.title = plan.title || "Slide Bài Giảng Mầm Non";
 
-      slides.forEach((s) => {
+      for (let i = 0; i < slides.length; i++) {
+        const s = slides[i];
         const slide = pres.addSlide();
 
         // 1. Nền trang Slide (Pastel Card)
@@ -214,18 +238,18 @@
         // 2. Top Banner Header Bar
         slide.addShape("rect", {
           x: 0.6,
-          y: 0.4,
+          y: 0.35,
           w: 12.13,
-          h: 0.7,
+          h: 0.65,
           fill: { color: s.accentColor }
         });
 
         slide.addText(s.tag || "BÀI GIẢNG ĐIỆN TỬ MẦM NON", {
           x: 0.8,
-          y: 0.4,
+          y: 0.35,
           w: 8.0,
-          h: 0.7,
-          fontSize: 14,
+          h: 0.65,
+          fontSize: 13,
           bold: true,
           color: "FFFFFF",
           fontFace: "Arial",
@@ -234,159 +258,130 @@
 
         slide.addText(`Slide ${s.index}/6 • KID-LESSON AI`, {
           x: 9.0,
-          y: 0.4,
+          y: 0.35,
           w: 3.5,
-          h: 0.7,
-          fontSize: 12,
+          h: 0.65,
+          fontSize: 11,
           color: "FFFFFF",
           fontFace: "Arial",
           align: "right",
           valign: "middle"
         });
 
-        // 3. Nội dung theo từng loại Slide
+        // 3. Khung ảnh minh họa bên phải (Right Photo Frame)
+        const photoX = 7.95;
+        const photoY = 1.25;
+        const photoW = 4.78;
+        const photoH = 5.6;
+
+        slide.addShape("rect", {
+          x: photoX,
+          y: photoY,
+          w: photoW,
+          h: photoH,
+          fill: { color: "FFFFFF" },
+          line: { color: PALETTE.cardBorder, width: 2 }
+        });
+
+        if (s.image) {
+          try {
+            const imgOpt = await resolveImageForPptx(s.image);
+            if (imgOpt) {
+              slide.addImage({
+                ...imgOpt,
+                x: photoX + 0.1,
+                y: photoY + 0.1,
+                w: photoW - 0.2,
+                h: photoH - 0.2
+              });
+            }
+          } catch (err) {
+            console.warn("Không thể nhúng ảnh vào slide " + s.index, err);
+          }
+        }
+
+        // 4. Nội dung Sư phạm bên trái (Left Content Box: x: 0.6, w: 7.05)
         if (s.type === "title") {
-          // Card trắng trung tâm
           slide.addShape("rect", {
             x: 0.6,
-            y: 1.3,
-            w: 12.13,
-            h: 5.4,
+            y: 1.25,
+            w: 7.05,
+            h: 5.6,
             fill: { color: "FFFFFF" },
             line: { color: PALETTE.cardBorder, width: 1.5 }
           });
 
           slide.addText(s.title, {
-            x: 1.0,
-            y: 1.6,
-            w: 11.33,
+            x: 0.9,
+            y: 1.5,
+            w: 6.45,
             h: 1.5,
-            fontSize: 28,
+            fontSize: 22,
             bold: true,
             color: PALETTE.dark,
             fontFace: "Arial",
-            align: "center",
             valign: "middle"
           });
 
           slide.addText(s.subtitle, {
-            x: 1.0,
-            y: 3.1,
-            w: 11.33,
-            h: 0.6,
-            fontSize: 18,
+            x: 0.9,
+            y: 3.05,
+            w: 6.45,
+            h: 0.5,
+            fontSize: 15,
             italic: true,
             color: PALETTE.sky,
-            fontFace: "Arial",
-            align: "center"
+            fontFace: "Arial"
           });
 
-          // 4 Hộp thông tin metadata
-          const colW = 2.6;
-          const startX = 1.0;
+          // 4 Hộp Metadata (2x2 grid)
+          const metaW = 3.05;
+          const metaH = 0.95;
           s.meta.forEach((m, idx) => {
-            const bx = startX + idx * (colW + 0.3);
+            const col = idx % 2;
+            const row = Math.floor(idx / 2);
+            const mx = 0.9 + col * (metaW + 0.35);
+            const my = 3.75 + row * (metaH + 0.2);
+
             slide.addShape("rect", {
-              x: bx,
-              y: 4.0,
-              w: colW,
-              h: 1.4,
+              x: mx,
+              y: my,
+              w: metaW,
+              h: metaH,
               fill: { color: PALETTE.primaryLight },
               line: { color: PALETTE.primary, width: 1 }
             });
-            slide.addText(`${m.icon} ${m.label}\n${m.value}`, {
-              x: bx,
-              y: 4.1,
-              w: colW,
-              h: 1.2,
-              fontSize: 13,
+            slide.addText(`${m.icon} ${m.label}: ${m.value}`, {
+              x: mx + 0.1,
+              y: my,
+              w: metaW - 0.2,
+              h: metaH,
+              fontSize: 11,
               bold: true,
               color: PALETTE.text,
               fontFace: "Arial",
-              align: "center",
               valign: "middle"
             });
           });
 
           slide.addText(s.school, {
-            x: 1.0,
-            y: 5.7,
-            w: 11.33,
-            h: 0.5,
-            fontSize: 12,
+            x: 0.9,
+            y: 6.15,
+            w: 6.45,
+            h: 0.45,
+            fontSize: 11,
             bold: true,
             color: PALETTE.muted,
-            fontFace: "Arial",
-            align: "center"
-          });
-
-        } else if (s.type === "objectives") {
-          // Tiêu đề Slide
-          slide.addText(s.title, {
-            x: 0.6,
-            y: 1.2,
-            w: 12.13,
-            h: 0.6,
-            fontSize: 22,
-            bold: true,
-            color: PALETTE.dark,
             fontFace: "Arial"
           });
 
-          // 3 Cột: Kiến thức, Kỹ năng, Thái độ
-          const colW = 3.8;
-          s.columns.forEach((col, idx) => {
-            const cx = 0.6 + idx * (colW + 0.35);
-            slide.addShape("rect", {
-              x: cx,
-              y: 1.9,
-              w: colW,
-              h: 4.9,
-              fill: { color: "FFFFFF" },
-              line: { color: col.color, width: 2 }
-            });
-
-            // Tiêu đề cột
-            slide.addShape("rect", {
-              x: cx,
-              y: 1.9,
-              w: colW,
-              h: 0.7,
-              fill: { color: col.color }
-            });
-
-            slide.addText(col.title, {
-              x: cx,
-              y: 1.9,
-              w: colW,
-              h: 0.7,
-              fontSize: 15,
-              bold: true,
-              color: "FFFFFF",
-              fontFace: "Arial",
-              align: "center",
-              valign: "middle"
-            });
-
-            // Nội dung items
-            const bulletItems = col.items.map(it => ({ text: it, options: { bullet: true, fontSize: 13, color: PALETTE.text, fontFace: "Arial" } }));
-            slide.addText(bulletItems, {
-              x: cx + 0.2,
-              y: 2.7,
-              w: colW - 0.4,
-              h: 3.9,
-              valign: "top"
-            });
-          });
-
-        } else if (s.type === "game") {
-          // Tiêu đề Slide
+        } else if (s.type === "objectives") {
           slide.addText(s.title, {
             x: 0.6,
-            y: 1.2,
-            w: 12.13,
-            h: 0.6,
-            fontSize: 22,
+            y: 1.25,
+            w: 7.05,
+            h: 0.5,
+            fontSize: 19,
             bold: true,
             color: PALETTE.dark,
             fontFace: "Arial"
@@ -394,48 +389,108 @@
 
           slide.addText(s.subtitle, {
             x: 0.6,
-            y: 1.8,
-            w: 12.13,
+            y: 1.75,
+            w: 7.05,
+            h: 0.4,
+            fontSize: 12.5,
+            bold: true,
+            color: PALETTE.sky,
+            fontFace: "Arial"
+          });
+
+          // 3 Hộp Mục tiêu xếp tầng
+          const cardH = 1.35;
+          const startY = 2.25;
+          s.columns.forEach((col, idx) => {
+            const cy = startY + idx * (cardH + 0.15);
+
+            slide.addShape("rect", {
+              x: 0.6,
+              y: cy,
+              w: 7.05,
+              h: cardH,
+              fill: { color: col.bg },
+              line: { color: col.color, width: 1.5 }
+            });
+
+            slide.addText(col.title, {
+              x: 0.8,
+              y: cy + 0.08,
+              w: 6.65,
+              h: 0.35,
+              fontSize: 12.5,
+              bold: true,
+              color: col.color,
+              fontFace: "Arial"
+            });
+
+            slide.addText(col.items.join(". "), {
+              x: 0.8,
+              y: cy + 0.45,
+              w: 6.65,
+              h: 0.8,
+              fontSize: 11.5,
+              color: PALETTE.text,
+              fontFace: "Arial",
+              valign: "top"
+            });
+          });
+
+        } else if (s.type === "game") {
+          slide.addText(s.title, {
+            x: 0.6,
+            y: 1.25,
+            w: 7.05,
             h: 0.5,
-            fontSize: 16,
+            fontSize: 19,
+            bold: true,
+            color: PALETTE.dark,
+            fontFace: "Arial"
+          });
+
+          slide.addText(s.subtitle, {
+            x: 0.6,
+            y: 1.75,
+            w: 7.05,
+            h: 0.4,
+            fontSize: 13,
             bold: true,
             color: PALETTE.emerald,
             fontFace: "Arial"
           });
 
-          // Khung chính
           slide.addShape("rect", {
             x: 0.6,
-            y: 2.4,
-            w: 12.13,
-            h: 4.4,
+            y: 2.25,
+            w: 7.05,
+            h: 3.4,
             fill: { color: "FFFFFF" },
             line: { color: PALETTE.cardBorder, width: 1.5 }
           });
 
-          const gameLines = s.rules.map(r => ({ text: r, options: { bullet: false, fontSize: 16, color: PALETTE.text, fontFace: "Arial" } }));
+          const gameLines = s.rules.map(r => ({ text: r, options: { bullet: false, fontSize: 12.5, color: PALETTE.text, fontFace: "Arial" } }));
           slide.addText(gameLines, {
-            x: 1.0,
-            y: 2.7,
-            w: 11.33,
-            h: 2.8,
+            x: 0.8,
+            y: 2.45,
+            w: 6.65,
+            h: 3.0,
             valign: "top"
           });
 
           slide.addShape("rect", {
-            x: 1.0,
-            y: 5.7,
-            w: 11.33,
-            h: 0.8,
+            x: 0.6,
+            y: 5.8,
+            w: 7.05,
+            h: 0.95,
             fill: { color: PALETTE.emeraldLight },
             line: { color: PALETTE.emerald, width: 1 }
           });
           slide.addText(s.tip, {
-            x: 1.2,
-            y: 5.7,
-            w: 10.9,
-            h: 0.8,
-            fontSize: 15,
+            x: 0.8,
+            y: 5.8,
+            w: 6.65,
+            h: 0.95,
+            fontSize: 12,
             bold: true,
             color: PALETTE.emerald,
             fontFace: "Arial",
@@ -446,10 +501,10 @@
           // Slide thông thường: Intro, Instruction, Conclusion
           slide.addText(s.title, {
             x: 0.6,
-            y: 1.2,
-            w: 12.13,
-            h: 0.6,
-            fontSize: 22,
+            y: 1.25,
+            w: 7.05,
+            h: 0.5,
+            fontSize: 19,
             bold: true,
             color: PALETTE.dark,
             fontFace: "Arial"
@@ -458,64 +513,122 @@
           if (s.subtitle) {
             slide.addText(s.subtitle, {
               x: 0.6,
-              y: 1.8,
-              w: 12.13,
-              h: 0.5,
-              fontSize: 16,
+              y: 1.75,
+              w: 7.05,
+              h: 0.4,
+              fontSize: 13,
               bold: true,
               color: s.accentColor,
               fontFace: "Arial"
             });
           }
 
-          // Card trắng chứa nội dung
-          slide.addShape("rect", {
-            x: 0.6,
-            y: 2.4,
-            w: 12.13,
-            h: 4.4,
-            fill: { color: "FFFFFF" },
-            line: { color: PALETTE.cardBorder, width: 1.5 }
-          });
-
-          // Text nội dung
-          let bodyText = s.content;
-          if (s.praise) bodyText = `${s.praise}\n\n${s.content}\n\n${s.wish}`;
-
-          slide.addText(bodyText, {
-            x: 1.0,
-            y: 2.7,
-            w: 11.33,
-            h: 3.0,
-            fontSize: 15,
-            color: PALETTE.text,
-            fontFace: "Arial",
-            valign: "top"
-          });
-
-          if (s.tip) {
+          if (s.type === "conclusion") {
             slide.addShape("rect", {
-              x: 1.0,
-              y: 5.7,
-              w: 11.33,
-              h: 0.8,
-              fill: { color: s.bgColor },
-              line: { color: s.accentColor, width: 1 }
+              x: 0.6,
+              y: 2.25,
+              w: 7.05,
+              h: 0.85,
+              fill: { color: PALETTE.amberLight },
+              line: { color: PALETTE.amber, width: 1 }
             });
-            slide.addText(s.tip, {
-              x: 1.2,
-              y: 5.7,
-              w: 10.9,
-              h: 0.8,
-              fontSize: 14,
+            slide.addText(s.praise, {
+              x: 0.8,
+              y: 2.25,
+              w: 6.65,
+              h: 0.85,
+              fontSize: 12,
               bold: true,
-              color: s.accentColor,
+              color: PALETTE.amber,
               fontFace: "Arial",
               valign: "middle"
             });
+
+            slide.addShape("rect", {
+              x: 0.6,
+              y: 3.25,
+              w: 7.05,
+              h: 2.4,
+              fill: { color: "FFFFFF" },
+              line: { color: PALETTE.cardBorder, width: 1.5 }
+            });
+            slide.addText(s.content, {
+              x: 0.8,
+              y: 3.4,
+              w: 6.65,
+              h: 2.1,
+              fontSize: 12.5,
+              color: PALETTE.text,
+              fontFace: "Arial",
+              valign: "top"
+            });
+
+            slide.addShape("rect", {
+              x: 0.6,
+              y: 5.8,
+              w: 7.05,
+              h: 0.95,
+              fill: { color: PALETTE.roseLight },
+              line: { color: PALETTE.rose, width: 1 }
+            });
+            slide.addText(s.wish, {
+              x: 0.8,
+              y: 5.8,
+              w: 6.65,
+              h: 0.95,
+              fontSize: 11.5,
+              bold: true,
+              color: PALETTE.rose,
+              fontFace: "Arial",
+              valign: "middle"
+            });
+
+          } else {
+            // Intro, Instruction
+            slide.addShape("rect", {
+              x: 0.6,
+              y: 2.25,
+              w: 7.05,
+              h: 3.4,
+              fill: { color: "FFFFFF" },
+              line: { color: PALETTE.cardBorder, width: 1.5 }
+            });
+
+            slide.addText(s.content, {
+              x: 0.8,
+              y: 2.45,
+              w: 6.65,
+              h: 3.0,
+              fontSize: 12.5,
+              color: PALETTE.text,
+              fontFace: "Arial",
+              valign: "top"
+            });
+
+            if (s.tip) {
+              slide.addShape("rect", {
+                x: 0.6,
+                y: 5.8,
+                w: 7.05,
+                h: 0.95,
+                fill: { color: s.bgColor },
+                line: { color: s.accentColor, width: 1 }
+              });
+              slide.addText(s.tip, {
+                x: 0.8,
+                y: 5.8,
+                w: 6.65,
+                h: 0.95,
+                fontSize: 12,
+                bold: true,
+                color: s.accentColor,
+                fontFace: "Arial",
+                valign: "middle"
+              });
+            }
           }
         }
-      });
+      }
 
       // Tên file tải về
       const safeTitle = (plan.title || "Giao_An_Mam_Non").replace(/[^a-zA-Z0-9\u00C0-\u1EF9]/g, "_").slice(0, 30);
@@ -582,7 +695,7 @@
       };
     },
 
-    // Render 1 Slide trong giao diện Smart TV
+    // Render 1 Slide trong giao diện Smart TV (Kèm ảnh minh họa 2 cột)
     renderTvSlide(index) {
       const slides = this.currentSlides;
       if (index < 0 || index >= slides.length) return;
@@ -624,13 +737,11 @@
             <div class="tv-badge" style="background: ${s.accentColor}; color: #fff;">${s.tag}</div>
             <h2 class="tv-heading">${escapeHtml(s.title)}</h2>
             <p class="tv-sub-heading">${escapeHtml(s.subtitle)}</p>
-            <div class="tv-columns-grid">
+            <div class="tv-objectives-stack">
               ${s.columns.map(col => `
-                <div class="tv-column-card" style="border-top: 5px solid ${col.color};">
-                  <div class="tv-col-header" style="color: ${col.color};">${col.title}</div>
-                  <ul class="tv-col-list">
-                    ${col.items.map(it => `<li>${escapeHtml(it)}</li>`).join("")}
-                  </ul>
+                <div class="tv-objective-row" style="border-left: 5px solid ${col.color}; background: ${col.bg};">
+                  <div class="tv-obj-title" style="color: ${col.color};">${col.title}</div>
+                  <div class="tv-obj-text">${escapeHtml(col.items.join(". "))}</div>
                 </div>
               `).join("")}
             </div>
@@ -669,7 +780,24 @@
         `;
       }
 
-      container.innerHTML = bodyHtml;
+      // Khung chia 2 cột hoàn chỉnh: Trái là Sư phạm, Phải là Ảnh minh họa sinh động
+      const fullLayoutHtml = `
+        <div class="tv-slide-split-layout">
+          <div class="tv-split-left">
+            ${bodyHtml}
+          </div>
+          <div class="tv-split-right">
+            <div class="tv-image-frame">
+              <img src="${s.image}" alt="${escapeHtml(s.title)}" class="tv-responsive-slide-img" />
+              <div class="tv-image-caption">
+                <span>🎨 Slide ${s.index} • Minh Họa Mầm Non</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = fullLayoutHtml;
 
       // Cập nhật trạng thái các nút Trước / Sau
       const btnPrev = document.getElementById("btn-tv-prev");
@@ -727,6 +855,30 @@
       }
     }
   };
+
+  // Chuyển ảnh cục bộ thành Base64 để PptxGenJS nhúng 100% offline vào file PowerPoint
+  async function resolveImageForPptx(imageSrc) {
+    if (!imageSrc) return null;
+    if (typeof imageSrc === "string" && imageSrc.startsWith("data:")) {
+      return { data: imageSrc };
+    }
+    try {
+      const res = await fetch(imageSrc);
+      if (res.ok) {
+        const blob = await res.blob();
+        const base64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+        if (base64) return { data: base64 };
+      }
+    } catch (e) {
+      console.warn("Không thể fetch chuyển base64 ảnh, dùng fallback path:", e);
+    }
+    return { path: imageSrc };
+  }
 
   function escapeHtml(str) {
     if (!str) return "";

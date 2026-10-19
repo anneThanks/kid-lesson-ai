@@ -179,23 +179,29 @@
 
           <!-- 5. Chủ đề bài dạy (Gộp tất cả hoặc cho phép nhập mới) -->
           <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <label class="form-label" for="input-topic">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+              <label class="form-label" for="input-topic" style="margin-bottom: 0;">
                 <span>🌟</span> Chủ đề bài học:
               </label>
-              <button type="button" class="btn-text-action" id="btn-clear-topic" title="Xóa để gõ chủ đề mới">
-                ➕ Nhập mới
-              </button>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <button type="button" class="btn-text-action" id="btn-sync-week-topic" title="Đồng bộ chủ đề này cho toàn bộ 5 ngày từ Thứ Hai đến Thứ Sáu" style="color: #059669; background: #ecfdf5; border-radius: 4px; padding: 2px 8px;">
+                  🔄 Cho cả tuần
+                </button>
+                <button type="button" class="btn-text-action" id="btn-clear-topic" title="Xóa để gõ chủ đề mới">
+                  ➕ Nhập mới
+                </button>
+              </div>
             </div>
             <input type="text" class="custom-input" id="input-topic" 
                    list="topics-datalist" 
                    value="Thế giới Động vật - Các loài côn trùng và hoa mùa xuân" 
-                   placeholder="Chọn từ danh sách hoặc gõ chủ đề mới...">
+                   placeholder="Chọn từ danh sách hoặc gõ chủ đề mới..."
+                   style="margin-top: 6px;">
             <datalist id="topics-datalist">
               <!-- Đổ toàn bộ chủ đề gộp từ data_preschool.js -->
             </datalist>
             <p style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
-              💡 <em>Cô có thể bấm mũi tên để chọn từ danh sách hoặc gõ tự do bất kỳ chủ đề mới nào.</em>
+              💡 <em>Đổi chủ đề sẽ tự động cập nhật bài mẫu gợi ý, mục tiêu, đồ dùng và tiến trình phù hợp chủ đề. Bấm <strong>"🔄 Cho cả tuần"</strong> để đồng bộ trọn vẹn 5 ngày!</em>
             </p>
           </div>
 
@@ -468,11 +474,16 @@
           </div>
         </div>
 
-        <!-- Xem trước danh sách 6 slide thu nhỏ -->
+        <!-- Xem trước danh sách 6 slide thu nhỏ kèm ảnh minh họa -->
         <div class="canva-preview-section">
-          <h4 style="font-size: 1rem; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-            <span>📑</span> Danh Sách 6 Slide Sư Phạm Chuẩn Bị Chiếu:
-          </h4>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <h4 style="font-size: 1rem; color: #1e293b; margin: 0; display: flex; align-items: center; gap: 8px;">
+              <span>📑</span> Danh Sách 6 Slide Kèm Ảnh Minh Họa Sư Phạm:
+            </h4>
+            <button type="button" class="btn-text-action" id="btn-reset-slide-images" style="font-size: 0.8rem; color: #64748b;" title="Khôi phục lại toàn bộ ảnh minh họa mầm non ban đầu">
+              🔄 Khôi phục ảnh gốc
+            </button>
+          </div>
           <div class="canva-slides-thumbnails" id="canva-slides-thumbnails">
             <!-- Đổ 6 thẻ slide từ canva_slide_builder.js -->
           </div>

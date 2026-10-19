@@ -2127,6 +2127,54 @@ body {
   line-height: 1.3;
 }
 
+.thumb-img-box {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 4px;
+}
+
+.thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.canva-slide-thumb-card:hover .thumb-img {
+  transform: scale(1.04);
+}
+
+.btn-thumb-change-img {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.btn-thumb-change-img:hover {
+  background: #4f46e5;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
 .thumb-desc {
   font-size: 0.78rem;
   color: #64748b;
@@ -2434,10 +2482,133 @@ body {
   background: #fdf2f8;
   color: #be185d;
   font-weight: 700;
-  font-size: 1.15rem;
-  padding: 14px 18px;
   border-radius: 12px;
   margin-top: 16px;
+}
+
+/* Layout 2 cột cho Smart TV: Trái là Sư phạm, Phải là Ảnh minh họa */
+.tv-slide-split-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 36px;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.tv-split-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 8px;
+}
+
+.tv-split-left .tv-main-title {
+  text-align: left;
+  font-size: 2rem;
+}
+
+.tv-split-left .tv-sub-title {
+  text-align: left;
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+}
+
+.tv-split-left .tv-meta-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.tv-split-left .tv-school-tag {
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.tv-split-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.tv-image-frame {
+  position: relative;
+  width: 100%;
+  max-height: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  border: 4px solid #ffffff;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-responsive-slide-img {
+  width: 100%;
+  height: auto;
+  max-height: 440px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.tv-image-frame:hover .tv-responsive-slide-img {
+  transform: scale(1.02);
+}
+
+.tv-image-caption {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  background: rgba(15, 23, 42, 0.78);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Thẻ mục tiêu xếp tầng trong Smart TV */
+.tv-objectives-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tv-objective-row {
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.tv-obj-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.tv-obj-text {
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+  .tv-slide-split-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    overflow-y: auto;
+  }
+  .tv-split-right {
+    display: none;
+  }
 }
 
 .tv-player-footer {

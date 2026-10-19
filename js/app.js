@@ -1156,11 +1156,18 @@ document.addEventListener("DOMContentLoaded", () => {
       els.canvaPreviewSub.textContent = `Chủ đề: ${plan.topic || plan.topicName || "Bé khám phá"} | Lớp: ${plan.ageName || "Mẫu giáo"} | GV: ${plan.teacher || appState.teacherName}`;
     }
 
-    // Trích xuất 6 slide và tạo thumbnail xem trước
+    // Trích xuất 6 slide và tạo thumbnail xem trước kèm ảnh minh họa
     const slides = window.CanvaSlideBuilder.extractSlides(plan);
     if (els.canvaSlidesThumbnails) {
       els.canvaSlidesThumbnails.innerHTML = slides.map((s, idx) => `
         <div class="canva-slide-thumb-card" style="border-top: 4px solid #${s.accentColor || '4f46e5'};">
+          <div class="thumb-img-box">
+            <img src="${s.image}" alt="Slide ${s.index}" class="thumb-img" id="thumb-preview-img-${idx}" />
+            <label class="btn-thumb-change-img" title="Chọn ảnh minh họa khác từ máy tính cho Slide này">
+              <span>📷 Đổi ảnh</span>
+              <input type="file" accept="image/*" class="input-slide-change-img" data-slide-idx="${idx}" style="display:none;" />
+            </label>
+          </div>
           <div class="thumb-header">
             <span class="thumb-num">Slide ${s.index}</span>
             <span class="thumb-tag" style="background: #${s.bgColor || 'eef2ff'}; color: #${s.accentColor || '4f46e5'};">${s.tag}</span>
@@ -1172,6 +1179,26 @@ document.addEventListener("DOMContentLoaded", () => {
           </button>
         </div>
       `).join("");
+
+      // Gắn sự kiện đổi ảnh tải lên từ máy tính
+      els.canvaSlidesThumbnails.querySelectorAll(".input-slide-change-img").forEach(input => {
+        input.onchange = (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const sIdx = parseInt(input.dataset.slideIdx, 10);
+          const reader = new FileReader();
+          reader.onload = (re) => {
+            const dataUrl = re.target.result;
+            if (window.CanvaSlideBuilder) {
+              window.CanvaSlideBuilder.updateSlideImage(sIdx, dataUrl);
+            }
+            const imgEl = document.getElementById(`thumb-preview-img-${sIdx}`);
+            if (imgEl) imgEl.src = dataUrl;
+            showToast(`✅ Đã thay ảnh minh họa cho Slide ${sIdx + 1}!`);
+          };
+          reader.readAsDataURL(file);
+        };
+      });
 
       // Gắn sự kiện các nút xem slide đơn lẻ
       els.canvaSlidesThumbnails.querySelectorAll(".btn-thumb-preview").forEach(btn => {
@@ -1196,6 +1223,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (els.btnCloseCanvaFooter && els.modalCanvaStudio) {
       els.btnCloseCanvaFooter.onclick = () => els.modalCanvaStudio.classList.remove("active");
+    }
+
+    // Nút khôi phục ảnh minh họa gốc
+    const btnResetSlideImages = document.getElementById("btn-reset-slide-images");
+    if (btnResetSlideImages) {
+      btnResetSlideImages.onclick = () => {
+        if (window.CanvaSlideBuilder && appState.currentLessonPlan) {
+          window.CanvaSlideBuilder.resetSlideImages();
+          openCanvaStudio(appState.currentLessonPlan);
+          showToast("🔄 Đã khôi phục toàn bộ ảnh minh họa mầm non ban đầu!");
+        }
+      };
     }
 
     // Tải file PPTX kéo thả Canva
