@@ -1,0 +1,139 @@
+Total pages: 11
+=== PAGE 1 ===
+Giáo viên thực hiện
+Nguyễn Thị Tiên
+KID-LESSON AI
+Đơn vị công tác:
+Trường Mầm non Phúc Sơn B
+Thôn Đồng Mít, xã Phúc Sơn, thành phố Hà Nội
+Email: 
+thanh.pham@rmit.edu.vn
+HỆ THỐNG TRỢ LÝ TRÍ TUỆ NHÂN TẠO TẠO SINH TRONG XÂY DỰNG KẾ HOẠCH BÀI DẠY (GIÁO ÁN) ĐIỆN TỬ
+ VÀ KHO HỌC LIỆU SỐ ĐA PHƯƠNG TIỆN CHO GIÁO VIÊN MẦM NON
+
+=== PAGE 2 ===
+DÀN Ý SLIDE
+Giải Thưởng Tiên Phong Ứng Dụng AI Trong
+Giáo Dục Việt Nam 2026
+Phần 1: Bối cảnh và Vấn đề
+Phần 2: Ý tưởng và Giải pháp AI
+Phần 3: Cách thực hiện giải pháp
+Phần 4: Kết quả và Tác động
+Phần 5: Tính bền vững & Khả năng nhân rộng 
+Phần 6: Định hướng tương lai & Tài liệu đính
+kèm
+
+=== PAGE 3 ===
+NỘI DUNG BÀI TRÌNH BÀY
+Giải phóng sức lao động nhà giáo - Khơi nguồn sáng tạo bài giảng mầm non cùng AI
+Mục tiêu trọng tâm: Ứng dụng Trí tuệ nhân tạo tạo sinh (Generative AI) để tự động hóa 80% quy trình xây dựng Kế hoạch bài
+dạy (giáo án) và sản xuất kho học liệu số đa phương tiện (thơ mới, câu đố vui, hình ảnh hoạt họa, trò chơi tương tác).
+Tính sư phạm pháp lý: Toàn bộ cấu trúc đầu ra được thiết kế bám sát 100% Chương trình Giáo dục Mầm non ban hành kèm
+Thông tư 51/2020/TT-BGDĐT của Bộ GD&ĐT.
+Địa bàn thực nghiệm: Triển khai thực tế tại Trường Mầm non Phúc Sơn B (huyện Tân Yên, tỉnh Bắc Giang) cho hơn 100 trẻ ở cả
+4 độ tuổi (Nhà trẻ, Mẫu giáo Bé, Nhỡ, Lớn).
+Hiệu quả nổi bật: Được chứng minh bằng số liệu thực nghiệm: Giảm từ 14h xuống 2.5h chuẩn bị/tuần, tỷ lệ trẻ hào hứng tập
+trung đạt 95.8%, chi phí vận hành 0 đồng.
+Thông điệp cốt lõi: AI không thay thế người thầy, mà trao quyền cho cô giáo dành trọn vẹn thời gian và tình yêu thương để chăm
+sóc, giáo dục từng mầm non tương lai.
+
+=== PAGE 4 ===
+BỐI CẢNH VÀ VẤN ĐỀ
+Thách thức 1: Gánh nặng hồ sơ sổ sách
+Thách thức 2: Nội dung bài học rập khuôn, chiếu lệ
+Theo quy định Bộ GD&ĐT, mỗi ngày giáo viên phải theo dõi 25 - 35 trẻ theo 5 lĩnh vực phát triển. Mỗi tuần mất 8 - 12 giờ
+ngoài giờ lên lớp chỉ để ghi chép.
+Do áp lực thời gian quá lớn, nhiều giáo viên phải sao chép thụ động các giáo án cũ tải trên mạng. Nội dung thường mang
+tính rập khuôn, chiếu lệ, chưa bám sát tâm lý lứa tuổi và chưa kích hoạt được tính sáng tạo thực tế của trẻ tại địa phương.
+Thách thức 3: Rào cản số hóa và áp lực thiết kế bài giảng điện tử
+Nhà trường có đầy đủ trang thiết bị và đồ dùng dạy học truyền thống, nhưng việc chuyển đổi sang bài giảng số đa phương
+tiện trên Smart TV vẫn là thách thức lớn. 
+
+=== PAGE 5 ===
+Diễn đàn Đổi mới sáng tạo Giáo dục Việt Nam với Trí tuệ nhân tạo 
+Ý TƯỞNG VÀ GIẢI PHÁP
+TRỤ CỘT 1
+Soạn Kế hoạch bài dạy
+chuẩn Thông tư 51
+TRỤ CỘT 2
+Studio Slide Canva & Trình
+chiếu Smart TV 0 đồng
+Ứng dụng Prompt Master bám sát mục tiêu 3
+phần: Kiến thức - Kỹ năng - Thái độ và tiến trình 3
+bước (Gây hứng thú - Khám phá - Kết thúc). Xuất
+file Word giáo án hoàn chỉnh trong 30 giây.
+Tự động chuyển đổi giáo án thành bộ Slide
+PowerPoint 16:9 kéo thả 1-click vào Canva; tích
+hợp chế độ Smart TV lớp học trình chiếu toàn
+màn hình offline 
+TRỤ CỘT 3
+Xuất bản Word (.docx) chuẩn
+ký duyệt & Thư viện số
+Tự động xuất toàn bộ kế hoạch bài dạy ra file
+Word (.docx) chuẩn quy cách Nghị định
+30/2020/NĐ-CP sẵn sàng in ấn trình Ban Giám
+hiệu ký duyệt; tích hợp thư viện số lưu trữ bảo
+mật 100% trên máy tính cá nhân của cô giáo.
+
+=== PAGE 6 ===
+Diễn đàn Đổi mới sáng tạo Giáo dục Việt Nam với Trí tuệ nhân tạo 
+TRIỂN KHAI THỰC TẾ
+QUY MÔ TRIỂN KHAI THỰC NGHIỆM
+Địa bàn áp dụng: Trường Mầm non Phúc Sơn B, Xã Phúc
+Sơn.
+ 4 Khối lớp tham gia:
+Nhóm Nhà trẻ (24 - 36 tháng tuổi)
+Lớp Mẫu giáo bé (3 - 4 tuổi)
+Lớp Mẫu giáo nhỡ (4 - 5 tuổi)
+Lớp Mẫu giáo lớn (5 - 6 tuổi)
+Tổng số học sinh: Hơn 100 trẻ tham gia theo dõi thực
+nghiệm.
+Thiết bị sử dụng: Điện thoại thông minh của giáo viên, máy
+tính lớp học, tivi kết nối internet sẵn có của nhà trường.
+
+=== PAGE 7 ===
+Diễn đàn Đổi mới sáng tạo Giáo dục Việt Nam với Trí tuệ nhân tạo 
+Chỉ số đo lường thực nghiệm  Trước áp dụng  Sau áp dụng Kết quả
+Thời gian soạn Kế hoạch bài dạy 12 - 14 giờ/tuần 2 - 2.5 giờ/tuần GIẢM 83.3%
+Thời gian chuyển đổi Giáo án sang
+Slide trình chiếu 45 - 60 phút / bài 5 - 10 phút / bài TỰ ĐỘNG HÓA 93% QUY TRÌNH
+Tỷ lệ giáo viên trong Tổ chuyên môn
+làm chủ công nghệ 0% 100% 100% TỔ CHUYÊN MÔN LÀM CHỦ
+Độ đồng bộ giữa Kế hoạch bài dạy và
+Slide Rời rạc, thiếu đồng bộ Đồng bộ tự động CHUẨN HÓA THỐNG NHẤT TOÀN BỘ NỘIDUNG BÀI GIẢNG
+KẾT QUẢ VÀ TÁC ĐỘNG 
+
+=== PAGE 8 ===
+Diễn đàn Đổi mới sáng tạo Giáo dục Việt Nam với Trí tuệ nhân tạo 
+TÍNH BỀN VỮNG & KHẢ NĂNG NHÂN RỘNG
+Chi phí vận hành 0 đồng
+Tận dụng tài khoản Canva for Education miễn phí cho giáo viên, phiên bản Google Gemini / Web
+Speech API miễn phí. Không phát sinh chi phí duy trì máy chủ hay phí bản quyền phần mềm.
+Đã đóng gói thành 'Sổ tay 3 bước ứng dụng AI', tập huấn 30 phút là giáo viên mọi độ tuổi
+đều làm chủ được; dễ dàng chuyển giao cho 100% trường bạn.
+Khả năng nhân rộng cao:
+Hoạt động trơn tru trên máy tính bảng hoặc máy tính để bàn sẵn có của trường mầm
+non. Giao diện Web App nhẹ nhàng, chạy cả offline trong mạng LAN.
+Không cần máy móc chuyên dụng:
+
+=== PAGE 9 ===
+ĐỊNH HƯỚNG PHÁT TRIỂN
+Giai đoạn 1: Chuẩn hóa bộ dữ liệu mẫu theo chủ đề năm học
+Xây dựng ngân hàng 100+ kịch bản mẫu và câu lệnh Prompt chuyên biệt cho từng chủ đề (Trường mầm non, Bản thân, Gia đình,
+Nghề nghiệp, Thế giới thực vật, Động vật).
+Giai đoạn 2: Phát triển Studio Đa phương tiện AI & Kho bài giảng tương tác
+Tích hợp AI tạo video hoạt họa ngắn 1-2 phút theo cốt truyện bài dạy, tự động phối nhạc bài thơ mầm non và bổ sung thêm 5 mini-
+game tương tác đa giác quan trên Smart TV giúp trẻ vừa học vừa chơi.
+Giai đoạn 3: Chuyển giao và xây dựng nền tảng dùng chung
+Nhân rộng giải pháp đến 100% trường mầm non trên địa bàn huyện; tổ chức các buổi hội thảo tập huấn chuyên đề chia sẻ kinh
+nghiệm ứng dụng AI nhân văn trong GDMN.
+
+=== PAGE 10 ===
+TÀI LIỆU/THÔNG TIN ĐÍNH KÈM (NẾU CÓ)
+Đường dẫn tới app: 
+https://annethanks.github.io/kid-lesson-ai/
+
+
+=== PAGE 11 ===
+
+
