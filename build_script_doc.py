@@ -1,0 +1,291 @@
+# -*- coding: utf-8 -*-
+import os
+
+html_doc = """\ufeff<html xmlns:o='urn:schemas-microsoft-com:office:office' 
+      xmlns:w='urn:schemas-microsoft-com:office:word' 
+      xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset='utf-8'>
+  <title>Kich_Ban_Video_5_Phut_KID_LESSON_AI</title>
+  <!--[if gte mso 9]>
+  <xml>
+    <w:WordDocument>
+      <w:View>Print</w:View>
+      <w:Zoom>100</w:Zoom>
+      <w:DoNotOptimizeForBrowser/>
+    </w:WordDocument>
+  </xml>
+  <![endif]-->
+  <style>
+    @page {
+      size: 210mm 297mm;
+      margin: 20mm 15mm 20mm 20mm;
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13pt;
+      line-height: 1.45;
+      color: #000;
+    }
+    h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      margin: 12pt 0 4pt 0;
+      color: #1e3a8a;
+    }
+    h2 {
+      font-size: 13pt;
+      font-weight: bold;
+      text-align: center;
+      margin: 4pt 0 14pt 0;
+      color: #0f172a;
+    }
+    h3 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin-top: 14pt;
+      margin-bottom: 6pt;
+      color: #1d4ed8;
+      border-bottom: 1.5pt solid #93c5fd;
+      padding-bottom: 3pt;
+    }
+    p {
+      margin: 4pt 0 6pt 0;
+      text-align: justify;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10pt 0 14pt 0;
+    }
+    th, td {
+      border: 1pt solid #000;
+      padding: 6pt 8pt;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f1f5f9;
+      font-weight: bold;
+      text-align: center;
+    }
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 14pt;
+    }
+    .header-table td {
+      border: none;
+      padding: 2pt 4pt;
+    }
+    .meta-box {
+      background-color: #f8fafc;
+      border: 1pt solid #cbd5e1;
+      padding: 8pt 12pt;
+      margin: 10pt 0 14pt 0;
+      font-size: 12pt;
+    }
+    .voice-box {
+      background-color: #eff6ff;
+      border-left: 3pt solid #2563eb;
+      padding: 8pt 12pt;
+      margin: 6pt 0 10pt 0;
+      font-style: italic;
+    }
+    .action-box {
+      background-color: #fefce8;
+      border-left: 3pt solid #ca8a04;
+      padding: 8pt 12pt;
+      margin: 6pt 0 10pt 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TIÊU NGỮ HÀNH CHÍNH -->
+  <table class='header-table'>
+    <tr>
+      <td style='width: 50%; text-align: left; vertical-align: top; font-size: 11pt;'>
+        <strong>PHÒNG GIÁO DỤC VÀ ĐÀO TẠO</strong><br>
+        <strong>TRƯỜNG MẦM NON PHÚC SƠN B</strong><br>
+        <em>Tổ Chuyên Môn Khối Mầm Non</em>
+      </td>
+      <td style='width: 50%; text-align: right; vertical-align: top; font-size: 11pt;'>
+        <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong><br>
+        <strong>Độc lập - Tự do - Hạnh phúc</strong><br>
+        <em>Phúc Sơn, ngày 20 tháng 10 năm 2026</em>
+      </td>
+    </tr>
+  </table>
+
+  <h1>KỊCH BẢN VIDEO 5 PHÚT: HƯỚNG DẪN SỬ DỤNG ỨNG DỤNG</h1>
+  <h2>DỰ ÁN SÁNG KIẾN: KID-LESSON AI (HỆ THỐNG TRỢ LÝ AI SOẠN GIÁO ÁN MẦM NON)</h2>
+
+  <div class='meta-box'>
+    <p>• <strong>Thời lượng:</strong> Đúng 05 phút 00 giây (300 giây).</p>
+    <p>• <strong>Hình thức thực hiện:</strong> Quay màn hình máy tính (Screen Recording 1080p 60fps) kết hợp lồng tiếng thuyết minh (Voice-over) rõ ràng, trực quan. Không sử dụng cảnh quay diễn xuất rườm rà.</p>
+    <p>• <strong>Mục tiêu:</strong> Giáo viên mầm non xem là thực hành làm chủ ứng dụng được ngay trong 5 phút.</p>
+  </div>
+
+  <h3>I. TỔNG QUAN TIẾN TRÌNH 5 BƯỚC THAO TÁC</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style='width: 15%;'>Phân đoạn</th>
+        <th style='width: 20%;'>Thời gian</th>
+        <th style='width: 65%;'>Nội dung thao tác trọng tâm trên màn hình</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style='text-align: center;'><strong>Mở đầu</strong></td>
+        <td style='text-align: center;'>0:00 - 0:30 (30s)</td>
+        <td>Truy cập ứng dụng trên trình duyệt web, giới thiệu tổng quan giao diện trực quan 0 đồng.</td>
+      </tr>
+      <tr>
+        <td style='text-align: center;'><strong>Bước 1</strong></td>
+        <td style='text-align: center;'>0:31 - 1:30 (60s)</td>
+        <td>Chọn độ tuổi, chọn tuần học bằng lịch trực quan và chọn chủ đề bài dạy (hỗ trợ mic tiếng Việt).</td>
+      </tr>
+      <tr>
+        <td style='text-align: center;'><strong>Bước 2</strong></td>
+        <td style='text-align: center;'>1:31 - 2:40 (70s)</td>
+        <td>Đổi thể loại hoạt động (Real-time tự cập nhật không cần xác nhận) và chỉnh sửa trực tiếp trên mặt giấy giáo án.</td>
+      </tr>
+      <tr>
+        <td style='text-align: center;'><strong>Bước 3</strong></td>
+        <td style='text-align: center;'>2:41 - 3:40 (60s)</td>
+        <td>Sử dụng nút <strong>'Lưu thay đổi'</strong> và trải nghiệm Popup cảnh báo an toàn thông minh (Quay lại / Lưu & Tiếp tục).</td>
+      </tr>
+      <tr>
+        <td style='text-align: center;'><strong>Bước 4</strong></td>
+        <td style='text-align: center;'>3:41 - 4:35 (55s)</td>
+        <td>Khai thác 3 nút công cụ bên trái: Lưu Thư Viện, Xuất Word (.doc) 4 cột và Tạo Slide / Chiếu Smart TV.</td>
+      </tr>
+      <tr>
+        <td style='text-align: center;'><strong>Lời kết</strong></td>
+        <td style='text-align: center;'>4:36 - 5:00 (25s)</td>
+        <td>Tóm tắt giá trị thiết thực, hiển thị mã QR Code trải nghiệm và lời chúc gửi đến thầy cô.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>II. KỊCH BẢN CHI TIẾT TỪNG GIÂY (THAO TÁC MÀN HÌNH & LỜI BÌNH)</h3>
+
+  <!-- 0:00 - 0:30 -->
+  <p><strong>1. PHẦN MỞ ĐẦU: TRUY CẬP ỨNG DỤNG (0:00 - 0:30 | 30 giây)</strong></p>
+  <div class='action-box'>
+    <strong>🖥️ Thao tác màn hình:</strong><br>
+    - Mở trình duyệt web (Chrome, Cốc Cốc hoặc Edge), truy cập địa chỉ ứng dụng KID-LESSON AI.<br>
+    - Quay lướt toàn cảnh giao diện làm việc: Cột bên trái là bảng điều khiển cấu hình; Cột bên phải là mặt giấy giáo án màu trắng chuyên nghiệp.
+  </div>
+  <div class='voice-box'>
+    <strong>🎙️ Lời bình (Voice-over):</strong><br>
+    "Xin chào quý thầy cô giáo mầm non! Hôm nay, em xin hướng dẫn thầy cô sử dụng <strong>KID-LESSON AI</strong> – ứng dụng hỗ trợ soạn kế hoạch bài dạy 4 cột chuẩn Thông tư 51 và tạo bài giảng điện tử hoàn toàn miễn phí, chạy trực tiếp trên trình duyệt web mà không cần cài đặt. Chỉ với vài phút thao tác đơn giản, thầy cô sẽ có ngay trọn bộ giáo án và slide bài dạy cho cả tuần. Chúng ta cùng bắt đầu ngay nhé!"
+  </div>
+
+  <!-- 0:31 - 1:30 -->
+  <p><strong>2. BƯỚC 1: THIẾT LẬP THÔNG TIN & LỊCH DẠY HỌC (0:31 - 1:30 | 60 giây)</strong></p>
+  <div class='action-box'>
+    <strong>🖥️ Thao tác màn hình:</strong><br>
+    1. Chuột bấm chọn mục <strong>'Độ tuổi của trẻ'</strong>: Chọn Mẫu giáo Bé 3-4 tuổi (hoặc 4-5 tuổi, 5-6 tuổi).<br>
+    2. Bấm nút <strong>'Chọn tuần trên Lịch'</strong>: Cửa sổ lịch học hiện ra, bấm vào một ngày bất kỳ &rarr; hệ thống tự động điền trọn tuần dạy từ Thứ 2 đến Thứ 6.<br>
+    3. Bấm chọn <strong>Thứ trong tuần</strong> trên thanh điều hướng (Thứ Hai, Thứ Ba, Thứ Tư, Thứ Năm, Thứ Sáu).<br>
+    4. Bấm vào ô <strong>'Chủ đề'</strong>: Chọn chủ đề gợi ý (ví dụ: Thế giới Động vật) hoặc gõ chủ đề mới.<br>
+    5. Bấm vào biểu tượng micro 🎙️ bên cạnh ô Đề tài, nói thử một câu tiếng Việt: <em>'Thơ Ong và bướm'</em> &rarr; chữ tự động xuất hiện vào ô nhập liệu.
+  </div>
+  <div class='voice-box'>
+    <strong>🎙️ Lời bình (Voice-over):</strong><br>
+    "Đầu tiên, tại bảng điều khiển bên trái, thầy cô chọn độ tuổi của lớp mình phụ trách: từ Nhà trẻ đến Mẫu giáo 3, 4 hoặc 5 tuổi.<br><br>
+    Tiếp theo, thầy cô bấm vào nút lịch để chọn tuần dạy. Rất tiện lợi là chỉ cần bấm chọn một ngày, ứng dụng sẽ tự động tính trọn vẹn tuần học từ Thứ Hai đến Thứ Sáu.<br><br>
+    Tại ô Chủ đề và Đề tài, thầy cô có thể chọn từ danh sách gợi ý phong phú, hoặc tự gõ theo giáo trình của trường. Đặc biệt, thầy cô có thể bấm vào nút micro để nói trực tiếp bằng tiếng Việt, hệ thống sẽ tự động chuyển thành văn bản mà không cần phải gõ bàn phím."
+  </div>
+
+  <!-- 1:31 - 2:40 -->
+  <p><strong>3. BƯỚC 2: CẬP NHẬT REAL-TIME & CHỈNH SỬA TRỰC TIẾP (1:31 - 2:40 | 70 giây)</strong></p>
+  <div class='action-box'>
+    <strong>🖥️ Thao tác màn hình:</strong><br>
+    1. Chuột chọn mục <strong>'Thể loại hoạt động'</strong>: Lần lượt đổi từ <em>Khám phá</em> sang <em>Âm nhạc</em>, sau đó sang <em>Làm quen văn học</em>.<br>
+    2. Camera quay rõ màn hình bên phải: <strong>Toàn bộ bảng giáo án 4 cột tự động cập nhật ngay tức khắc</strong> theo từng lựa chọn, hiển thị rõ 3 Mục tiêu, Chuẩn bị và Tiến trình 3 bước sư phạm mà không cần bấm xác nhận.<br>
+    3. Chuột bấm trực tiếp vào một dòng chữ bất kỳ trên trang giấy giáo án (phần Ổn định tổ chức), gõ thêm câu: <em>'Cô cùng trẻ hát và vận động bài hát Đố bạn'</em>. Chữ hiển thị mượt mà trên trang in.
+  </div>
+  <div class='voice-box'>
+    <strong>🎙️ Lời bình (Voice-over):</strong><br>
+    "Điểm cải tiến nổi bật nhất của phiên bản này chính là tính năng <strong>Cập nhật thời gian thực (Real-time)</strong>. Khi thầy cô thay đổi thể loại hoạt động: từ Âm nhạc, Nhận biết, Tạo hình, Văn học cho đến Vận động, toàn bộ bảng giáo án 4 cột ở khung bên phải sẽ tự động cấu trúc lại ngay lập tức mà thầy cô không cần phải bấm bất kỳ nút xác nhận nào.<br><br>
+    Đặc biệt, thầy cô có toàn quyền làm chủ bài dạy: hãy nhấp chuột trực tiếp vào bất kỳ câu chữ nào trên trang giáo án để gõ thêm, sửa bớt hoặc bổ sung tên trò chơi theo ý muốn của mình, y như đang thao tác trong phần mềm soạn thảo văn bản."
+  </div>
+
+  <!-- 2:41 - 3:40 -->
+  <p><strong>4. BƯỚC 3: NÚT 'LƯU THAY ĐỔI' & CẢNH BÁO AN TOÀN THÔNG MINH (2:41 - 3:40 | 60 giây)</strong></p>
+  <div class='action-box'>
+    <strong>🖥️ Thao tác màn hình:</strong><br>
+    1. Camera zoom vào góc trên bên phải thanh công cụ: Nút <strong>'Lưu thay đổi'</strong> tự động chuyển sang màu cam nhấp nháy (chỉ báo có nội dung chưa lưu).<br>
+    2. Chuột bấm thử vào nút <strong>'Xuất Word (.doc)'</strong> khi chưa lưu &rarr; Màn hình hiện <strong>Popup cảnh báo thông minh: 'Chưa Lưu Thay Đổi Giáo Án!'</strong>.<br>
+    3. Thao tác trên 2 nút lựa chọn của popup:<br>
+    - Bấm <strong>'Quay lại'</strong>: Popup đóng lại, nút <em>Lưu thay đổi</em> rung nhẹ nhắc nhở cô tự kiểm tra.<br>
+    - Bấm lại Xuất Word và bấm <strong>'Lưu thay đổi & Tiếp tục'</strong>: Hệ thống tự động đồng bộ mọi dữ liệu, pháo hoa giấy (confetti) bắn lên chúc mừng, âm thanh vang lên và mở ngay file Word tải về.<br>
+    4. Bấm trực tiếp nút <strong>'Lưu thay đổi'</strong> trên góc phải để thấy thông báo đã lưu thành công.
+  </div>
+  <div class='voice-box'>
+    <strong>🎙️ Lời bình (Voice-over):</strong><br>
+    "Ngay khi thầy cô chỉnh sửa nội dung, nút <strong>'Lưu thay đổi'</strong> ở góc trên bên phải sẽ tự động chuyển sang màu cam nhấp nháy để nhắc nhở thầy cô chưa lưu bài.<br><br>
+    Để tránh việc thầy cô vô tình quên lưu các ý tưởng vừa chỉnh sửa, hệ thống được tích hợp <strong>cơ chế an toàn thông minh</strong>: Nếu thầy cô bấm xuất file hoặc tạo slide khi chưa lưu, một popup cảnh báo sẽ hiện lên.<br><br>
+    Tại đây, thầy cô có 2 lựa chọn rất thuận tiện: Nếu muốn kiểm tra thêm, bấm <strong>'Quay lại'</strong>. Nếu muốn xuất ngay, bấm <strong>'Lưu thay đổi & Tiếp tục'</strong> – hệ thống sẽ tự động đồng bộ mọi chỉnh sửa mới nhất, phát hiệu ứng ăn mừng vui nhộn và thực hiện tiếp tác vụ ngay tức thì mà không làm mất công của cô."
+  </div>
+
+  <!-- 3:41 - 4:35 -->
+  <p><strong>5. BƯỚC 4: XUẤT WORD CHUẨN 4 CỘT & TRÌNH CHIẾU SMART TV (3:41 - 4:35 | 55 giây)</strong></p>
+  <div class='action-box'>
+    <strong>🖥️ Thao tác màn hình:</strong><br>
+    1. Bấm nút <strong>'Lưu Thư Viện'</strong>: Thông báo đã lưu bài giảng vào kho của cô.<br>
+    2. Bấm nút <strong>'Xuất Word (.doc)'</strong>: File Word tải về trong 1 giây. Mở file Word trên máy tính: Bảng kẻ ô 4 cột thẳng tắp, đầy đủ tiêu ngữ hành chính và phần duyệt chữ ký cuối bài.<br>
+    3. Bấm nút <strong>'Tạo Slide'</strong>: Cửa sổ Canva Slide Studio mở ra với 6 slide rực rỡ sắc màu.<br>
+    4. Bấm <strong>'Chiếu Smart TV'</strong>: Trình chiếu toàn màn hình, bấm chuyển slide và bấm biểu tượng loa để nghe AI phát âm tiếng Việt.<br>
+    5. Bấm nút <strong>'Tải File PPTX Canva'</strong>: File PowerPoint 16:9 được tải về sẵn sàng kéo thả vào Canva.
+  </div>
+  <div class='voice-box'>
+    <strong>🎙️ Lời bình (Voice-over):</strong><br>
+    "Sau khi lưu bài xong, thầy cô hãy sử dụng 3 nút chức năng tiện ích ở góc trái:<br><br>
+    Thứ nhất: Nút <strong>'Lưu Thư Viện'</strong> giúp cô cất giữ bài dạy vào kho tài liệu cá nhân để những năm học sau mở ra dùng lại bất cứ lúc nào.<br><br>
+    Thứ hai: Nút <strong>'Xuất Word (.doc)'</strong> sẽ tạo ngay một tệp văn bản chuẩn bảng kẻ ô 4 cột theo đúng thể thức hành chính, có sẵn tiêu ngữ và phần chữ ký ban giám hiệu, thầy cô chỉ việc in ấn ký duyệt mà không mất một phút nào căn chỉnh lề.<br><br>
+    Thứ ba: Nút <strong>'Tạo Slide'</strong> mở ra phòng thiết kế bài giảng thông minh. Thầy cô có thể trình chiếu trực tiếp lên Smart TV của lớp học với giọng đọc tiếng Việt sinh động, hoặc tải tệp PowerPoint về để kéo thả chỉnh sửa thỏa thích trên Canva."
+  </div>
+
+  <!-- 4:36 - 5:00 -->
+  <p><strong>6. LỜI KẾT & CHÚC MỪNG (4:36 - 5:00 | 25 giây)</strong></p>
+  <div class='action-box'>
+    <strong>🖥️ Thao tác màn hình:</strong><br>
+    - Quay lại màn hình chính của ứng dụng, hiển thị biểu tượng các tính năng đa phương tiện.<br>
+    - Hiện đường link truy cập web và mã QR Code lớn ở giữa màn hình.
+  </div>
+  <div class='voice-box'>
+    <strong>🎙️ Lời bình (Voice-over):</strong><br>
+    "Như vậy chỉ trong chưa đầy 5 phút, thầy cô đã làm chủ hoàn toàn ứng dụng <strong>KID-LESSON AI</strong>. Nhanh chóng, chuẩn mực, dễ sử dụng và hoàn toàn miễn phí, ứng dụng sẽ là người bạn đồng hành tin cậy của mỗi cô giáo mầm non.<br><br>
+    Thầy cô hãy quét mã QR trên màn hình hoặc truy cập đường link bên dưới để trải nghiệm ngay hôm nay. Chúc quý thầy cô luôn tràn đầy niềm vui và có những tiết dạy thật hạnh phúc bên các con! Xin trân trọng cảm ơn!"
+  </div>
+
+  <!-- BẢNG KÝ TÊN DUYỆT -->
+  <table class='header-table' style='margin-top: 30pt;'>
+    <tr>
+      <td style='width: 50%; text-align: center; vertical-align: top; font-size: 11pt;'>
+        <strong>BAN GIÁM HIỆU / TỔ CHUYÊN MÔN</strong><br>
+        <em>(Ký và ghi rõ họ tên)</em><br><br><br><br><br>
+        <strong>Hiệu trưởng / Tổ trưởng Chuyên môn</strong>
+      </td>
+      <td style='width: 50%; text-align: center; vertical-align: top; font-size: 11pt;'>
+        <strong>NGƯỜI XÂY DỰNG KỊCH BẢN</strong><br>
+        <em>(Ký và ghi rõ họ tên)</em><br><br><br><br><br>
+        <strong>Giáo viên thực hiện</strong>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+"""
+
+output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Kich_Ban_Video_5_Phut_KID_LESSON_AI.doc")
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(html_doc)
+print(f"Generated successfully: {output_path}")

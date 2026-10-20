@@ -1,51 +1,108 @@
-# KỊCH BẢN PHÂN CẢNH VÀ LỜI BÌNH VIDEO THUYẾT MINH 5 PHÚT
-## DỰ ÁN SÁNG KIẾN: KID-LESSON AI
-### TRỢ LÝ AI TẠO SINH TRONG XÂY DỰNG KẾ HOẠCH BÀI DẠY VÀ KHO HỌC LIỆU SỐ ĐA PHƯƠNG TIỆN CHO GIÁO VIÊN MẦM NON
-* **Thời lượng quy định chuẩn của Ban Tổ Chức:** Đúng 04 phút 45 giây đến 04 phút 55 giây (Tối đa không quá 05:00)
-* **Đơn vị áp dụng:** Trường Mầm non Phúc Sơn B
-* **Phiên bản cập nhật:** Giao diện Realtime Dynamic, Toolbar chuẩn sư phạm & Hệ thống Cảnh báo Sư phạm Thông minh (Smart Unsaved Warning)
+# KỊCH BẢN VIDEO 5 PHÚT: HƯỚNG DẪN SỬ DỤNG ỨNG DỤNG KID-LESSON AI
+## HỆ THỐNG TRỢ LÝ AI SOẠN KẾ HOẠCH BÀI DẠY VÀ TẠO HỌC LIỆU SỐ MẦM NON
+* **Thời lượng:** Đúng 05 phút 00 giây (300 giây)
+* **Hình thức thể hiện:** Quay màn hình máy tính (Screen Recording) kết hợp giọng đọc thuyết minh (Voice-over) và thao tác chuột trực quan. Không dùng cảnh quay diễn xuất rườm rà.
+* **Mục tiêu:** Giúp giáo viên mầm non xem là thao tác được ngay trong 5 phút.
 
 ---
 
-## I. TỔNG QUAN PHÂN BỔ THỜI LƯỢNG (TIMELINE STRUCTURE)
+## TỔNG QUAN THỜI LƯỢNG 5 BƯỚC THAO TÁC
 
-| STT | Phân đoạn | Thời lượng | Nội dung trọng tâm |
-| :---: | :--- | :---: | :--- |
-| **1** | **Nỗi niềm trăn trở của cô giáo mầm non** | `0:00 - 0:35` *(35s)* | Áp lực soạn giáo án 4 cột thủ công và chuẩn bị học liệu số hàng đêm. |
-| **2** | **Ý tưởng ra đời của KID-LESSON AI** | `0:36 - 1:15` *(40s)* | Khắc họa "Tổ phó Chuyên môn ảo" chạy trực tiếp trên web, chi phí 0 đồng. |
-| **3** | **Vận hành Realtime & An toàn Sư phạm** | `1:16 - 2:35` *(79s)* | Cập nhật giáo án tự động theo thời gian thực, chỉnh sửa trực tiếp, Toolbar 3 nút trái - Lưu thay đổi phải, Popup cảnh báo thông minh, Studio Canva & Trình chiếu Smart TV. |
-| **4** | **Tiết dạy thực tế bùng nổ cảm xúc** | `2:36 - 3:35` *(60s)* | Trẻ tương tác trên Smart TV, đọc thơ AI sáng tác, chơi đố vui hào hứng. |
-| **5** | **Dữ liệu thực nghiệm & Đạo đức AI** | `3:36 - 4:20` *(45s)* | Giảm 82% thời gian soạn bài, tăng 96.2% độ hứng thú của trẻ, bảo mật 100%. |
-| **6** | **Thông điệp truyền cảm hứng & Lời tri ân** | `4:21 - 5:00` *(40s)* | "AI giải phóng đôi tay người thầy để trọn vẹn trái tim cho con trẻ". |
-
----
-
-## II. BẢNG PHÂN CẢNH CHI TIẾT TỪNG GIÂY (STORYBOARD & LỜI BÌNH)
-
-| Thời gian | Phân cảnh & Tiêu đề | Lời bình của Tác giả / Thuyết minh viên (Voice-over) | Hình ảnh B-Roll & Hiệu ứng kỹ xảo |
-| :---: | :--- | :--- | :--- |
-| **0:00 - 0:35**<br>*(35 giây)* | **PHẦN 1: NỖI NIỀM TRĂN TRỞ CỦA CÔ GIÁO MẦM NON**<br>*(The Teacher's Pain Point)* | *"Kính thưa Ban Giám khảo! Mỗi ngày khi tiếng cười trẻ thơ khép lại sau giờ tan lớp, các cô giáo mầm non lại bước vào một cuộc chiến thầm lặng bên bàn máy tính.<br><br>Để chuẩn bị bài dạy cho một tuần học theo đúng chuẩn Thông tư 51 của Bộ GD&ĐT, người giáo viên phải mất từ 12 đến 15 giờ để kẻ vẽ từng ô bảng 4 cột, viết từng mục tiêu kiến thức, kỹ năng và tự cắt dán đồ dùng trực quan. Thiếu thời gian và công cụ số, nhiều bài dạy đành chấp nhận sự rập khuôn, thiếu vắng những tranh ảnh sinh động..."* | • **Cảnh 1 (0:00 - 0:15):** Cô giáo ngồi một mình trong góc lớp học khi trời đã tối muộn, xung quanh là chồng sổ sách kế hoạch giáo dục dày cộp, ánh mắt đăm chiêu bên màn hình laptop.<br>• **Cảnh 2 (0:15 - 0:35):** Cận cảnh đôi bàn tay cô giáo cặm cụi gõ phím, kẻ bảng Word thủ công, ánh sáng đèn bàn leo lét.<br>• **Âm thanh:** Tiếng piano du dương, trầm lắng, tạo sự đồng cảm sâu sắc. |
-| **0:36 - 1:15**<br>*(40 giây)* | **PHẦN 2: Ý TƯỞNG RA ĐỜI CỦA KID-LESSON AI**<br>*(Breakthrough Innovation)* | *"Thấu hiểu sâu sắc nỗi vất vả ấy, chúng tôi đã nghiên cứu và phát triển sáng kiến: **'KID-LESSON AI'** - Hệ thống trợ lý Trí tuệ nhân tạo tạo sinh trong xây dựng kế hoạch bài dạy điện tử và kho học liệu số đa phương tiện tại Trường Mầm non Phúc Sơn B.<br><br>Đây không chỉ là một phần mềm thông thường, mà chính là một **'Tổ phó Chuyên môn ảo'** mẫn cán, ứng dụng công nghệ Dual-Engine kết hợp mô hình AI ngoại tuyến chi phí 0 đồng và Gemini Cloud hiện đại, giúp giải phóng hoàn toàn sức lao động hành chính của nhà giáo!"* | • **Cảnh 3 (0:36 - 0:50):** Nhạc nền chuyển sang điệu tiết tấu công nghệ tươi sáng, tràn đầy năng lượng. Logo **KID-LESSON AI** xuất hiện với hiệu ứng ánh sáng 3D ấn tượng.<br>• **Cảnh 4 (0:50 - 1:15):** Cô giáo mỉm cười rạng rỡ, mở trình duyệt web ứng dụng trên máy tính và điện thoại. Giao diện sắc nét, tone màu xanh pastel thân thiện chuẩn sư phạm mầm non.<br>• **Đồ họa chữ:** *"Chi phí 0đ - Chạy tức thì trên Web - Chuẩn Thông tư 51"*. |
-| **1:16 - 2:35**<br>*(79 giây)* | **PHẦN 3: ĐỘT PHÁ VẬN HÀNH REALTIME & AN TOÀN SƯ PHẠM**<br>*(Realtime Workflow & Human-in-the-Loop)* | *"Khác biệt hoàn toàn với các giải pháp AI cứng nhắc trước đây, KID-LESSON AI mang đến một quy trình trải nghiệm mượt mà không độ trễ:<br><br>👉 **Thứ nhất - Phản hồi Realtime tức thì:** Cô giáo chỉ cần chọn Chủ đề, Lứa tuổi hay Thể loại hoạt động: từ Khám phá, Âm nhạc, Tạo hình đến Văn học, Vận động. Bỏ qua mọi nút bấm rườm rà, kế hoạch bài dạy 4 cột chuẩn chỉnh tự động cấu trúc sống động ngay trước mắt theo thời gian thực!<br><br>👉 **Thứ hai - Toàn quyền Sư phạm (Human-in-the-Loop):** Cô có thể nhấp chuột gõ chỉnh sửa trực tiếp từng câu chữ ngay trên mặt giấy in. Nút **'Lưu thay đổi'** ở góc phải sẽ tự động đổi màu cam nhấp nháy, nhắc nhở cô lưu lại những sáng tạo riêng của mình.<br><br>👉 **Thứ ba - Cơ chế Cảnh báo Thông minh:** Nếu cô bấm Xuất Word hay Tạo Slide khi chưa bấm Lưu, hệ thống lập tức bật Popup cảnh báo an toàn. Cô chỉ cần chọn **'Lưu thay đổi & Tiếp tục'** - hệ thống sẽ tự động đồng bộ và mở tác vụ ngay tức thì, hoặc chọn **'Quay lại'** để kiểm tra thêm.<br><br>👉 **Thứ tư - Xuất bản đa phương tiện 1 chạm:** Ba nút thao tác bên trái cho phép cô: Lưu bài vào thư viện dùng nhiều năm, Xuất file Word chuẩn bảng kẻ ô Nghị định 30, và đặc biệt là mở **Canva Slide Studio** để chiếu Smart TV hoặc xuất PowerPoint 16:9 lộng lẫy!"* | • **Cảnh 5 (1:16 - 1:35):** Cận cảnh màn hình: Chuột chọn lớp Bé 3-4 tuổi $\rightarrow$ chọn thể loại 'Âm nhạc' $\rightarrow$ Toàn bộ bảng 4 cột tự động 'nhảy' ra nội dung sư phạm hoàn chỉnh (Mục đích - Chuẩn bị - Tiến hành 3 bước) trong tích tắc.<br>• **Cảnh 6 (1:35 - 1:55):** Cận cảnh cô giáo gõ thêm dòng ghi chú trực tiếp trên mặt giấy giáo án $\rightarrow$ Nút **'Lưu thay đổi'** góc phải phát sáng hiệu ứng pulse màu cam cảnh báo sinh động.<br>• **Cảnh 7 (1:55 - 2:15):** Chuột bấm nút **'Xuất Word (.doc)'** $\rightarrow$ Popup cảnh báo *'Chưa Lưu Thay Đổi Giáo Án!'* hiện lên $\rightarrow$ Chuột bấm **'Lưu thay đổi & Tiếp tục'** $\rightarrow$ Hiệu ứng pháo hoa giấy (Confetti) tung bay rực rỡ, âm thanh chuông 'ding' vui tai vang lên, file Word được tải về chuẩn kẻ ô tuyệt đẹp.<br>• **Cảnh 8 (2:15 - 2:35):** Bấm nút **'Tạo Slide'** $\rightarrow$ Cửa sổ Canva Slide Studio mở ra với 6 slide rực rỡ, bấm 'Chiếu Smart TV' toàn màn hình với giọng đọc AI tiếng Việt mượt mà. |
-| **2:36 - 3:35**<br>*(60 giây)* | **PHẦN 4: TIẾT DẠY THỰC TẾ BÙNG NỔ CẢM XÚC**<br>*(Classroom in Action)* | *"Mang những học liệu do KID-LESSON AI kiến tạo vào tiết dạy thực tế tại lớp Mẫu giáo 4-5 tuổi, một luồng sinh khí mới đã tràn ngập không gian lớp học!<br><br>Thay cho những tranh vẽ photocopy mờ nhạt ngày xưa, các con được ngắm nhìn thế giới sống động qua những slide bài giảng rực rỡ sắc màu trên màn hình Smart TV. Trẻ hào hứng giơ tay thi nhau giải những câu đố vui bằng thơ, say sưa chơi trò chơi ghép bóng và hòa nhịp cùng bài thơ mới toanh cô vừa cùng AI chắp bút.<br><br>Mỗi phút giây trên lớp giờ đây là một hành trình khám phá ngập tràn tiếng cười, nơi trẻ học bằng cả sự say mê và đôi mắt tròn xoe lấp lánh niềm vui!"* | • **Cảnh 9 (2:36 - 2:55):** Toàn cảnh lớp học mầm non sinh động: Cô giáo đứng bên màn hình Smart TV tương tác, các bé ngồi quây quần chăm chú lắng nghe, ánh mắt rạng ngời.<br>• **Cảnh 10 (2:55 - 3:15):** Cận cảnh từng em nhỏ hào hứng giơ tay: *"Con thưa cô con biết ạ!"*, một bé lên chạm ngón tay vào màn hình Smart TV chơi trò chơi ghép bóng của app, các bạn bên dưới vỗ tay rộn rã.<br>• **Cảnh 11 (3:15 - 3:35):** Cả lớp cùng cô đọc bài thơ vừa tạo, nhún nhảy theo giai điệu. Nụ cười hạnh phúc, tự tin và tràn đầy tình cảm của cô giáo mầm non.<br>• **Âm thanh:** Tiếng trẻ thơ đọc thơ đồng thanh trong trẻo, tiếng vỗ tay giòn giã và nhạc nền vui tươi. |
-| **3:36 - 4:20**<br>*(45 giây)* | **PHẦN 5: DỮ LIỆU THỰC NGHIỆM ĐỊNH LƯỢNG & ĐẠO ĐỨC AI**<br>*(Quantitative Evidence & AI Ethics)* | *"Qua một học kỳ áp dụng thực nghiệm tại Trường Mầm non Phúc Sơn B, kết quả đã vượt xa mọi kỳ vọng ban đầu:<br><br>📊 **Thời gian soạn bài của giáo viên giảm tới 82%** - từ hơn 14 giờ mỗi tuần nay chỉ còn chưa đầy 2.5 giờ!<br>📊 **100% tiết dạy** đều có slide bài giảng và học liệu số trực quan bắt mắt.<br>📊 **Mức độ tích cực và tập trung của trẻ đạt 96.2%** qua phiếu quan sát sư phạm chuyên môn.<br><br>Đặc biệt, sáng kiến tuân thủ tuyệt đối **Đạo đức AI trong giáo dục**: Hệ thống không thu thập dữ liệu nhạy cảm của trẻ em, dữ liệu lưu cục bộ tại máy tính của cô; và hơn hết, người giáo viên luôn nắm quyền kiểm duyệt sư phạm cuối cùng trước khi đưa vào giảng dạy!"* | • **Cảnh 12 (3:36 - 3:55):** Đồ họa Infographic động 3D nhảy số trực quan:<br>- Biểu đồ cột: Thời gian soạn bài giảm từ *14h $\rightarrow$ 2.5h* (Giảm 82%).<br>- Tỷ lệ học liệu số: *100%*.<br>- Chỉ số hứng thú của trẻ: *96.2%*.<br>• **Cảnh 13 (3:55 - 4:08):** Đoạn phỏng vấn ngắn (10s) của đại diện Ban Giám hiệu / Tổ trưởng Chuyên môn: *"Sáng kiến đã giúp các cô giáo trút bỏ gánh nặng sổ sách, chuyên môn nhà trường được nâng tầm rõ rệt!"*<br>• **Cảnh 14 (4:08 - 4:20):** Cảnh tập huấn: Các cô giáo trong trường quây quần bên máy tính, thích thú thực hành xuất file Word và chiếu slide trong 30 phút. |
-| **4:21 - 5:00**<br>*(40 giây)* | **PHẦN 6: THÔNG ĐIỆP TRUYỀN CẢM HỨNG & LỜI TRI ÂN**<br>*(Inspiring Closing & Call-to-Action)* | *"Kính thưa Ban Giám khảo! Công nghệ sinh ra không phải để thay thế trái tim và tình yêu thương của người thầy. Nhưng người thầy biết làm chủ AI sẽ mang lại những giá trị vô giá cho giáo dục tương lai!<br><br>**KID-LESSON AI** tự hào là chiếc cầu nối số, giải phóng đôi bàn tay người thầy khỏi áp lực bàn phím, để mỗi giờ lên lớp là một hành trình hạnh phúc trọn vẹn bên các con thơ!<br><br>Chúng tôi xin trân trọng cảm ơn Ban Tổ chức, Ban Giám khảo đã lắng nghe! Kính chúc Hội thi thành công rực rỡ!"* | • **Cảnh 15 (4:21 - 4:40):** Góc quay Flycam hoặc toàn cảnh sân trường ngập tràn ánh nắng: Cô giáo nắm tay đàn trẻ nhỏ cùng vẫy tay chào rạng rỡ về phía ống kính.<br>• **Cảnh 16 (4:40 - 5:00):** Tác giả cúi đầu chào trang trọng. Màn hình kết thúc xuất hiện đầy đủ thông tin:<br>- Tên tác giả & Đơn vị: *Trường Mầm non Phúc Sơn B*<br>- Mã QR Code quét trải nghiệm trực tuyến trên GitHub Pages<br>- Dòng chữ: *"KID-LESSON AI - Đồng hành cùng nụ cười con trẻ"*. Nhạc nền dâng trào cảm xúc và mờ dần (Fade out). |
+| Bước | Thời gian | Nội dung thao tác chính trên màn hình |
+| :---: | :---: | :--- |
+| **Mở đầu** | `0:00 - 0:30` *(30s)* | Truy cập ứng dụng trên trình duyệt web, giới thiệu giao diện trực quan 0 đồng. |
+| **Bước 1** | `0:31 - 1:30` *(60s)* | Chọn độ tuổi, chọn tuần học bằng lịch trực quan và chọn chủ đề bài dạy. |
+| **Bước 2** | `1:31 - 2:40` *(70s)* | Đổi thể loại hoạt động (Real-time tự động cập nhật) và chỉnh sửa trực tiếp trên mặt giấy giáo án. |
+| **Bước 3** | `2:41 - 3:40` *(60s)* | Sử dụng nút "Lưu thay đổi" và trải nghiệm Popup cảnh báo thông minh ("Quay lại" / "Lưu & Tiếp tục"). |
+| **Bước 4** | `3:41 - 4:35` *(55s)* | Khai thác 3 nút công cụ: Lưu Thư Viện, Xuất Word (.doc) chuẩn 4 cột và Tạo Slide / Chiếu Smart TV. |
+| **Lời kết** | `4:36 - 5:00` *(25s)* | Tóm tắt lợi ích, hướng dẫn lưu link web và lời chúc thầy cô. |
 
 ---
 
-## III. HƯỚNG DẪN DỰNG PHIM & TIÊU CHUẨN KỸ THUẬT QUAY (PRODUCTION CHECKLIST)
+## KỊCH BẢN CHI TIẾT TỪNG GIÂY (LỜI BÌNH & THAO TÁC MÀN HÌNH)
 
-### 1. Thông số kỹ thuật video:
-* **Độ phân giải:** Full HD (1920x1080) hoặc 4K (3840x2160), tỷ lệ chuẩn 16:9.
-* **Tốc độ khung hình (Frame rate):** 30fps hoặc 60fps mượt mà.
-* **Thời lượng file xuất (Master):** Chính xác `04:52` (An toàn tuyệt đối dưới mốc 05:00).
-* **Âm thanh:** Voice-over thu âm qua mic cài áo lọc tạp âm (Mic wireless Rode/Dji), chuẩn âm lượng Stereo `-14 LUFS`, nhạc nền không át tiếng thuyết minh.
-
-### 2. Các điểm chèn hiệu ứng màn hình UI đắt giá (Bắt buộc quay màn hình máy tính 60fps):
-1. **Thao tác đổi ngày / đổi thể loại hoạt động:** Thể hiện rõ bảng giáo án tự động cập nhật real-time ngay tức khắc, nhấn mạnh không cần nút xác nhận rườm rà.
-2. **Gõ chỉnh sửa trực tiếp trên mặt giấy in:** Trỏ chuột gõ chữ trên nền bảng 4 cột $\rightarrow$ camera zoom cận nút **"Lưu thay đổi"** ở góc phải chuyển sang màu cam rung nhẹ.
-3. **Kích hoạt Popup cảnh báo an toàn:** Bấm nút **"Xuất Word"** khi chưa lưu $\rightarrow$ Hiện modal **"Chưa Lưu Thay Đổi Giáo Án!"** $\rightarrow$ Bấm nút **"Lưu thay đổi & Tiếp tục"** $\rightarrow$ Hiệu ứng confetti rơi đẹp mắt $\rightarrow$ Mở ngay file `.doc` trong Microsoft Word kẻ ô chuyên nghiệp.
-4. **Mở Canva Slide Studio & Trình chiếu Smart TV:** Giao diện 6 slide chuyển động mượt mà, bấm icon loa đọc bài thơ bằng giọng AI tự nhiên.
+### 0:00 - 0:30 (30 giây) | PHẦN MỞ ĐẦU: TRUY CẬP ỨNG DỤNG
+* **Thao tác màn hình:**
+  - Mở trình duyệt web (Chrome / Cốc Cốc / Edge), dán đường link ứng dụng.
+  - Màn hình hiển thị trang chủ **KID-LESSON AI** gọn gàng: Cột trái là bảng điều khiển cấu hình bài dạy; cột phải là mặt giấy giáo án in ấn màu trắng chuyên nghiệp.
+* **Lời bình (Voice-over):**
+  > *"Xin chào quý thầy cô giáo mầm non! Hôm nay, em xin hướng dẫn thầy cô sử dụng **KID-LESSON AI** – ứng dụng hỗ trợ soạn kế hoạch bài dạy 4 cột chuẩn Thông tư 51 và tạo bài giảng điện tử hoàn toàn miễn phí, chạy trực tiếp trên trình duyệt web mà không cần cài đặt. Chỉ với vài phút thao tác đơn giản, thầy cô sẽ có ngay trọn bộ giáo án và slide bài dạy cho cả tuần. Chúng ta cùng bắt đầu ngay nhé!"*
 
 ---
-*Bản quyền kịch bản thuộc Dự án Sáng kiến Giáo dục Mầm non KID-LESSON AI - 2026*
+
+### 0:31 - 1:30 (60 giây) | BƯỚC 1: THIẾT LẬP THÔNG TIN & LỊCH DẠY HỌC
+* **Thao tác màn hình:**
+  1. Chuột bấm chọn mục **"Độ tuổi của trẻ"**: Chọn *"Mẫu giáo Bé (3-4 tuổi)"* (hoặc 4-5 tuổi, 5-6 tuổi).
+  2. Bấm vào nút **"Chọn tuần trên Lịch"**: Cửa sổ lịch học hiện ra, bấm vào một ngày bất kỳ $\rightarrow$ hệ thống tự động điền trọn tuần dạy từ Thứ 2 đến Thứ 6 và hiển thị đúng ngày tháng.
+  3. Bấm chọn **Thứ trong tuần** trên thanh điều hướng ngày (Thứ Hai, Thứ Ba, Thứ Tư, Thứ Năm, Thứ Sáu).
+  4. Bấm vào ô **"Chủ đề"**: Chọn chủ đề có sẵn như *"Thế giới Động vật"* hoặc gõ tên chủ đề mới.
+  5. Thử bấm biểu tượng chiếc micro 🎙️ bên cạnh ô Đề tài, nói câu tiếng Việt: *"Thơ Ong và bướm"* $\rightarrow$ chữ tự động xuất hiện chuẩn xác vào ô nhập liệu.
+* **Lời bình (Voice-over):**
+  > *"Đầu tiên, tại bảng điều khiển bên trái, thầy cô chọn độ tuổi của lớp mình phụ trách: từ Nhà trẻ đến Mẫu giáo 3, 4 hoặc 5 tuổi.*
+  > 
+  > *Tiếp theo, thầy cô bấm vào nút lịch để chọn tuần dạy. Rất tiện lợi là chỉ cần bấm chọn một ngày, ứng dụng sẽ tự động tính trọn vẹn tuần học từ Thứ Hai đến Thứ Sáu.*
+  > 
+  > *Tại ô Chủ đề và Đề tài, thầy cô có thể chọn từ danh sách gợi ý phong phú, hoặc tự gõ theo giáo trình của trường. Đặc biệt, thầy cô có thể bấm vào nút micro để nói trực tiếp bằng tiếng Việt, hệ thống sẽ tự động chuyển thành văn bản mà không cần phải gõ bàn phím."*
+
+---
+
+### 1:31 - 2:40 (70 giây) | BƯỚC 2: CẬP NHẬT REAL-TIME & CHỈNH SỬA TRỰC TIẾP
+* **Thao tác màn hình:**
+  1. Chuột chọn mục **"Thể loại hoạt động"**: Đổi từ *"Khám phá"* sang *"Âm nhạc"*, sau đó sang *"Làm quen văn học"*.
+  2. Camera quay rõ màn hình bên phải: **Toàn bộ bảng giáo án 4 cột tự động cập nhật ngay tức khắc** theo từng lựa chọn, hiển thị rõ: 3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ), Đồ dùng chuẩn bị và Tiến trình 3 bước sư phạm.
+  3. Chuột bấm trực tiếp vào một dòng chữ bất kỳ trên trang giấy giáo án (ví dụ phần *Ổn định tổ chức*), gõ thêm câu: *"Cô cùng trẻ hát và vận động bài hát Đố bạn"*. Chữ hiển thị mượt mà trên trang in.
+* **Lời bình (Voice-over):**
+  > *"Điểm cải tiến nổi bật nhất của phiên bản này chính là tính năng **Cập nhật thời gian thực (Real-time)**. Khi thầy cô thay đổi thể loại hoạt động: từ Âm nhạc, Nhận biết, Tạo hình, Văn học cho đến Vận động, toàn bộ bảng giáo án 4 cột ở khung bên phải sẽ tự động cấu trúc lại ngay lập tức mà thầy cô không cần phải bấm bất kỳ nút xác nhận nào.*
+  > 
+  > *Đặc biệt, thầy cô có toàn quyền làm chủ bài dạy: hãy nhấp chuột trực tiếp vào bất kỳ câu chữ nào trên trang giáo án để gõ thêm, sửa bớt hoặc bổ sung tên trò chơi theo ý muốn của mình, y như đang thao tác trong phần mềm soạn thảo văn bản."*
+
+---
+
+### 2:41 - 3:40 (60 giây) | BƯỚC 3: NÚT "LƯU THAY ĐỔI" & CẢNH BÁO AN TOÀN THÔNG MINH
+* **Thao tác màn hình:**
+  1. Khi vừa chỉnh sửa xong, camera zoom vào góc trên bên phải thanh công cụ: Nút **"Lưu thay đổi"** tự động đổi sang màu cam nổi bật kèm hiệu ứng nhấp nháy (`is-dirty`).
+  2. Bấm thử vào nút **"Xuất Word (.doc)"** ở bên trái khi chưa bấm Lưu $\rightarrow$ Màn hình hiện **Popup cảnh báo thông minh**: *"Chưa Lưu Thay Đổi Giáo Án!"*.
+  3. Chỉ vào 2 nút trên popup:
+     - Nút **"Quay lại"**: Bấm vào, popup đóng lại, nút *Lưu thay đổi* rung nhẹ nhắc nhở cô tự kiểm tra.
+     - Nút **"Lưu thay đổi & Tiếp tục"**: Bấm vào $\rightarrow$ Hệ thống tự động lưu bài dạy, pháo hoa giấy (confetti) bắn lên chúc mừng, âm thanh 'ding' vang lên và mở ngay file Word tải về.
+  4. Bấm trực tiếp nút **"Lưu thay đổi"** trên thanh công cụ để thấy thông báo *"Đã lưu thay đổi giáo án thành công!"*.
+* **Lời bình (Voice-over):**
+  > *"Ngay khi thầy cô chỉnh sửa nội dung, nút **'Lưu thay đổi'** ở góc trên bên phải sẽ tự động chuyển sang màu cam nhấp nháy để nhắc nhở thầy cô chưa lưu bài.*
+  > 
+  > *Để tránh việc thầy cô vô tình quên lưu các ý tưởng vừa chỉnh sửa, hệ thống được tích hợp **cơ chế an toàn thông minh**: Nếu thầy cô bấm xuất file hoặc tạo slide khi chưa lưu, một popup cảnh báo sẽ hiện lên.*
+  > 
+  > *Tại đây, thầy cô có 2 lựa chọn rất thuận tiện:*
+  > *Nếu muốn kiểm tra thêm, bấm **'Quay lại'**.*
+  > *Nếu muốn xuất ngay, bấm **'Lưu thay đổi & Tiếp tục'** – hệ thống sẽ tự động đồng bộ mọi chỉnh sửa mới nhất, phát hiệu ứng ăn mừng vui nhộn và thực hiện tiếp tác vụ ngay tức thì mà không làm mất công của cô."*
+
+---
+
+### 3:41 - 4:35 (55 giây) | BƯỚC 4: XUẤT WORD CHUẨN 4 CỘT & TRÌNH CHIẾU SMART TV
+* **Thao tác màn hình:**
+  1. Bấm nút **"Lưu Thư Viện"**: Hiện thông báo đã lưu bài giảng vào kho của cô để tái sử dụng.
+  2. Bấm nút **"Xuất Word (.doc)"**: Tải về file Word trong 1 giây. Mở file Word trên máy tính: Bảng kẻ ô 4 cột thẳng tắp chuẩn thể thức Nghị định 30, đầy đủ tiêu ngữ hành chính và phần duyệt chữ ký cuối bài.
+  3. Bấm nút **"Tạo Slide"**: Cửa sổ **Canva Slide Studio** mở ra với 6 slide rực rỡ sắc màu kèm hình minh họa mầm non.
+  4. Bấm **"Chiếu Smart TV"**: Màn hình chuyển sang chế độ trình chiếu toàn màn hình. Bấm thử nút chuyển slide và bấm biểu tượng loa để nghe AI phát âm tiếng Việt chuẩn từng câu.
+  5. Bấm nút **"Tải File PPTX Canva"**: File PowerPoint chuẩn 16:9 được tải về, sẵn sàng kéo thả vào Canva.
+* **Lời bình (Voice-over):**
+  > *"Sau khi lưu bài xong, thầy cô hãy sử dụng 3 nút chức năng tiện ích ở góc trái:*
+  > 
+  > *Thứ nhất: Nút **'Lưu Thư Viện'** giúp cô cất giữ bài dạy vào kho tài liệu cá nhân để những năm học sau mở ra dùng lại bất cứ lúc nào.*
+  > 
+  > *Thứ hai: Nút **'Xuất Word (.doc)'** sẽ tạo ngay một tệp văn bản chuẩn bảng kẻ ô 4 cột theo đúng thể thức hành chính, có sẵn tiêu ngữ và phần chữ ký ban giám hiệu, thầy cô chỉ việc in ấn ký duyệt mà không mất một phút nào căn chỉnh lề.*
+  > 
+  > *Thứ ba: Nút **'Tạo Slide'** mở ra phòng thiết kế bài giảng thông minh. Thầy cô có thể trình chiếu trực tiếp lên Smart TV của lớp học với giọng đọc tiếng Việt sinh động, hoặc tải tệp PowerPoint về để kéo thả chỉnh sửa thỏa thích trên Canva."*
+
+---
+
+### 4:36 - 5:00 (25 giây) | LỜI KẾT & CHÚC MỪNG
+* **Thao tác màn hình:**
+  - Quay lại trang chủ ứng dụng, hiển thị biểu tượng các thẻ học liệu số, trò chơi ghép bóng và đố vui.
+  - Hiện đường link truy cập web và mã QR Code lớn ở giữa màn hình.
+* **Lời bình (Voice-over):**
+  > *"Như vậy chỉ trong chưa đầy 5 phút, thầy cô đã làm chủ hoàn toàn ứng dụng **KID-LESSON AI**. Nhanh chóng, chuẩn mực, dễ sử dụng và hoàn toàn miễn phí, ứng dụng sẽ là người bạn đồng hành tin cậy của mỗi cô giáo mầm non.*
+  > 
+  > *Thầy cô hãy quét mã QR trên màn hình hoặc truy cập đường link bên dưới để trải nghiệm ngay hôm nay. Chúc quý thầy cô luôn tràn đầy niềm vui và có những tiết dạy thật hạnh phúc bên các con! Xin trân trọng cảm ơn!"*
+
+---
+*Kịch bản chuẩn hóa thực hành - Dự án Sáng kiến Giáo dục Mầm non KID-LESSON AI - 2026*
