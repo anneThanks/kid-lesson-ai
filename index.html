@@ -80,14 +80,14 @@
         <aside class="config-sidebar">
           <div class="sidebar-title-row">
             <h3 class="sidebar-heading">
-              <span>🎯</span> Thiết Lập Tiết Dạy
+              Thiết Lập Tiết Dạy
             </h3>
           </div>
 
           <!-- 1. Chọn Lứa Tuổi -->
           <div class="form-group">
             <label class="form-label" for="select-age">
-              <span>👶</span> Lứa tuổi mầm non:
+              Lứa tuổi mầm non:
             </label>
             <select class="custom-select" id="select-age">
               <!-- Đổ dữ liệu từ js/data_preschool.js -->
@@ -97,7 +97,7 @@
           <!-- 2. Chọn Tuần Học (Range Date) -->
           <div class="form-group">
             <label class="form-label" for="input-week-range">
-              <span>📅</span> Chọn Tuần học (Khoảng thời gian):
+              Chọn Tuần học (Khoảng thời gian):
             </label>
             <div class="week-input-wrapper">
               <input type="text" class="custom-input" id="input-week-range" 
@@ -113,7 +113,7 @@
           <!-- 3. Chọn Ngày Trong Tuần (Thứ 2, 3, 4, 5, 6) -->
           <div class="form-group">
             <label class="form-label">
-              <span>🗓️</span> Chọn ngày dạy trong tuần:
+              Chọn ngày dạy trong tuần:
             </label>
             <!-- Chọn ngày dạy trong tuần -->
             <div class="day-pills-container" id="day-pills-container">
@@ -149,35 +149,23 @@
             </div>
           </div>
 
-          <!-- 4. CẤU HÌNH THỂ LOẠI & NỘI DUNG HOẠT ĐỘNG (CHO NGÀY ĐANG CHỌN) -->
-          <div class="form-group config-card-highlight">
-            <div class="activity-config-header">
-              <label class="form-label" for="select-activity-type" style="margin-bottom: 0;">
-                <span>🎭</span> Thể loại & Hoạt động (<strong id="active-day-label" style="color: #4f46e5;">Thứ Hai</strong>):
-              </label>
-            </div>
-
-            <!-- Loại hoạt động chính -->
-            <select class="custom-select" id="select-activity-type" style="margin-top: 6px;">
-              <!-- Đổ từ data_preschool.js activityTypes -->
-            </select>
-
-            <!-- Các nội dung con linh hoạt theo từng thể loại hoạt động -->
-            <div id="activity-subfields-container" style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px;">
-              <!-- Render động theo sơ đồ phân cấp từng thể loại hoạt động -->
-            </div>
+          <!-- 4. Tên đề tài bài học -->
+          <div class="form-group">
+            <label class="form-label" for="input-lesson-title">
+              Tên đề tài bài dạy:
+            </label>
+            <input type="text" class="custom-input" id="input-lesson-title" 
+                   value="Nghe hát: 'Hoa thơm bướm lượn' (Dân ca quan họ Bắc Ninh)" 
+                   placeholder="Nhập tên đề tài bài dạy...">
           </div>
 
           <!-- 5. Chủ đề bài dạy (Combobox chọn nhanh & gõ tự do) -->
-          <div class="form-group" style="position: relative;">
+          <div class="form-group" style="position: relative; z-index: 10;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
               <label class="form-label" for="input-topic" style="margin-bottom: 0;">
-                <span>🌟</span> Chủ đề bài học:
+                Chủ đề bài học:
               </label>
               <div style="display: flex; gap: 6px; align-items: center;">
-                <button type="button" class="btn-text-action" id="btn-sync-week-topic" title="Đồng bộ chủ đề này cho toàn bộ 5 ngày từ Thứ Hai đến Thứ Sáu" style="color: #059669; background: #ecfdf5; border-radius: 4px; padding: 2px 8px;">
-                  🔄 Cho cả tuần
-                </button>
                 <button type="button" class="btn-text-action" id="btn-clear-topic" title="Xóa để gõ chủ đề mới">
                   ➕ Nhập mới
                 </button>
@@ -197,34 +185,31 @@
                 <!-- Đổ danh sách 24 chủ đề mầm non -->
               </div>
             </div>
-
-            <p style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
-              💡 <em>Cô có thể bấm vào ô hoặc bấm mũi tên ▼ để chọn ngay bất kỳ chủ đề nào mà không cần xóa chữ. Bấm <strong>"🔄 Cho cả tuần"</strong> để đồng bộ trọn vẹn 5 ngày!</em>
-            </p>
           </div>
 
-          <!-- 6. Tên đề tài bài học -->
-          <div class="form-group">
-            <label class="form-label" for="input-lesson-title">
-              <span>✏️</span> Tên đề tài bài dạy:
-            </label>
-            <input type="text" class="custom-input" id="input-lesson-title" 
-                   value="Nghe hát: 'Hoa thơm bướm lượn' (Dân ca quan họ Bắc Ninh)" 
-                   placeholder="Nhập tên đề tài bài dạy...">
-            
-            <!-- Gợi ý nhanh 1-click -->
-            <div style="font-size: 0.78rem; font-weight: 600; color: #64748b; margin-top: 6px;">
-              Gợi ý bài dạy tiêu biểu theo ngày (Bấm chọn nhanh):
+          <!-- 6. CẤU HÌNH THỂ LOẠI & NỘI DUNG HOẠT ĐỘNG (CHO NGÀY ĐANG CHỌN) -->
+          <div class="form-group config-card-highlight">
+            <div class="activity-config-header">
+              <label class="form-label" for="select-activity-type" style="margin-bottom: 0;">
+                Thể loại & Hoạt động (<strong id="active-day-label" style="color: #4f46e5;">Thứ Hai</strong>):
+              </label>
             </div>
-            <div class="preset-chips-box" id="preset-chips-box">
-              <!-- Đổ động từ data_preschool.js -->
+
+            <!-- Loại hoạt động chính -->
+            <select class="custom-select" id="select-activity-type" style="margin-top: 6px;">
+              <!-- Đổ từ data_preschool.js activityTypes -->
+            </select>
+
+            <!-- Các nội dung con linh hoạt theo từng thể loại hoạt động -->
+            <div id="activity-subfields-container" style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px;">
+              <!-- Render động theo sơ đồ phân cấp từng thể loại hoạt động -->
             </div>
           </div>
 
-          <!-- Nút Tạo Kế Hoạch Bằng AI -->
+          <!-- Nút Xác Nhận Bài Dạy -->
           <div style="margin-top: 6px;">
             <button type="button" class="btn-generate-main" id="btn-generate-all" style="width: 100%;">
-              <span>✨</span> Bấm Tạo Kế Hoạch Bài Dạy Bằng AI
+              Xác Nhận Bài Dạy
             </button>
           </div>
         </aside>
@@ -375,7 +360,7 @@
             <span>✨</span> Bước 2: AI tự động lập Kế hoạch bài dạy
           </strong>
           <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">
-            Bấm <strong>"Bấm Tạo Kế Hoạch Bài Dạy Bằng AI"</strong> (chạy siêu tốc 0đ Offline hoặc Gemini Cloud). Hệ thống tự động cấu trúc bảng 4 cột chuẩn Thông tư 51/2020/TT-BGDĐT: <em>3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ)</em>, <em>Đồ dùng chuẩn bị (Cô & Trẻ)</em>, và <em>Tiến trình 3 bước sư phạm hoàn chỉnh</em>.
+            Bấm <strong>"Xác Nhận Bài Dạy"</strong> (chạy siêu tốc 0đ Offline hoặc Gemini Cloud). Hệ thống tự động cấu trúc bảng 4 cột chuẩn Thông tư 51/2020/TT-BGDĐT: <em>3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ)</em>, <em>Đồ dùng chuẩn bị (Cô & Trẻ)</em>, và <em>Tiến trình 3 bước sư phạm hoàn chỉnh</em>.
           </p>
         </div>
 
@@ -421,39 +406,7 @@
       </div>
 
       <div class="modal-body calendar-modal-body">
-        <!-- 1. DẢI CHỌN NHANH CÁC TUẦN THÔNG DỤNG -->
-        <div class="cal-quick-ribbon-section">
-          <div class="cal-quick-label">⚡ Chọn nhanh các tuần:</div>
-          <div class="cal-quick-chips" id="cal-quick-chips">
-            <button type="button" class="cal-chip-btn" data-preset="current-week">📌 Tuần này</button>
-            <button type="button" class="cal-chip-btn" data-preset="next-week">⏩ Tuần sau</button>
-            <button type="button" class="cal-chip-btn" data-preset="prev-week">⏪ Tuần trước</button>
-            <button type="button" class="cal-chip-btn active" data-preset="tuan-20">⭐ Tuần 20 (26/01 - 30/01)</button>
-            <button type="button" class="cal-chip-btn" data-preset="tuan-21">Tuần 21 (02/02 - 06/02)</button>
-            <button type="button" class="cal-chip-btn" data-preset="tuan-22">Tuần 22 (09/02 - 13/02)</button>
-            <button type="button" class="cal-chip-btn" data-preset="tuan-23">Tuần 23 (16/02 - 20/02)</button>
-          </div>
-        </div>
-
-        <!-- 2. BỘ CHUYỂN ĐỔI CHẾ ĐỘ CHỌN -->
-        <div class="cal-mode-selector">
-          <button type="button" class="cal-mode-btn active" id="cal-mode-week" data-mode="week">
-            <span class="cal-mode-icon">🎯</span>
-            <div class="cal-mode-text">
-              <strong>Chọn Trọn Tuần Học (T2 - T6)</strong>
-              <small>Bấm 1 ngày bất kỳ, tự động lấy cả tuần 5 ngày dạy</small>
-            </div>
-          </button>
-          <button type="button" class="cal-mode-btn" id="cal-mode-custom" data-mode="custom">
-            <span class="cal-mode-icon">✏️</span>
-            <div class="cal-mode-text">
-              <strong>Khoảng Ngày Tự Do</strong>
-              <small>Chọn ngày bắt đầu & ngày kết thúc tùy ý</small>
-            </div>
-          </button>
-        </div>
-
-        <!-- 3. THANH ĐIỀU HƯỚNG THÁNG / NĂM -->
+        <!-- 1. THANH ĐIỀU HƯỚNG THÁNG / NĂM -->
         <div class="cal-nav-bar">
           <button type="button" class="btn-cal-nav" id="btn-cal-prev-month" title="Tháng trước">
             ◀ Tháng trước
@@ -474,7 +427,7 @@
           </button>
         </div>
 
-        <!-- 4. LƯỚI LỊCH (CALENDAR GRID) -->
+        <!-- 2. LƯỚI LỊCH (CALENDAR GRID) -->
         <div class="cal-grid-wrapper">
           <table class="cal-table" id="cal-table">
             <thead>
@@ -495,10 +448,10 @@
           </table>
         </div>
 
-        <!-- 5. BẢNG XEM TRƯỚC KHOẢNG TUẦN & 5 NGÀY DẠY -->
+        <!-- 3. BẢNG XEM TRƯỚC KHOẢNG TUẦN & 5 NGÀY DẠY -->
         <div class="cal-preview-card">
           <div class="cal-preview-header">
-            <span class="cal-preview-badge">✨ Tuần học đang chọn</span>
+            <span class="cal-preview-badge">Tuần học đang chọn</span>
             <strong class="cal-preview-range-text" id="cal-preview-range-text">26/01/2026 - 30/01/2026</strong>
             <span class="cal-preview-count-pill" id="cal-preview-count-pill">5 ngày dạy</span>
           </div>
@@ -509,15 +462,11 @@
       </div>
 
       <!-- FOOTER -->
-      <div class="modal-footer cal-modal-footer">
-        <div class="cal-footer-info">
-          <span style="font-size: 0.82rem; color: #64748b; font-weight: 600;">Khoảng tuần:</span>
-          <input type="text" class="cal-footer-input" id="cal-footer-input" value="26/01/2026 - 30/01/2026" readonly>
-        </div>
+      <div class="modal-footer cal-modal-footer" style="justify-content: flex-end;">
         <div class="cal-footer-actions">
           <button type="button" class="btn-outline" id="btn-cancel-calendar">Hủy</button>
           <button type="button" class="btn-primary" id="btn-apply-calendar">
-            <span>✅</span> Áp Dụng Tuần Này
+            Áp Dụng Tuần Này
           </button>
         </div>
       </div>

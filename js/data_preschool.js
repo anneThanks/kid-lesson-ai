@@ -26,13 +26,13 @@ const PRE_SCHOOL_DATA = {
       subFields: [
         {
           key: "ndtt",
-          label: "🎯 Nội dung trọng tâm (NDTT):",
+          label: "Nội dung trọng tâm (NDTT):",
           placeholder: "Ví dụ: NH: Hoa thơm, bướm lượn (hoặc DH: Con bướm vàng, VĐM: Em yêu cây xanh)...",
           prefix: "- NDTT: "
         },
         {
           key: "ndkh",
-          label: "🎲 Nội dung kết hợp (NDKH):",
+          label: "Nội dung kết hợp (NDKH):",
           placeholder: "Ví dụ: TCÂN: Ai nhanh nhất (hoặc NH: Bướm hoa, TCÂN: Tai ai tinh)...",
           prefix: "+ NDKH: "
         }
@@ -49,7 +49,7 @@ const PRE_SCHOOL_DATA = {
       subFields: [
         {
           key: "sub_nhan_biet",
-          label: "🔍 Các nội dung liên quan đến nhận biết:",
+          label: "Các nội dung liên quan đến nhận biết:",
           placeholder: "Ví dụ: Ôn nhận biết hình tròn, hình vuông; Phân biệt màu đỏ - màu vàng; Nhận biết to - nhỏ...",
           prefix: "- "
         }
@@ -66,7 +66,7 @@ const PRE_SCHOOL_DATA = {
       subFields: [
         {
           key: "sub_tao_hinh",
-          label: "🎨 Các nội dung liên quan đến tạo hình:",
+          label: "Các nội dung liên quan đến tạo hình:",
           placeholder: "Ví dụ: In màu trang trí cánh bướm; Vẽ hoa mùa xuân; Nặn chú sâu con; Xé dán cánh hoa...",
           prefix: "- "
         }
@@ -83,7 +83,7 @@ const PRE_SCHOOL_DATA = {
       subFields: [
         {
           key: "sub_van_hoc",
-          label: "📚 Thơ/truyện:",
+          label: "Thơ/truyện:",
           placeholder: "Ví dụ: Thơ: 'Ong và bướm' (Nhược Thủy); Truyện cổ tích: 'Quả táo của ai?'...",
           prefix: "- "
         }
@@ -100,13 +100,13 @@ const PRE_SCHOOL_DATA = {
       subFields: [
         {
           key: "sub_ptcb",
-          label: "🏃 Phát triển cơ bản:",
+          label: "Phát triển cơ bản:",
           placeholder: "Ví dụ: VĐCB: Ném và bắt bóng bằng 2 tay; Bò chui qua cổng; Đi trong đường hẹp...",
           prefix: "- Phát triển cơ bản: "
         },
         {
           key: "sub_tcvd",
-          label: "🎯 Trò chơi vận động:",
+          label: "Trò chơi vận động:",
           placeholder: "Ví dụ: TCVĐ: Kéo co; TCVĐ: Cáo và thỏ; TCVĐ: Mèo đuổi chuột...",
           prefix: "+ Trò chơi vận động: "
         }
@@ -123,7 +123,7 @@ const PRE_SCHOOL_DATA = {
       subFields: [
         {
           key: "sub_khac",
-          label: "⭐ Nội dung hoạt động:",
+          label: "Nội dung hoạt động:",
           placeholder: "Ví dụ: Kỹ năng sống: Bé biết rửa tay đúng cách...",
           prefix: "- "
         }

@@ -1288,11 +1288,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (els.btnGenerateAll) {
       els.btnGenerateAll.disabled = true;
-      els.btnGenerateAll.innerHTML = `<span>⏳</span> Đang Tạo Giáo Án Chuẩn 4 Cột...`;
+      els.btnGenerateAll.innerHTML = `Đang Xác Nhận Bài Dạy...`;
     }
 
     try {
-      showToast(`✨ AI đang xây dựng Kế hoạch ${currentDayName} (${appState.selectedActivityType})...`);
+      showToast(`AI đang hoàn thiện Kế hoạch ${currentDayName} (${appState.selectedActivityType})...`);
 
       const subValues = getSubValuesFromDOM();
       const lessonPlan = await aiEngine.generateLessonPlan({
@@ -1326,7 +1326,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hiệu ứng ăn mừng nhẹ
       gamesSystem.triggerConfetti();
       speechSystem.playCorrectSound();
-      showToast(`🎉 Đã tạo Kế hoạch bài dạy ${currentDayName} thành công!`);
+      showToast(`Đã xác nhận Kế hoạch bài dạy ${currentDayName} thành công!`);
 
     } catch (error) {
       console.error("[KID-LESSON AI] Lỗi tạo bài dạy:", error);
@@ -1334,7 +1334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       if (els.btnGenerateAll) {
         els.btnGenerateAll.disabled = false;
-        els.btnGenerateAll.innerHTML = `<span>✨</span> Bấm Tạo Kế Hoạch Bài Dạy Bằng AI`;
+        els.btnGenerateAll.innerHTML = `Xác Nhận Bài Dạy`;
       }
     }
   }
@@ -1353,30 +1353,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return defaultDayMeta[d] ? defaultDayMeta[d].badge : "Học";
     };
 
-    // 1. THANH CHUYỂN NGÀY VÀ CÁC NÚT THAO TÁC TRÊN ĐỈNH
+    // 1. THANH CÔNG CỤ THAO TÁC TRÊN ĐỈNH
     const toolbarHtml = `
-      <div class="week-nav-bar">
-        <div class="week-nav-days">
-          <button type="button" class="week-nav-btn ${!isFullWeek && plan.dayOfWeek === 'Thứ Hai' ? 'active' : ''}" data-navday="mon">
-            T2: ${getDayBadge('mon')}
-          </button>
-          <button type="button" class="week-nav-btn ${!isFullWeek && plan.dayOfWeek === 'Thứ Ba' ? 'active' : ''}" data-navday="tue">
-            T3: ${getDayBadge('tue')}
-          </button>
-          <button type="button" class="week-nav-btn ${!isFullWeek && plan.dayOfWeek === 'Thứ Tư' ? 'active' : ''}" data-navday="wed">
-            T4: ${getDayBadge('wed')}
-          </button>
-          <button type="button" class="week-nav-btn ${!isFullWeek && plan.dayOfWeek === 'Thứ Năm' ? 'active' : ''}" data-navday="thu">
-            T5: ${getDayBadge('thu')}
-          </button>
-          <button type="button" class="week-nav-btn ${!isFullWeek && plan.dayOfWeek === 'Thứ Sáu' ? 'active' : ''}" data-navday="fri">
-            T6: ${getDayBadge('fri')}
-          </button>
-          <button type="button" class="week-nav-btn btn-all-week ${isFullWeek ? 'active' : ''}" id="btn-nav-full-week">
-            📋 Xem Toàn Tuần (5 Ngày)
-          </button>
-        </div>
-
+      <div class="week-nav-bar" style="justify-content: flex-end;">
         <div class="toolbar-btns">
           <button class="btn-tool btn-save-library" id="btn-save-library" title="Lưu vào Thư viện của cô">
             <span>💾</span> Lưu Thư Viện
@@ -2393,7 +2372,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initLibraryBackup();
     initCanvaStudioModals();
 
-    // Nút Bấm Tạo Kế Hoạch Bằng AI
+    // Nút Xác Nhận Bài Dạy
     if (els.btnGenerateAll) {
       els.btnGenerateAll.onclick = () => generateCurrentDayLesson();
     }
