@@ -205,13 +205,6 @@
               <!-- Render động theo sơ đồ phân cấp từng thể loại hoạt động -->
             </div>
           </div>
-
-          <!-- Nút Xác Nhận Bài Dạy -->
-          <div style="margin-top: 6px;">
-            <button type="button" class="btn-generate-main" id="btn-generate-all" style="width: 100%;">
-              Xác Nhận Bài Dạy
-            </button>
-          </div>
         </aside>
 
         <!-- CỘT PHẢI: KẾ HOẠCH BÀI DẠY (GIÁO ÁN CHI TIẾT) -->
@@ -360,7 +353,7 @@
             <span>✨</span> Bước 2: AI tự động lập Kế hoạch bài dạy
           </strong>
           <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">
-            Bấm <strong>"Xác Nhận Bài Dạy"</strong> (chạy siêu tốc 0đ Offline hoặc Gemini Cloud). Hệ thống tự động cấu trúc bảng 4 cột chuẩn Thông tư 51/2020/TT-BGDĐT: <em>3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ)</em>, <em>Đồ dùng chuẩn bị (Cô & Trẻ)</em>, và <em>Tiến trình 3 bước sư phạm hoàn chỉnh</em>.
+            Hệ thống tự động cấu trúc bảng 4 cột và cập nhật real-time theo từng lựa chọn của cô: <em>3 Mục tiêu (Kiến thức - Kỹ năng - Thái độ)</em>, <em>Đồ dùng chuẩn bị (Cô & Trẻ)</em>, và <em>Tiến trình 3 bước sư phạm hoàn chỉnh</em>. Thầy/cô chỉ cần bấm <strong>"Lưu thay đổi"</strong> để lưu bài dạy.
           </p>
         </div>
 
@@ -606,6 +599,29 @@
       <button type="button" class="btn-tv-nav primary" id="btn-tv-next">
         <span>Trang Sau</span> ❯
       </button>
+    </div>
+  </div>
+
+  <!-- MODAL: NHẮC NHỞ LƯU THAY ĐỔI TRƯỚC KHI THAO TÁC -->
+  <div class="modal-backdrop" id="modal-unsaved-warning" style="display: none; z-index: 9999;">
+    <div class="modal-window" style="max-width: 480px; text-align: center; padding: 26px 24px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
+      <div style="width: 58px; height: 58px; margin: 0 auto 14px auto; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);">
+        ⚠️
+      </div>
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; font-family: var(--font-heading);">
+        Chưa Lưu Thay Đổi Giáo Án!
+      </h3>
+      <p style="font-size: 0.92rem; color: #475569; line-height: 1.6; margin-bottom: 22px;">
+        Thầy/cô vừa có các chỉnh sửa nội dung bài dạy nhưng chưa lưu lại. Vui lòng bấm nút <strong>"Lưu thay đổi"</strong> để cập nhật bản giáo án mới nhất trước khi thực hiện thao tác này.
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="btn-outline" id="btn-unsaved-dismiss" style="padding: 9px 18px; font-weight: 600;">
+          Để tôi tự bấm Lưu
+        </button>
+        <button type="button" class="btn-primary" id="btn-unsaved-save-continue" style="padding: 9px 20px; font-weight: 700; background: #2563eb;">
+          Lưu thay đổi & Tiếp tục
+        </button>
+      </div>
     </div>
   </div>
 

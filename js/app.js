@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentLessonPlan: null,
     weeklyPlanCache: {}, // Lưu các bài của Thứ 2 -> Thứ 6
     viewMode: "single",  // "single" hoặc "full_week"
+    hasUnsavedChanges: false, // Trạng thái có thay đổi chưa bấm Lưu
 
     currentLiterary: null,
     currentFlashcards: [],
@@ -115,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnClearTopic: document.getElementById("btn-clear-topic"),
     inputLessonTitle: document.getElementById("input-lesson-title"),
     presetChipsBox: document.getElementById("preset-chips-box"),
-    btnGenerateAll: document.getElementById("btn-generate-all"),
     engineStatusPill: document.getElementById("engine-status-pill"),
 
     // Tabs & Panels
@@ -1019,6 +1019,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       renderLessonPlanPaper(plan, true);
     }
+
+    if (typeof markUnsavedChanges === "function") {
+      markUnsavedChanges(true);
+    }
   }
 
   window.updateActivePlanRealtime = updateActivePlanRealtime;
@@ -1048,6 +1052,9 @@ document.addEventListener("DOMContentLoaded", () => {
           const plan = appState.weeklyPlanCache[day];
           appState.currentLessonPlan = plan;
           renderLessonPlanPaper(plan, false);
+          if (typeof markUnsavedChanges === "function") {
+            markUnsavedChanges(false);
+          }
           showToast(`Đã chuyển sang ${plan.dayOfWeek} (${plan.badge || plan.activityTypeName})`);
         }
       };
@@ -1286,11 +1293,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const daysNameMap = { mon: "Thứ Hai", tue: "Thứ Ba", wed: "Thứ Tư", thu: "Thứ Năm", fri: "Thứ Sáu" };
     const currentDayName = daysNameMap[appState.selectedDay] || "Thứ Hai";
 
-    if (els.btnGenerateAll) {
-      els.btnGenerateAll.disabled = true;
-      els.btnGenerateAll.innerHTML = `Đang Xác Nhận Bài Dạy...`;
-    }
-
     try {
       showToast(`AI đang hoàn thiện Kế hoạch ${currentDayName} (${appState.selectedActivityType})...`);
 
@@ -1326,16 +1328,131 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hiệu ứng ăn mừng nhẹ
       gamesSystem.triggerConfetti();
       speechSystem.playCorrectSound();
-      showToast(`Đã xác nhận Kế hoạch bài dạy ${currentDayName} thành công!`);
+      showToast(`Đã cập nhật Kế hoạch bài dạy ${currentDayName} thành công!`);
 
     } catch (error) {
       console.error("[KID-LESSON AI] Lỗi tạo bài dạy:", error);
       showToast("Lỗi: " + error.message);
-    } finally {
-      if (els.btnGenerateAll) {
-        els.btnGenerateAll.disabled = false;
-        els.btnGenerateAll.innerHTML = `Xác Nhận Bài Dạy`;
+    }
+  }
+
+  // 8.B. QUẢN LÝ TRẠNG THÁI LƯU THAY ĐỔI & POPUP NHẮC NHỞ
+  function markUnsavedChanges(dirty = true) {
+    appState.hasUnsavedChanges = dirty;
+    const btnSaveChanges = document.getElementById("btn-save-changes");
+    if (btnSaveChanges) {
+      if (dirty) {
+        btnSaveChanges.classList.add("is-dirty");
+      } else {
+        btnSaveChanges.classList.remove("is-dirty", "highlight-pulse");
       }
+    }
+  }
+
+  function saveCurrentChanges() {
+    const day = appState.selectedDay;
+    const plan = appState.weeklyPlanCache[day] || appState.currentLessonPlan;
+    if (!plan) return;
+
+    // Lấy các giá trị mới nhất từ cấu hình và DOM
+    const subValues = getSubValuesFromDOM();
+    plan.subValues = Object.assign({}, plan.subValues || {}, subValues);
+    if (els.inputLessonTitle) plan.title = els.inputLessonTitle.value.trim();
+    if (els.inputTopic) plan.topic = els.inputTopic.value.trim();
+    if (els.inputLessonDate) plan.date = els.inputLessonDate.value.trim();
+
+    // Cập nhật lại cache và currentLessonPlan
+    appState.weeklyPlanCache[day] = plan;
+    appState.currentLessonPlan = plan;
+
+    // Đánh dấu đã lưu
+    markUnsavedChanges(false);
+
+    // Cập nhật giao diện nút Lưu thay đổi
+    const btn = document.getElementById("btn-save-changes");
+    if (btn) {
+      btn.innerHTML = `<span>✅</span> Đã lưu thay đổi`;
+      btn.classList.remove("is-dirty", "highlight-pulse");
+      setTimeout(() => {
+        const currentBtn = document.getElementById("btn-save-changes");
+        if (currentBtn && !appState.hasUnsavedChanges) {
+          currentBtn.innerHTML = `<span>💾</span> Lưu thay đổi`;
+        }
+      }, 2000);
+    }
+
+    if (window.gamesSystem && typeof gamesSystem.triggerConfetti === "function") {
+      gamesSystem.triggerConfetti();
+    }
+    if (window.speechSystem && typeof speechSystem.playCorrectSound === "function") {
+      speechSystem.playCorrectSound();
+    }
+    showToast(`💾 Đã lưu thay đổi giáo án ${plan.dayOfWeek || "hôm nay"} thành công!`);
+  }
+
+  let pendingActionCallback = null;
+
+  function showUnsavedWarningModal(actionName, onProceed) {
+    const modal = document.getElementById("modal-unsaved-warning");
+    if (!modal) {
+      if (confirm(`⚠️ Thầy/cô chưa lưu thay đổi giáo án! Bấm OK để lưu ngay và tiếp tục ${actionName}.`)) {
+        saveCurrentChanges();
+        if (typeof onProceed === "function") onProceed();
+      }
+      return;
+    }
+
+    pendingActionCallback = onProceed;
+    modal.style.display = "flex";
+  }
+
+  function hideUnsavedWarningModal() {
+    const modal = document.getElementById("modal-unsaved-warning");
+    if (modal) modal.style.display = "none";
+  }
+
+  function checkUnsavedChangesBeforeAction(actionName, onProceed) {
+    if (appState.hasUnsavedChanges) {
+      showUnsavedWarningModal(actionName, onProceed);
+      return false;
+    }
+    if (typeof onProceed === "function") onProceed();
+    return true;
+  }
+
+  function initUnsavedWarningModal() {
+    const modal = document.getElementById("modal-unsaved-warning");
+    const btnDismiss = document.getElementById("btn-unsaved-dismiss");
+    const btnSaveContinue = document.getElementById("btn-unsaved-save-continue");
+
+    if (btnDismiss) {
+      btnDismiss.onclick = () => {
+        hideUnsavedWarningModal();
+        const btnSave = document.getElementById("btn-save-changes");
+        if (btnSave) {
+          btnSave.classList.add("highlight-pulse");
+          btnSave.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+        showToast("👉 Thầy/cô hãy bấm nút 'Lưu thay đổi' ở góc trên bên phải nhé!");
+      };
+    }
+
+    if (btnSaveContinue) {
+      btnSaveContinue.onclick = () => {
+        saveCurrentChanges();
+        hideUnsavedWarningModal();
+        if (typeof pendingActionCallback === "function") {
+          const cb = pendingActionCallback;
+          pendingActionCallback = null;
+          cb();
+        }
+      };
+    }
+
+    if (modal) {
+      modal.onclick = (e) => {
+        if (e.target === modal) hideUnsavedWarningModal();
+      };
     }
   }
 
@@ -1345,18 +1462,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     appState.viewMode = isFullWeek ? "full_week" : "single";
 
-    // Lấy badge của từng ngày để hiển thị trên thanh điều hướng đỉnh
-    const getDayBadge = (d) => {
-      if (appState.weeklyPlanCache[d] && appState.weeklyPlanCache[d].badge) {
-        return appState.weeklyPlanCache[d].badge;
-      }
-      return defaultDayMeta[d] ? defaultDayMeta[d].badge : "Học";
-    };
-
-    // 1. THANH CÔNG CỤ THAO TÁC TRÊN ĐỈNH
+    // 1. THANH CÔNG CỤ THAO TÁC TRÊN ĐỈNH (CĂN TRÁI 3 NÚT, BÊN PHẢI LƯU THAY ĐỔI)
+    const isDirty = appState.hasUnsavedChanges;
     const toolbarHtml = `
-      <div class="week-nav-bar" style="justify-content: flex-end;">
-        <div class="toolbar-btns">
+      <div class="week-nav-bar">
+        <div class="toolbar-btns toolbar-btns-left">
           <button class="btn-tool btn-save-library" id="btn-save-library" title="Lưu vào Thư viện của cô">
             <span>💾</span> Lưu Thư Viện
           </button>
@@ -1365,6 +1475,12 @@ document.addEventListener("DOMContentLoaded", () => {
           </button>
           <button class="btn-tool btn-canva-slide" id="btn-open-canva-studio" title="Studio Slide Canva & Trình Chiếu Bài Giảng AI">
             <span>🎨</span> Tạo Slide
+          </button>
+        </div>
+
+        <div class="toolbar-btns toolbar-btns-right">
+          <button class="btn-tool btn-save-changes ${isDirty ? 'is-dirty' : ''}" id="btn-save-changes" title="Lưu lại các thay đổi mới nhất vào giáo án của ngày">
+            <span>${isDirty ? '⚠️' : '💾'}</span> Lưu thay đổi
           </button>
         </div>
       </div>
@@ -1640,25 +1756,49 @@ document.addEventListener("DOMContentLoaded", () => {
       };
     }
 
+    // 3 nút bên trái: Lưu Thư Viện, Xuất Word (.doc), Tạo Slide
+    // Yêu cầu: Nếu có thay đổi chưa lưu, hiển thị popup nhắc nhở bấm Lưu thay đổi
     const btnSave = document.getElementById("btn-save-library");
     if (btnSave) {
       btnSave.onclick = () => {
-        saveLessonToLibrary(plan);
+        checkUnsavedChangesBeforeAction("Lưu Thư Viện", () => {
+          saveLessonToLibrary(plan);
+        });
       };
     }
 
     const btnDocx = document.getElementById("btn-export-docx");
     if (btnDocx) {
       btnDocx.onclick = () => {
-        exportLessonToWordFile(plan, isFullWeek);
+        checkUnsavedChangesBeforeAction("Xuất Word", () => {
+          exportLessonToWordFile(plan, isFullWeek);
+        });
       };
     }
 
     const btnCanva = document.getElementById("btn-open-canva-studio");
     if (btnCanva) {
       btnCanva.onclick = () => {
-        openCanvaStudio(plan);
+        checkUnsavedChangesBeforeAction("Tạo Slide", () => {
+          openCanvaStudio(plan);
+        });
       };
+    }
+
+    // Nút Lưu thay đổi bên phải
+    const btnSaveChanges = document.getElementById("btn-save-changes");
+    if (btnSaveChanges) {
+      btnSaveChanges.onclick = () => {
+        saveCurrentChanges();
+      };
+    }
+
+    // Lắng nghe người dùng chỉnh sửa trực tiếp trên mặt giấy giáo án
+    const paperEl = document.getElementById("printable-lesson-paper");
+    if (paperEl) {
+      paperEl.addEventListener("input", () => {
+        markUnsavedChanges(true);
+      });
     }
 
     const btnSmartTv = document.getElementById("btn-open-smart-tv");
@@ -2371,11 +2511,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initSettingsModal();
     initLibraryBackup();
     initCanvaStudioModals();
-
-    // Nút Xác Nhận Bài Dạy
-    if (els.btnGenerateAll) {
-      els.btnGenerateAll.onclick = () => generateCurrentDayLesson();
-    }
+    initUnsavedWarningModal();
 
     // Hiển thị bài đầu tiên (Thứ Hai) ngay khi mở web
     if (appState.currentLessonPlan) {
@@ -2383,6 +2519,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       generateCurrentDayLesson();
     }
+    markUnsavedChanges(false);
   }
 
   startApp();
